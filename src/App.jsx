@@ -1,14 +1,19 @@
-
-import './App.css'
+// App.js
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import './App.css';
+import Notification from './pages/Notification';
+import React, { useState } from 'react';
 
 function App() {
 
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Notification />
+    },
+  ]);
 
-  return (
-    <>
-     
-    </>
-  )
+  return <RouterProvider router={router} />;
 }
 
-export default App
+export default App;
