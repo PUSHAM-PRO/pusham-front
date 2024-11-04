@@ -1,13 +1,13 @@
 import React from 'react';
 import { FaSearch, FaChartBar, FaHistory, FaRegCheckCircle, FaCog, FaQuestionCircle, FaUserCircle,} from 'react-icons/fa';
-import pushamLogo from '../../assets/images/pushamLogo.png';
+import pushamLogo from '../assets/images/pushamLogo.png';
 import { FiLogOut } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 
 const SideBar = () => {
     return (
         <div
-            className="text-white flex flex-col justify-between p-4"
+            className="text-white flex flex-col justify-between p-4 absolute"
             style={{
                 width: '311px',
                 height: '982px',
@@ -31,7 +31,7 @@ const SideBar = () => {
                 <nav>
                     <div className="flex flex-col gap-1">
                         <Link
-                            to="dashboard" className="flex focus:bg-[#03A10B] rounded-[6px]"
+                            to="#" className="flex focus:bg-[#03A10B] rounded-[6px]"
                             style={{ padding: '8px 12px' }}
                         >
                             <FaChartBar className="mr-2 w-4 h-4" /><p className="flex items-center text-white hover:text-[#03A10B] text-sm font-bold tracking-wide">Dashboard</p>

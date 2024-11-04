@@ -1,16 +1,13 @@
 import React from 'react'
-import SideBar from '../pages/customerpage/SideBar';
-import { Outlet } from 'react-router-dom';
+import SideBar from '../components/SideBar';
 
-const RootLayout = () => {
-  return (
-    <div>
-        <SideBar />
-        <Outlet />
-    
-       
-    </div>
-  );
-};
+const RootLayout = ({ children }) => {
+    return (
+        <div>
+            <SideBar />
+            <div>{children}</div>
+        </div>
+    )
+}
 
 export default RootLayout;

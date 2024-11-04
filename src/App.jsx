@@ -1,5 +1,6 @@
 
 
+
  import { createBrowserRouter,RouterProvider,Outlet } from 'react-router-dom'
 import './App.css'
 import LoginPage from './pages/authPage/LoginPage'
@@ -34,6 +35,7 @@ const router = createBrowserRouter([
     
   
 }
+
 
 export default App; 
 
