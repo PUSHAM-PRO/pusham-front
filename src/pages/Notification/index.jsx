@@ -1,32 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FiBell, FiX, FiMapPin, FiCalendar, FiAlertTriangle } from 'react-icons/fi';
 
-const powerOutageNotifications = [
-  {
-    title: 'Emergency Power Outage',
-    date: 'October 31st 10:00',
-    location: 'Douala, Littoral Region',
-    message: 'Emergency maintenance required. Expected duration: 2 hours.',
-    type: 'emergency'
-  },
-  {
-    title: 'Scheduled Maintenance',
-    date: 'November 1st 08:00',
-    location: 'Yaoundé, Central Region',
-    message: 'Routine maintenance work. Duration: 4 hours.',
-    type: 'scheduled'
-  },
-  {
-    title: 'Power Restoration Update',
-    date: 'October 31st 07:45',
-    location: 'Bamenda, Northwest Region',
-    message: 'Power has been restored to all affected areas. Thank you for your patience.',
-    type: 'update'
-  }
-];
-
 const Notification = () => {
-  const [notifications, setNotifications] = useState(powerOutageNotifications);
+  const [notifications, setNotifications] = useState([]);
+  const [location, setLocation] = useState(null);
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        setLocation({ latitude, longitude });
+      },
+      (error) => console.error("Location access denied:", error)
+    );
+  }, []);
+
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      try {
+        const response = await fetch(
+          `/api/notifications?lat=${location?.latitude}&lon=${location?.longitude}`
+        );
+        const data = await response.json();
+        setNotifications(data);
+      } catch (error) {
+        console.error('Error fetching notifications:', error);
+      }
+    };
+
+    if (location) {
+      fetchNotifications();
+    }
+  }, [location]);
 
   const getNotificationIcon = (type) => {
     switch (type) {
@@ -55,24 +60,33 @@ const Notification = () => {
   };
 
   return (
-    <div className="flex p-6 bg-white rounded-lg shadow-lg max-w-xl mx-auto">
+    <div className="relative flex p-8 bg-white rounded-lg shadow-lg max-w-2xl mx-auto">
+      <button
+        onClick={() => setNotifications([])}
+        className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
+      >
+        <FiX className="w-6 h-6" />
+      </button>
+
       <div className="flex-shrink-0">
         <img
           src="/src/assets/images/selective-focus-electricians-are-fixing-power-transmission-line-electricity-pole 1@2x.png"
           alt="Notification background"
-          className="rounded-lg object-cover h-full w-64"
+          className="rounded-lg object-cover h-full w-72"
         />
       </div>
+
       <div className="flex flex-col w-full ml-6">
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center justify-between mb-6 mt-6">
           <h2 className="text-2xl font-semibold">Notifications</h2>
           <FiBell className="w-6 h-6 text-green-500" />
         </div>
-        <div className="mt-4 space-y-4 overflow-y-auto max-h-[500px]">
+
+        <div className="mt-4 space-y-4 overflow-y-auto max-h-[600px]">
           {notifications.map((notification, index) => (
-            <div 
-              key={index} 
-              className={`flex items-start space-x-3 p-3 rounded-lg ${getNotificationStyle(notification.type)}`}
+            <div
+              key={index}
+              className={`flex items-start space-x-3 p-4 rounded-lg ${getNotificationStyle(notification.type)}`}
             >
               <div className="flex-shrink-0">
                 {getNotificationIcon(notification.type)}
@@ -80,7 +94,7 @@ const Notification = () => {
               <div className="flex-1">
                 <div className="flex items-center justify-between">
                   <h3 className="text-sm font-semibold">{notification.title}</h3>
-                  <button 
+                  <button
                     onClick={() => removeNotification(index)}
                     className="text-gray-400 hover:text-gray-600"
                   >
@@ -101,6 +115,7 @@ const Notification = () => {
             </div>
           ))}
         </div>
+
         {notifications.length === 0 && (
           <div className="text-center text-gray-500 py-8">
             No power outage notifications at this time
