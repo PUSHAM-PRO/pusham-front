@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import backgroundImage from '../../assets/images/image3.png'; // Ensure the path is correct
+import backgroundImage from '../../assets/images/image3.png'; 
 
 
-const EneoSignUp = () => {
+const CustomerSignUp = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    department: '',
-    nationality: '',
+    location: '',
+    phone: '',
     password: '',
     confirmPassword: '',
   });
@@ -32,16 +32,12 @@ const EneoSignUp = () => {
 
   return (
     <div className="flex min-h-screen">
-      {/* Left side: Sign Up Form */}
+      
       <div className="w-full md:w-1/2 flex items-center justify-center p-8 bg-white">
         <div className="w-full max-w-md space-y-6">
-          
-
-          {/* Title */}
           <h2 className="text-3xl font-bold text-center text-gray-800">Create account</h2>
 
           <form onSubmit={handleSubmit} className="space-y-4">
-            {/* Name Field */}
             <div>
               <label className="block text-sm font-medium text-gray-700">Name</label>
               <input
@@ -53,8 +49,6 @@ const EneoSignUp = () => {
                 onChange={handleChange}
               />
             </div>
-
-            {/* Email Field */}
             <div>
               <label className="block text-sm font-medium text-gray-700">Email</label>
               <input
@@ -66,34 +60,28 @@ const EneoSignUp = () => {
                 onChange={handleChange}
               />
             </div>
-
-            {/* Department Field */}
             <div>
-              <label className="block text-sm font-medium text-gray-700">Department</label>
+              <label className="block text-sm font-medium text-gray-700">Location</label>
               <input
                 type="text"
-                name="department"
+                name="location"
                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-green-500"
-                placeholder="Department"
-                value={formData.department}
+                placeholder="location"
+                value={formData.location}
                 onChange={handleChange}
               />
             </div>
-
-            {/* Nationality Field */}
             <div>
-              <label className="block text-sm font-medium text-gray-700">Nationality</label>
+              <label className="block text-sm font-medium text-gray-700">Phone Number</label>
               <input
                 type="text"
-                name="Nationality"
+                name="phone"
                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-green-500"
-                placeholder="nationality"
-                value={formData.nationality}
+                placeholder="Phone Number"
+                value={formData.phone}
                 onChange={handleChange}
               />
             </div>
-
-            {/* Password Field */}
             <div>
               <label className="block text-sm font-medium text-gray-700">Password</label>
               <input
@@ -105,8 +93,6 @@ const EneoSignUp = () => {
                 onChange={handleChange}
               />
             </div>
-
-            {/* Confirm Password Field */}
             <div>
               <label className="block text-sm font-medium text-gray-700">Confirm your password</label>
               <input
@@ -118,16 +104,12 @@ const EneoSignUp = () => {
                 onChange={handleChange}
               />
             </div>
-
-            {/* Terms and Conditions Checkbox */}
             <div className="flex items-center">
               <input type="checkbox" className="h-4 w-4 text-green-500 rounded" />
               <span className="ml-2 text-sm text-gray-600">
                 I accept the <a href="#" className="text-green-500 underline">terms and conditions</a>
               </span>
             </div>
-
-            {/* Buttons */}
             <div className="flex justify-between items-center">
               <button
                 type="button"
@@ -142,19 +124,13 @@ const EneoSignUp = () => {
                 Continue
               </button>
             </div>
-
-            {/* Sign In Link */}
             <p className="text-center text-sm text-gray-600">
               You already have an account? <a href="/signin" className="text-green-500 underline">Sign In</a>
             </p>
           </form>
-
-          {/* Footer */}
           <p className="text-center text-xs text-gray-400">© Pusham 2024</p>
         </div>
       </div>
-
-      {/* Right side: Background Image */}
       <div
         className="hidden md:block md:w-1/2 bg-cover bg-center"
         style={{
@@ -165,4 +141,4 @@ const EneoSignUp = () => {
   );
 };
 
-export default EneoSignUp;
+export default CustomerSignUp;
