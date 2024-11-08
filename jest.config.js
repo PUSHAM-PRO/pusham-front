@@ -1,9 +1,17 @@
+// jest.config.js
 export default {
-    testEnvironment: 'jsdom', // Allows DOM testing for React components
-    transform: {
-      '^.+\\.jsx?$': 'babel-jest', // Transforms JavaScript/JSX files
-    },
-    moduleFileExtensions: ['js', 'jsx', 'json', 'node'],
-    setupFilesAfterEnv: ['@testing-library/jest-dom'], // Adds extra matchers for Jest
-  };
-  
+  testEnvironment: 'jsdom',
+  transform: {
+    '^.+\\.(js|jsx)$': 'babel-jest',
+  },
+  moduleFileExtensions: ['js', 'jsx', 'json', 'node'],
+  setupFilesAfterEnv: ['<rootDir>/src/setupTests.js'],
+  testMatch: ['<rootDir>/src/**/*.test.{js,jsx}'],
+  testPathIgnorePatterns: ['/node_modules/'],
+  transformIgnorePatterns: [
+    '/node_modules/(?!(YOUR_ES_MODULE_PACKAGE_HERE)/)', // Update this if needed
+  ],
+  moduleNameMapper: {
+    '\\.(jpg|jpeg|png|gif|svg)$': '<rootDir>/__mocks__/fileMock.js',
+  },
+};
