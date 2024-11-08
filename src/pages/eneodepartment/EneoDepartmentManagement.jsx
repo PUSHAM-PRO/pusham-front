@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Plus, Pencil, Trash } from 'lucide-react';
 import Modal from '../../components/Modal';
@@ -85,28 +84,28 @@ const EneoDepartmentManagement = () => {
   };
 
   return (
-    <div className="p-6 bg-white rounded-lg shadow-lg">
-      <h1 className="text-2xl font-bold mb-4">ENEO Department Management</h1>
+    <div className="p-4 md:p-6 bg-white rounded-lg shadow-lg">
+      <h1 className="text-xl md:text-2xl font-bold mb-4 text-center md:text-left">ENEO Department Management</h1>
       <button
-        className="flex items-center px-4 py-2 text-white bg-green-500 rounded-md hover:bg-green-600"
+        className="flex items-center justify-center px-3 md:px-4 py-2 text-white bg-green-500 rounded-md hover:bg-green-600 w-full md:w-auto"
         onClick={() => openModal()}
       >
         <Plus className="mr-2" />
         Add New Account
       </button>
-      <div className="mt-6">
+      <div className="mt-6 overflow-x-auto">
         <table className="min-w-full bg-white rounded-lg shadow overflow-hidden">
           <thead>
             <tr>
-              <th className="p-3 text-left">Department Name</th>
-              <th className="p-3 text-left">Email</th>
-              <th className="p-3 text-left">Contact Number</th>
-              <th className="p-3 text-center">Actions</th>
+              <th className="p-3 text-left text-xs md:text-sm font-medium">Department Name</th>
+              <th className="p-3 text-left text-xs md:text-sm font-medium">Email</th>
+              <th className="p-3 text-left text-xs md:text-sm font-medium">Contact Number</th>
+              <th className="p-3 text-center text-xs md:text-sm font-medium">Actions</th>
             </tr>
           </thead>
           <tbody>
             {accounts.map((account) => (
-              <tr key={account.id}>
+              <tr key={account.id} className="text-xs md:text-sm">
                 <td className="p-3">{account.departmentName}</td>
                 <td className="p-3">{account.email}</td>
                 <td className="p-3">{account.contactNumber}</td>
@@ -127,12 +126,12 @@ const EneoDepartmentManagement = () => {
       {/* Modal for Add/Edit */}
       {showModal && (
         <Modal onClose={closeModal}>
-          <form onSubmit={handleSubmit} className="p-6">
-            <h2 className="text-xl font-bold mb-4">
+          <form onSubmit={handleSubmit} className="p-4 md:p-6">
+            <h2 className="text-lg md:text-xl font-bold mb-4">
               {currentAccount ? 'Edit Account' : 'Add New Account'}
             </h2>
             <div className="mb-4">
-              <label className="block mb-1">Department Name</label>
+              <label className="block mb-1 text-sm">Department Name</label>
               <input
                 type="text"
                 name="departmentName"
@@ -143,7 +142,7 @@ const EneoDepartmentManagement = () => {
               />
             </div>
             <div className="mb-4">
-              <label className="block mb-1">Email</label>
+              <label className="block mb-1 text-sm">Email</label>
               <input
                 type="email"
                 name="email"
@@ -154,7 +153,7 @@ const EneoDepartmentManagement = () => {
               />
             </div>
             <div className="mb-4">
-              <label className="block mb-1">Contact Number</label>
+              <label className="block mb-1 text-sm">Contact Number</label>
               <input
                 type="tel"
                 name="contactNumber"
@@ -168,13 +167,13 @@ const EneoDepartmentManagement = () => {
               <button
                 type="button"
                 onClick={closeModal}
-                className="px-4 py-2 bg-gray-200 rounded-md"
+                className="px-3 py-2 bg-gray-200 rounded-md text-sm"
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="px-4 py-2 text-white bg-green-500 rounded-md"
+                className="px-3 py-2 text-white bg-green-500 rounded-md text-sm"
               >
                 Save
               </button>
