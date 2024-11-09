@@ -1,20 +1,22 @@
-import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom'
+import { createBrowserRouter, RouterProvider, } from 'react-router-dom'
 import './App.css'
 import LoginPage from './pages/authPage/LoginPage'
 import HomePage from './pages/HomePage/HomePage';
 import EneoSignUp from './pages/SignUps/EneoSignUp';
 import Notification from './pages/Notification';
 import CustomerFacing from './pages/customerpage/CustomerFacing';
+import StatusTracking from './pages/customerpage/StatusTracking';
+import EditTicket from './pages/customerpage/EditTicket';
 
 function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <LoginPage />
+      element: <HomePage />
     },
     {
-      path: "/home",
-      element: <HomePage />
+      path: "/login",
+    element: <LoginPage />
     },
     {
       path: "/eno",
@@ -26,9 +28,17 @@ function App() {
     },
     {
       path: "/dashboard",
-      element: <CustomerFacing />
+      element: <CustomerFacing />,
     },
-  ])
+    {
+      path: "/status-tracking",
+      element: <StatusTracking />
+    },
+    {
+      path: "/edit",
+      element: <EditTicket />
+    },
+  ]);
 
   return <RouterProvider router={router} />;
 
