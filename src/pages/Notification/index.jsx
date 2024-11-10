@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { FiBell, FiX, FiMapPin, FiCalendar, FiAlertTriangle } from 'react-icons/fi';
 
 const Notification = () => {
-  // Sample notifications to demonstrate functionality
   const sampleNotifications = [
     { type: 'emergency', title: 'Power Outage in Downtown', location: 'Downtown District', message: 'Scheduled maintenance will cause power outage from 10 AM to 4 PM.', date: '2024-10-31' },
     { type: 'scheduled', title: 'Routine System Maintenance', location: 'Uptown Area', message: 'Brief power outage expected during system maintenance from 2 PM to 3 PM.', date: '2024-11-01' },
@@ -15,7 +14,6 @@ const Notification = () => {
   const [notificationCount, setNotificationCount] = useState(0);
 
   useEffect(() => {
-    // Filter notifications and calculate count
     const outageNotifications = sampleNotifications.filter(notification => notification.type === 'emergency' || notification.type === 'scheduled');
     const generalNotifs = sampleNotifications.filter(notification => notification.type === 'general');
 
@@ -57,35 +55,47 @@ const Notification = () => {
   };
 
   return (
-    <div className="relative flex p-8 bg-white rounded-lg shadow-lg max-w-2xl mx-auto">
+    <div className="relative flex flex-col sm:flex-row p-4 bg-white rounded-lg shadow-lg max-w-2xl mx-auto">
       {/* Bell icon with notification count */}
-      <div className="absolute top-4 right-4 flex items-center">
-        <FiBell className="w-8 h-8 text-gray-600" />
-        {notificationCount > 0 && (
-          <span className="ml-2 bg-red-500 text-white text-xs font-bold rounded-full h-6 w-6 flex items-center justify-center">
-            {notificationCount}
-          </span>
-        )}
+      <div className="absolute top-4 right-4 sm:top-4 sm:right-8">
+  <div className="relative">
+    {/* Bell Icon */}
+    <FiBell className="w-8 h-8 text-gray-600" />
+    
+    {/* Notification Count Badge */}
+    {notificationCount > 0 && (
+      <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center shadow-lg">
+        {notificationCount}
+      </span>
+    )}
+  </div>
+</div>
+
+      {/* Responsive Image */}
+      <div className="flex-shrink-0 mb-4 sm:mb-0 sm:mr-6">
+        <img
+          src="/src/assets/images/selective-focus-electricians-are-fixing-power-transmission-line-electricity-pole 1@2x.png"
+          alt="Notification background"
+          className="rounded-lg object-cover h-48 w-full sm:w-72 sm:h-full"
+        />
       </div>
 
-      <div className="flex-shrink-0">
-        <img src="/src/assets/images/selective-focus-electricians-are-fixing-power-transmission-line-electricity-pole 1@2x.png" alt="Notification background" className="rounded-lg object-cover h-full w-72" />
-      </div>
-
-      <div className="flex flex-col w-full ml-6">
-        <h2 className="text-2xl font-semibold">Power Outage Notifications</h2>
+      <div className="flex flex-col w-full">
+      <h2 className="text-2xl font-semibold mt-8 pr-12">Power Outage Notifications</h2>
         <div className="mt-4 space-y-4 overflow-y-auto max-h-[300px]">
           {powerOutageNotifications.map((notification, index) => (
-            <div key={index} className={`flex items-start space-x-3 p-4 rounded-lg ${getNotificationStyle(notification.type)}`}>
-              <div className="flex-shrink-0">{getNotificationIcon(notification.type)}</div>
+            <div key={index} className={`flex flex-col sm:flex-row items-start sm:items-center space-x-3 p-4 rounded-lg ${getNotificationStyle(notification.type)}`}>
+              <div className="flex-shrink-0 mb-2 sm:mb-0">{getNotificationIcon(notification.type)}</div>
               <div className="flex-1">
-                <div className="flex items-center justify-between">
+                <div className="flex items-start justify-between">
                   <h3 className="text-sm font-semibold">{notification.title}</h3>
                   <button onClick={() => removeNotification(index, true)} className="text-gray-400 hover:text-gray-600">
                     <FiX className="w-4 h-4" />
                   </button>
                 </div>
-                <p className="text-xs text-gray-500 mt-1"><FiMapPin className="w-4 h-4 mr-1" />{notification.location}</p>
+                <p className="text-xs text-gray-500 flex items-center mt-1">
+                  <FiMapPin className="w-4 h-4 mr-1" /> {notification.location}
+                </p>
                 <p className="text-sm text-gray-600 mt-1">{notification.message}</p>
                 <p className="text-xs text-gray-400 mt-2">{notification.date}</p>
               </div>
@@ -96,16 +106,18 @@ const Notification = () => {
         <h2 className="text-2xl font-semibold mt-8">General Notifications</h2>
         <div className="mt-4 space-y-4 overflow-y-auto max-h-[300px]">
           {generalNotifications.map((notification, index) => (
-            <div key={index} className={`flex items-start space-x-3 p-4 rounded-lg ${getNotificationStyle(notification.type)}`}>
-              <div className="flex-shrink-0">{getNotificationIcon(notification.type)}</div>
+            <div key={index} className={`flex flex-col sm:flex-row items-start sm:items-center space-x-3 p-4 rounded-lg ${getNotificationStyle(notification.type)}`}>
+              <div className="flex-shrink-0 mb-2 sm:mb-0">{getNotificationIcon(notification.type)}</div>
               <div className="flex-1">
-                <div className="flex items-center justify-between">
+                <div className="flex items-start justify-between">
                   <h3 className="text-sm font-semibold">{notification.title}</h3>
                   <button onClick={() => removeNotification(index, false)} className="text-gray-400 hover:text-gray-600">
                     <FiX className="w-4 h-4" />
                   </button>
                 </div>
-                <p className="text-xs text-gray-500 mt-1"><FiMapPin className="w-4 h-4 mr-1" />{notification.location}</p>
+                <p className="text-xs text-gray-500 flex items-center mt-1">
+                  <FiMapPin className="w-4 h-4 mr-1" /> {notification.location}
+                </p>
                 <p className="text-sm text-gray-600 mt-1">{notification.message}</p>
                 <p className="text-xs text-gray-400 mt-2">{notification.date}</p>
               </div>

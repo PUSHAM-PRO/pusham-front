@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Plus, Pencil, Trash } from 'lucide-react';
 import Modal from '../../components/Modal';
@@ -85,32 +84,32 @@ const EneoDepartmentManagement = () => {
   };
 
   return (
-    <div className="p-6 bg-white rounded-lg shadow-lg">
-      <h1 className="text-2xl font-bold mb-4">ENEO Department Management</h1>
+    <div className="p-4 sm:p-6 bg-white rounded-lg shadow-lg">
+      <h1 className="text-lg sm:text-2xl font-bold mb-4">ENEO Department Management</h1>
       <button
-        className="flex items-center px-4 py-2 text-white bg-green-500 rounded-md hover:bg-green-600"
+        className="flex items-center px-3 py-2 sm:px-4 sm:py-2 text-white bg-green-500 rounded-md hover:bg-green-600"
         onClick={() => openModal()}
       >
         <Plus className="mr-2" />
         Add New Account
       </button>
-      <div className="mt-6">
-        <table className="min-w-full bg-white rounded-lg shadow overflow-hidden">
-          <thead>
+      <div className="mt-6 overflow-x-auto">
+        <table className="min-w-full bg-white rounded-lg shadow">
+          <thead className="bg-gray-100">
             <tr>
-              <th className="p-3 text-left">Department Name</th>
-              <th className="p-3 text-left">Email</th>
-              <th className="p-3 text-left">Contact Number</th>
-              <th className="p-3 text-center">Actions</th>
+              <th className="p-2 sm:p-3 text-left">Department Name</th>
+              <th className="p-2 sm:p-3 text-left">Email</th>
+              <th className="p-2 sm:p-3 text-left">Contact Number</th>
+              <th className="p-2 sm:p-3 text-center">Actions</th>
             </tr>
           </thead>
           <tbody>
             {accounts.map((account) => (
-              <tr key={account.id}>
-                <td className="p-3">{account.departmentName}</td>
-                <td className="p-3">{account.email}</td>
-                <td className="p-3">{account.contactNumber}</td>
-                <td className="p-3 flex justify-center space-x-2">
+              <tr key={account.id} className="border-t">
+                <td className="p-2 sm:p-3">{account.departmentName}</td>
+                <td className="p-2 sm:p-3">{account.email}</td>
+                <td className="p-2 sm:p-3">{account.contactNumber}</td>
+                <td className="p-2 sm:p-3 flex justify-center space-x-2">
                   <button onClick={() => openModal(account)}>
                     <Pencil className="text-blue-500" />
                   </button>
@@ -127,8 +126,8 @@ const EneoDepartmentManagement = () => {
       {/* Modal for Add/Edit */}
       {showModal && (
         <Modal onClose={closeModal}>
-          <form onSubmit={handleSubmit} className="p-6">
-            <h2 className="text-xl font-bold mb-4">
+          <form onSubmit={handleSubmit} className="p-4 sm:p-6 w-full sm:w-96">
+            <h2 className="text-lg sm:text-xl font-bold mb-4">
               {currentAccount ? 'Edit Account' : 'Add New Account'}
             </h2>
             <div className="mb-4">
