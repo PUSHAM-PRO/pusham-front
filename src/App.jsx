@@ -1,16 +1,21 @@
-import { createBrowserRouter, RouterProvider, } from 'react-router-dom'
-import './App.css'
-import LoginPage from './pages/authPage/LoginPage'
-import HomePage from './pages/HomePage/HomePage';
-import EneoSignUp from './pages/SignUps/EneoSignUp';
+
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import './App.css';
+import LoginPage from './pages/authPage/LoginPage';
+import HomePage from './pages/homepage/HomePage';
 import Notification from './pages/Notification';
 import CustomerFacing from './pages/customerpage/CustomerFacing';
-import StatusTracking from './pages/customerpage/StatusTracking';
-import EditTicket from './pages/customerpage/EditTicket';
+import ENEOAccountManagement from './pages/superadmin/EneoAccountManagement';
+import CreateENEOAccountForm from './pages/superadmin/CreateAccountForm';
+import EditENEOAccountForm from './pages/superadmin/EditAccountform';
+import EneoDepartmentManagement from './pages/eneodepartment/EneoDepartmentManagement';
+import AgentSignUp from './pages/signups/AgentSignUp';
+import CustomerSignUp from './pages/signups/CustomerSignUp';
 
 function App() {
   const router = createBrowserRouter([
     {
+
       path: "/",
       element: <HomePage />
     },
@@ -19,35 +24,47 @@ function App() {
     element: <LoginPage />
     },
     {
-      path: "/eno",
-      element: <EneoSignUp />
+      path: '/home',
+      element: <HomePage />,
+
     },
     {
-      path: "/notification",
-      element: <Notification />
+      path: '/agent',
+      element: <AgentSignUp />,
     },
     {
-      path: "/dashboard",
+      path: '/customer',
+      element: <CustomerSignUp/>,
+    },
+    {
+      path: '/notification',
+      element: <Notification />,
+    },
+    {
+      path: '/dashboard',
       element: <CustomerFacing />,
     },
     {
-      path: "/status-tracking",
-      element: <StatusTracking />
+      path: '/admin/eneo-accounts',
+      element: <ENEOAccountManagement />,
     },
     {
-      path: "/edit",
-      element: <EditTicket />
+      path: '/admin/create-eneo-account',
+      element: <CreateENEOAccountForm />,
     },
+    {
+      path: '/admin/edit-eneo-account/:id',
+      element: <EditENEOAccountForm />,
+    },
+    {
+      path: "/admin/eneo",
+      element: <EneoDepartmentManagement />
+    },
+    
+
   ]);
 
   return <RouterProvider router={router} />;
-
-
-
-
-
 }
 
-
 export default App;
-
