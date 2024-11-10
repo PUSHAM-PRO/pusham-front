@@ -16,8 +16,8 @@ const CustomerFacing = () => {
 
     return (
         <RootLayout>
-            <div className="bg-gray-100 pb-16 lg:pl-20">
-                <header className="flex justify-between bg-white p-4 shadow lg:ml-48 mb-8">
+            <div className="bg-gray-100 pb-16 ">
+                <header className="flex justify-between bg-white p-4 shadow  mb-8">
                     <div className="ml-4 lg:ml-12">
                         <h1 className="text-xl font-bold">Welcome, Mireille</h1>
                         <p className="text-gray-600 text-xs">
@@ -25,7 +25,7 @@ const CustomerFacing = () => {
                         </p>
                     </div>
 
-                    <div className="flex items-center space-x-4 mr-4">
+                    <div className="flex items-center space-x-4">
                         <div onClick={handleBellClick} className="cursor-pointer relative">
                             <FiBell className="text-gray-600" />
                             {notifications.length > 0 && (
@@ -46,11 +46,11 @@ const CustomerFacing = () => {
                 </header>
                 
                 <div>
-                    <h2 className="text-2xl font-extrabold mb-6 ml-4 lg:ml-64">My Profile</h2>
+                    <h2 className="text-2xl font-extrabold mb-6 ml-4">My Profile</h2>
                 </div>
 
                 {/* Profile Section */}
-                <div className="bg-white rounded-xl shadow p-8 mx-4 lg:mx-64 lg:mr-20">
+                <div className="bg-white rounded-xl shadow p-8 mx-4  lg:mr-20">
                     <div className="flex items-center mb-4">
                         <div className="flex flex-col items-center sm:flex-row sm:items-start">
                             {user.isLoggedIn && (
