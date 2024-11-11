@@ -8,10 +8,13 @@ import { HiOutlineTrash } from "react-icons/hi";
 import { LuAlertCircle } from "react-icons/lu";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import { Link } from "react-router-dom";
+import TicketDetails from "../pages/departmentDashboard/ticketDetails";
+import CreateTicket from "../pages/departmentDashboard/createTicket";
 
 function DepartmentDashboard() {
   const [showModal, setShowModal] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [showTicketDetails, setShowTicketDetails] = useState(false);
 
   const handleDelete = () => {
     setShowModal(true);
@@ -31,6 +34,15 @@ function DepartmentDashboard() {
     setShowSuccess(false);
   };
 
+  const openTicketDetails = () => {
+    setShowTicketDetails(true);
+  };
+
+  const closeTicketDetails = () => {
+    setShowTicketDetails(false);
+  };
+
+
   return (
     <div className="p-6 bg-white pl-72">
       {/* Header */}
@@ -39,11 +51,8 @@ function DepartmentDashboard() {
           <h1 className="text-2xl font-semibold">Billing Department</h1>
           {/* Centered "Create" button */}
           <div className="relative">
-            {/* <button className="bg-gray-700 text-white font-semibold py-2 px-3 shadow-md focus:outline-none  " style={{ right: "50%", transform: "translateX(50%)" }}>
-              Create
-            </button> */}
-            <Link to="/ticketCreation">
-              <button className="bg-gray-700 text-white font-semibold py-2 px-3 shadow-md focus:outline-none" style={{ right: "50%", transform: "translateX(50%)" }}>
+            <Link to="/createTicket">
+              <button className="bg-gray-700 text-white font-semibold py-2 px-3 shadow-md focus:outline-none" >
                 Create
               </button>
             </Link>
@@ -125,7 +134,9 @@ function DepartmentDashboard() {
               <td className="p-4">
                 {/* Quick Action Icons (using Font Awesome or Heroicons) */}
                 <div className="flex justify-start space-x-2">
-                  <button className="p-2"><FaRegFileAlt /></button>
+                <button onClick={openTicketDetails} className="p-2">
+                    <FaRegFileAlt />
+                  </button>
                   <Link to="/shareTicketForm" className="p-2">
                     <IoShareSocialOutline />
                   </Link>
@@ -138,6 +149,18 @@ function DepartmentDashboard() {
           ))}
         </tbody>
       </table>
+
+      {/* TicketDetails Pop-up */}
+      {showTicketDetails && (
+        <div className="fixed inset-0 flex  items-center bg-gray-300 bg-opacity-50">
+          
+          <TicketDetails />
+          <button onClick={closeTicketDetails} className="absolute top-4 right-4 bg-gray-200 rounded-full p-2">
+            Close
+          </button>
+        </div>
+       
+      )}
 
       {/* Modal */}
 {showModal && (

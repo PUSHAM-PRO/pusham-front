@@ -1,15 +1,15 @@
-import React from "react";
+// import React from "react";
 import { MdArrowBack, MdPhone, MdLocationOn } from "react-icons/md";
 
 function TicketDetails() {
   return (
     <div
-      className="absolute bg-white shadow-lg p-6"
+      className="fixed bg-white shadow-lg p-6"
       style={{
-        width: "473px",
-        height: "568px",
-        top: "413px",
-        left: "1034px",
+        width: "470px",
+        height: "500px",
+        right: "50px", // Positions it closer to the right side
+        top: "80px",  // Lowers it a bit from the top of the page
         borderRadius: "8px 0px 0px 8px",
         opacity: 1,
       }}

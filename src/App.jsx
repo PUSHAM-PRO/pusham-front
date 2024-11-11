@@ -2,8 +2,8 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './App.css'
 import DepartmentDashboard from './layouts/DepartmentDashboard';
 import ShareTicketForm from './pages/departmentDashboard/ShareTicketForm';
-import TicketCreation from './pages/departmentDashboard/ticketCreation';
 import TicketDetails from './pages/departmentDashboard/ticketDetails';
+import CreateTicket from './pages/departmentDashboard/createTicket';
 
 function App() {
   const router = createBrowserRouter([
@@ -19,8 +19,9 @@ function App() {
 
 
     {
-      path: "/ticketCreation",
-      element: <TicketCreation/>,
+      path: "/createTicket",
+      element: <CreateTicket/>
+  
     },
 
     {

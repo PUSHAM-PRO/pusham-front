@@ -6,7 +6,7 @@ import { IoArrowForwardOutline } from "react-icons/io5";
 import { LuUploadCloud } from "react-icons/lu";
 import { LuEye } from "react-icons/lu";
 
-function TicketCreation() {
+function CreateTicket() {
   return (
     <div className=" bg-white flex flex-col items-center p-6">
       <header
@@ -168,4 +168,4 @@ function TicketCreation() {
   );
 }
 
-export default TicketCreation;
+export default CreateTicket;
