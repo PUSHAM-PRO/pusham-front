@@ -65,7 +65,7 @@ const StatusTracking = () => {
                     </div>
                     <div className="flex items-center space-x-4">
                         <button
-                            onClick={handleCreateClick}
+                            onClick={() => navigate("/ticketcreation")}
                             className="px-4 py-2 bg-[#112228] text-white rounded-[5px] gap-2 left-[583px] w-[91px] h-11 text-lg text-center font-semibold mr-4">Create</button>
                         <div className="relative">
                             <FaSearch className="ml-2 absolute top-1/2 left-3 transform -translate-y-1/2 text-gray-400" onClick={handleSearchIconClick} />
