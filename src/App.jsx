@@ -12,15 +12,16 @@ import AgentSignUp from './pages/signups/AgentSignUp';
 import CustomerSignUp from './pages/signups/CustomerSignUp';
 import TicketCreation from './pages/customerpage/TicketCreation';
 import StatusTracking from './pages/customerpage/StatusTracking';
+import EditTicket from './pages/customerpage/EditTicket';
 
 function App() {
   const router = createBrowserRouter([
     {
-      path: '/',
+      path: '/login',
       element: <LoginPage />,
     },
     {
-      path: '/home',
+      path: '/',
       element: <HomePage />,
     },
     {
@@ -62,6 +63,10 @@ function App() {
     {
       path: "/status-tracking",
       element: <StatusTracking/>,
+    },
+    {
+      path: "/edit",
+      element: <EditTicket/>,
     },
     
   ]);
