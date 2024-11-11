@@ -1,4 +1,3 @@
-
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './App.css';
 import LoginPage from './pages/authPage/LoginPage';
@@ -13,21 +12,20 @@ import AgentSignUp from './pages/signups/AgentSignUp';
 import CustomerSignUp from './pages/signups/CustomerSignUp';
 import TenderSubmissionForm from './pages/tendersub';
 
+import TicketCreation from './pages/customerpage/TicketCreation';
+import StatusTracking from './pages/customerpage/StatusTracking';
+import EditTicket from './pages/customerpage/EditTicket';
+
+
 function App() {
   const router = createBrowserRouter([
     {
-
-      path: "/",
-      element: <HomePage />
+      path: '/login',
+      element: <LoginPage />,
     },
     {
-      path: "/login",
-    element: <LoginPage />
-    },
-    {
-      path: '/home',
+      path: '/',
       element: <HomePage />,
-
     },
     {
       path: '/agent',
@@ -59,7 +57,19 @@ function App() {
     },
     {
       path: "/admin/eneo",
-      element: <EneoDepartmentManagement />
+      element: <EneoDepartmentManagement />,
+    },
+    {
+      path: "/ticketcreation",
+      element: <TicketCreation />,
+    },
+    {
+      path: "/status-tracking",
+      element: <StatusTracking/>,
+    },
+    {
+      path: "/edit",
+      element: <EditTicket/>,
     },
     {
       path: "/tender",
@@ -67,7 +77,6 @@ function App() {
     },
     
     
-
   ]);
 
   return <RouterProvider router={router} />;
