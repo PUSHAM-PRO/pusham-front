@@ -10,9 +10,12 @@ import EditENEOAccountForm from './pages/superadmin/EditAccountform';
 import EneoDepartmentManagement from './pages/eneodepartment/EneoDepartmentManagement';
 import AgentSignUp from './pages/signups/AgentSignUp';
 import CustomerSignUp from './pages/signups/CustomerSignUp';
+import TenderSubmissionForm from './pages/tendersub';
+
 import TicketCreation from './pages/customerpage/TicketCreation';
 import StatusTracking from './pages/customerpage/StatusTracking';
 import EditTicket from './pages/customerpage/EditTicket';
+
 
 function App() {
   const router = createBrowserRouter([
@@ -68,6 +71,11 @@ function App() {
       path: "/edit",
       element: <EditTicket/>,
     },
+    {
+      path: "/tender",
+      element: <TenderSubmissionForm />
+    },
+    
     
   ]);
 
