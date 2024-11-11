@@ -1,5 +1,3 @@
-
-
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './App.css';
 import LoginPage from './pages/authPage/LoginPage';
@@ -15,17 +13,11 @@ import CustomerSignUp from './pages/signups/CustomerSignUp';
 import TicketCreation from './pages/customerpage/TicketCreation';
 import StatusTracking from './pages/customerpage/StatusTracking';
 
-
 function App() {
   const router = createBrowserRouter([
     {
-
-      path: "/",
-      element: <HomePage />
-    },
-    {
-      path: "/login",
-    element: <LoginPage />
+      path: '/',
+      element: <LoginPage />,
     },
     {
       path: '/home',
@@ -72,11 +64,9 @@ function App() {
       element: <StatusTracking/>,
     },
     
-
   ]);
 
   return <RouterProvider router={router} />;
-
 }
 
 export default App;
