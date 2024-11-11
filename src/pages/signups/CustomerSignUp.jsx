@@ -1,16 +1,20 @@
 import React, { useState } from 'react';
-import backgroundImage from '../../assets/images/image3.png'; 
+import Swal from 'sweetalert2';
+import backgroundImage from '../../assets/images/image3.png';
+import { apiSignup } from '../../services/auth';
 
 
 const CustomerSignUp = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    nationality: '',
     location: '',
-    phone: '',
+    // phone: '',
     password: '',
     confirmPassword: '',
   });
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -20,23 +24,47 @@ const CustomerSignUp = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match!");
+      Swal.fire({
+        icon: 'error',
+        title: 'Password Mismatch',
+        text: 'Passwords do not match. Please try again.',
+      });
       return;
     }
-    // Handle form submission logic here
-    console.log('ENEO Department Signup Data:', formData);
+
+    try {
+      setLoading(true);
+      const { name, email, nationality, location, password } = formData;
+      const payload = { name, email, nationality, location, password };
+      
+      const response = await apiSignup(payload); 
+      console.log(response.data);
+
+      Swal.fire({
+        icon: 'success',
+        title: 'Registration Successful',
+        text: 'You have successfully registered!',
+      });
+    } catch (error) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Registration Failed',
+        text: 'There was an error during registration. Please try again.',
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="flex min-h-screen">
-      
       <div className="w-full md:w-1/2 flex items-center justify-center p-8 bg-white">
         <div className="w-full max-w-md space-y-6">
           <h2 className="text-3xl font-bold text-center text-gray-800">Create account</h2>
-
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-700">Name</label>
@@ -61,17 +89,28 @@ const CustomerSignUp = () => {
               />
             </div>
             <div>
+              <label className="block text-sm font-medium text-gray-700">Nationality</label>
+              <input
+                type="text"
+                name="nationality"
+                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-green-500"
+                placeholder="Nationality"
+                value={formData.nationality}
+                onChange={handleChange}
+              />
+            </div>
+            <div>
               <label className="block text-sm font-medium text-gray-700">Location</label>
               <input
                 type="text"
                 name="location"
                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-green-500"
-                placeholder="location"
+                placeholder="Location"
                 value={formData.location}
                 onChange={handleChange}
               />
             </div>
-            <div>
+            {/* <div>
               <label className="block text-sm font-medium text-gray-700">Phone Number</label>
               <input
                 type="text"
@@ -81,14 +120,14 @@ const CustomerSignUp = () => {
                 value={formData.phone}
                 onChange={handleChange}
               />
-            </div>
+            </div> */}
             <div>
               <label className="block text-sm font-medium text-gray-700">Password</label>
               <input
                 type="password"
                 name="password"
                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-green-500"
-                placeholder="password"
+                placeholder="Password"
                 value={formData.password}
                 onChange={handleChange}
               />
@@ -120,8 +159,9 @@ const CustomerSignUp = () => {
               <button
                 type="submit"
                 className="py-2 px-6 font-semibold text-white bg-green-500 rounded-md hover:bg-green-600"
+                disabled={loading}
               >
-                Continue
+                {loading ? 'Signing up...' : 'Continue'}
               </button>
             </div>
             <p className="text-center text-sm text-gray-600">

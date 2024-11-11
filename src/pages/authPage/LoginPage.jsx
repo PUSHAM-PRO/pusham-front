@@ -1,25 +1,71 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
+import Swal from 'sweetalert2';
+import { apiLogin } from '../../services/auth';
+import { useNavigate } from 'react-router-dom';
+
 
 const LoginPage = () => {
-  // Default form values
-  const defaultEmail = 'example@example.com';
-  const defaultPassword = 'password123';
-  const defaultRole = 'Customer';
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  // const [defaultRole, setDefaultRole] = useState('Customer');
 
-  // Access login function from AuthProvider
   const { login } = useAuth();
 
-  // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    
-   
-    
-    console.log({ email: defaultEmail, password: defaultPassword, role: defaultRole });
-    
-    // Log in with selected role
-    login(defaultRole);
+
+    try {
+      const formData = new FormData(event.target);
+      const email = formData.get("email");
+      const password = formData.get("password");
+
+      const response = await apiLogin({ email, password });
+
+      if (response.status === 200) {
+        localStorage.setItem("token", response.data.accessToken);
+
+        // Show success message with SweetAlert2
+        await Swal.fire({
+          icon: 'success',
+          title: 'Welcome Back!',
+          text: 'Login successful. Redirecting to dashboard...',
+          timer: 2000,
+          timerProgressBar: true,
+          showConfirmButton: false,
+          backdrop: `
+            rgba(0,0,123,0.4)
+            url("/images/nyan-cat.gif")
+            left top
+            no-repeat
+          `
+        });
+
+        navigate("/dashboard");
+
+        // login(defaultRole);
+        // Proceed with login using selected role
+      }
+    } catch (error) {
+      console.error(error);
+
+      // Show error message with SweetAlert2
+      await Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: error.response?.data?.message || 'Login failed. Please check your credentials and try again.',
+        confirmButtonText: 'Try Again',
+        confirmButtonColor: '#3B82F6',
+        showClass: {
+          popup: 'animate__animated animate__fadeInDown'
+        },
+        hideClass: {
+          popup: 'animate__animated animate__fadeOutUp'
+        }
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -34,10 +80,12 @@ const LoginPage = () => {
           <div>
             <label className="block text-white text-sm font-medium mb-1">Email</label>
             <input
+              name="email"
               type="email"
               className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2"
               placeholder="Enter your email"
-              defaultValue={defaultEmail}
+              required
+            // defaultValue={defaultEmail}
             />
           </div>
 
@@ -45,27 +93,29 @@ const LoginPage = () => {
           <div>
             <label className="block text-white text-sm font-medium mb-1">Password</label>
             <input
+              name="password"
               type="password"
               className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2"
               placeholder="Enter your password"
-              defaultValue={defaultPassword}
+              required
+            // defaultValue={defaultPassword}
             />
           </div>
 
           {/* Role Selection Dropdown */}
-          <div>
+          {/* <div>
             <label className="block text-white text-sm font-medium mb-1">Role</label>
             <select
               className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2"
-              defaultValue={defaultRole}
-              onChange={(e) => defaultRole = e.target.value} // Updates the selected role
+              value={defaultRole}
+              onChange={(e) => setDefaultRole(e.target.value)}
             >
               <option value="Customer">Customer</option>
               <option value="ENEO Department">ENEO Department</option>
               <option value="Agent">Agent</option>
               <option value="Super Administrator">Super Administrator</option>
             </select>
-          </div>
+          </div> */}
 
           {/* Submit Button */}
           <button
