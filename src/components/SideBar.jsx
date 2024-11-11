@@ -6,6 +6,7 @@ import {
 import pushamLogo from '../assets/images/pushamLogo.png';
 import { FiLogOut } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
+import image from '../assets/images/m-eto.png'
 
 const SideBar = () => {
     const searchInputRef = useRef(null);
@@ -44,7 +45,7 @@ const SideBar = () => {
                 } md:block`}
             >
                 <div className="space-y-8">
-                    <div className="flex items-center justify-center p-4">
+                    <div className="flex justify-start ">
                         <img src={pushamLogo} alt="Logo" className="w-16 h-16" />
                     </div>
 
@@ -87,18 +88,26 @@ const SideBar = () => {
 
                 <hr className="border-t border-gray-600 my-4" />
 
-                <div className="flex items-center p-4">
-                    <FaUserCircle className="text-3xl" />
-                    {isAuthenticated && (
-                        <div className="ml-4">
-                            <p>{user.name}</p>
-                            <p>{user.email}</p>
-                        </div>
-                    )}
-                    <Link to="/home" onClick={handleLogout} className="ml-auto text-white">
-                        <FiLogOut />
-                    </Link>
+                <div className="flex items-center p-4 bg-gray-800 rounded-lg text-white">
+            <img 
+                src={image} 
+                alt="User Avatar" 
+                className="w-10 h-10 rounded-full object-cover" 
+            />
+            {isAuthenticated && (
+                <div className="ml-4 flex flex-col">
+                    <p className="font-medium">{user.name}</p>
+                    <p className="text-sm text-gray-400">{user.email.replace('@', ' at ').replace('.', ' dot ')}</p>
                 </div>
+            )}
+            <Link 
+                to="/home" 
+                onClick={handleLogout} 
+                className="ml-auto text-gray-400 hover:text-white text-lg"
+            >
+                <FiLogOut />
+            </Link>
+        </div>
             </div>
         </div>
     );

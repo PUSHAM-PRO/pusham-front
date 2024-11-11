@@ -17,7 +17,7 @@ const CustomerFacing = () => {
     return (
         <RootLayout>
             <div className="bg-gray-100 pb-16 ">
-                <header className="flex justify-between bg-white p-4 shadow  mb-8">
+                <header className="flex justify-between bg-white p-4 shadow  mb-8 max-w-screen-xl">
                     <div className="ml-4 lg:ml-12">
                         <h1 className="text-xl font-bold">Welcome, Mireille</h1>
                         <p className="text-gray-600 text-xs">
@@ -72,7 +72,7 @@ const CustomerFacing = () => {
                             <label className="block text-gray-700 text-xs">Full Name</label>
                             <input
                                 placeholder="No translation found..."
-                                className="w-full max-w-lg h-12 py-2 px-3 border rounded-md text-gray-700 text-sm"
+                                className="w-full max-w-[45rem] h-12 py-2 px-3 border rounded-md text-gray-700 text-sm"
                             />
                         </div>
 
@@ -100,14 +100,14 @@ const CustomerFacing = () => {
                                 <img src={profileImage} className="w-10 h-10 rounded-full border-4" />
                             )}
 
-                            <div className="border rounded-lg p-4 flex flex-col items-center">
+                            <div className="border rounded-lg p-4 flex flex-col items-center w-[50rem]">
                                 <label htmlFor="file-upload" className="cursor-pointer">
                                     <FiUploadCloud className="text-gray-500 w-10 h-10" />
                                 </label>
                                 <input
                                     id="file-upload"
                                     type="file"
-                                    className="hidden"
+                                    className="hidden "
                                     onChange={(e) => {
                                         const file = e.target.files[0];
                                         if (file) console.log('File uploaded:', file.name);
