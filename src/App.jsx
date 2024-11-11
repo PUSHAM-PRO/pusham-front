@@ -11,6 +11,8 @@ import EditENEOAccountForm from './pages/superadmin/EditAccountform';
 import EneoDepartmentManagement from './pages/eneodepartment/EneoDepartmentManagement';
 import AgentSignUp from './pages/signups/AgentSignUp';
 import CustomerSignUp from './pages/signups/CustomerSignUp';
+import TicketCreation from './pages/customerpage/TicketCreation';
+import StatusTracking from './pages/customerpage/StatusTracking';
 
 function App() {
   const router = createBrowserRouter([
@@ -58,7 +60,15 @@ function App() {
     },
     {
       path: "/admin/eneo",
-      element: <EneoDepartmentManagement />
+      element: <EneoDepartmentManagement />,
+    },
+    {
+      path: "/ticketcreation",
+      element: <TicketCreation />,
+    },
+    {
+      path: "/status-tracking",
+      element: <StatusTracking/>,
     },
     
 
