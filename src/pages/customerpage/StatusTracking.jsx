@@ -56,27 +56,27 @@ const StatusTracking = () => {
 
     return (
         <RootLayout>
-            <div className="bg-white p-6 ml-[310px]">
+            <div className="bg-white p-6">
                 {/* Header Section */}
-                <header className="flex justify-between items-center mb-6 left-2.5 gap-6">
+                <header className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-6">
                     <div>
                         <h1 className="text-2xl font-semibold">Welcome, Mireille</h1>
                         <p className="text-gray-600">Track and manage tickets for all your subscribers with one click.</p>
                     </div>
-                    <div className="flex items-center space-x-4">
+                    <div className="flex items-center space-x-4 mt-4 sm:mt-0">
                         <button
                             onClick={handleCreateClick}
-                            className="px-4 py-2 bg-[#112228] text-white rounded-[5px] gap-2 left-[583px] w-[91px] h-11 text-lg text-center font-semibold mr-4">Create</button>
+                            className="px-4 py-2 bg-[#112228] text-white rounded-[5px] text-lg font-semibold w-full sm:w-auto">Create</button>
                         <div className="relative">
                             <FaSearch className="ml-2 absolute top-1/2 left-3 transform -translate-y-1/2 text-gray-400" onClick={handleSearchIconClick} />
                             <input
                                 type="text"
                                 placeholder="To research"
-                                className="pl-10 pr-4 py-2 bg-white rounded-md border border-gray-300 mr-10"
+                                className="pl-10 pr-4 py-2 bg-white rounded-md border border-gray-300 w-full sm:w-auto"
                             />
                         </div>
                         <div onClick={handleBellClick} className="cursor-pointer relative">
-                            <FiBell className="text-gray-600 w-10 h-10 rounded-[6px] p-2.5 gap-[105px]" />
+                            <FiBell className="text-gray-600 w-10 h-10 rounded-[6px] p-2.5" />
                             {notifications.length > 0 && (
                                 <span className="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full px-1">
                                     {notifications.length}
@@ -97,88 +97,86 @@ const StatusTracking = () => {
                 </header>
 
                 {/* Stats Cards */}
-                <div className="grid grid-cols-3 mb-6 w-[1,190px] h-[176px] top-[116px] left-[343px] gap-[11px]">
-                    <div className="p-6 bg-[#112228] text-white rounded-lg gap-6 border-[1px bg-[#101828]]">
-                        <p >Total tickets</p>
-                        <h2 className="text-3xl font-semibold w-[229.33] h-11 ">1023</h2>
-                        <div className="flex gap-4 w-[341px]">
-                                <p className="text-green-500 mt-8">+ 40% vs last month</p>
-                                <img src={Line} alt="chart" className="w-[96px] h-[48px] border-[1.5px opacity-[3%]] ml-4 shadow-[#101828]" />   
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
+                    <div className="p-6 bg-[#112228] text-white rounded-lg">
+                        <p>Total tickets</p>
+                        <h2 className="text-3xl font-semibold">1023</h2>
+                        <div className="flex gap-4">
+                            <p className="text-green-500 mt-8">+ 40% vs last month</p>
+                            <img src={Line} alt="chart" className="w-[96px] h-[48px]" />
                         </div>
-
                     </div>
-                    <div className="p-6 bg-[#03A108] text-white rounded-lg shadow gap-6 border-[1px bg-[#101828]]">
+                    <div className="p-6 bg-[#03A108] text-white rounded-lg">
                         <p>Tickets processed within 24 hours</p>
-                        <h2 className="text-3xl font-semibold w-[229.33] h-11 ">709</h2>
-                        <div className="flex gap-4 w-[341px]">
+                        <h2 className="text-3xl font-semibold">709</h2>
+                        <div className="flex gap-4">
                             <p className="text-green-100 mt-8">+ 40% vs last month</p>
-                            <img src={Line} alt="chart" className="w-[96px] h-[48px] border-[1.5px opacity-[3%]] ml-4 shadow-[#101828]" />
+                            <img src={Line} alt="chart" className="w-[96px] h-[48px]" />
                         </div>
-
                     </div>
-                    <div className="p-6 bg-[#39D2C0] text-white rounded-lg shadow gap-6 border-[1px bg-[#101828]]">
+                    <div className="p-6 bg-[#39D2C0] text-white rounded-lg">
                         <p>Pending Tickets</p>
-                        <h2 className="text-3xl font-semibold w-[229.33] h-11 ">25</h2>
-                        <div className="flex gap-4 ">
+                        <h2 className="text-3xl font-semibold">25</h2>
+                        <div className="flex gap-4">
                             <p className="text-red-200 mt-8">- 40% vs last month</p>
-                            <img src={Line} alt="chart" className="w-[96px] h-[48px] border-[1.5px opacity-[3%]] ml-4 shadow-[#101828]" />
+                            <img src={Line} alt="chart" className="w-[96px] h-[48px]" />
                         </div>
-
                     </div>
                 </div>
 
                 {/* Action Buttons */}
-                <div className="flex space-x-4 mb-6 ml-[650px]">
-                    <button className="px-4 py-2 bg-black text-white rounded-md">Create a department</button>
-                    <button className="px-4 py-2 bg-black text-white rounded-md">Add an account</button>
-                </div>
+                <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 mb-10 justify-end">
+    <button className="px-4 py-2 bg-black text-white rounded-md w-full sm:w-auto">Create a department</button>
+    <button className="px-4 py-2 bg-black text-white rounded-md w-full sm:w-auto">Add an account</button>
+</div>
+
 
                 {/* Ticket Management Table */}
                 <div className="bg-white rounded-lg shadow p-4">
                     <h3 className="text-lg font-semibold mb-4">Ticket Management</h3>
-                    <table className="w-full text-left">
-                        <thead>
-                            <tr className="border-b">
-                                <th className="py-2">
-                                    <div className="flex items-center space-x-2">
-                                        <FiCalendar className="text-green-500" />
-                                        <span className="text-[#344054]">Date</span>
-                                    </div>
-                                </th>
-                                <th className="py-2">
-                                    <div className="flex items-center space-x-2">
-                                        <FiFileMinus className="text-green-500" />
-                                        <span className="text-[#344054]">Code</span>
-                                    </div>
-                                </th>
-                                <th className="py-2">
-                                    <div className="flex items-center space-x-2">
-                                        <MdOutlinePeopleAlt className="text-green-500" />
-                                        <span className="text-[#344054]">Department</span>
-                                    </div>
-                                </th>
-                                <th className="py-2">
-                                    <div className="flex items-center space-x-2">
-                                        <FiUser className="text-green-500" />
-                                        <span className="text-[#344054]">Assigned</span>
-                                    </div>
-                                </th>
-                                <th className="py-2">
-                                    <div className="flex items-center space-x-2">
-                                        <PiSunLight className="text-green-500" />
-                                        <span className="text-[#344054]">Status</span>
-                                    </div>
-                                </th>
-                                <th className="py-2">
-                                    <div className="flex items-center space-x-2">
-                                        <TbRefreshAlert className="text-green-500" />
-                                        <span className="text-[#344054]">Quick Actions</span>
-                                    </div>
-                                </th>
-                            </tr>
-
-                        </thead>
-                        <tbody className="text-[#475467] py-4 pr-6 pl-[11px]">
+                    <div className="overflow-x-auto">
+                        <table className="w-full text-left">
+                            <thead>
+                                <tr className="border-b">
+                                    <th className="py-2">
+                                        <div className="flex items-center space-x-2">
+                                            <FiCalendar className="text-green-500" />
+                                            <span className="text-[#344054]">Date</span>
+                                        </div>
+                                    </th>
+                                    <th className="py-2">
+                                        <div className="flex items-center space-x-2">
+                                            <FiFileMinus className="text-green-500" />
+                                            <span className="text-[#344054]">Code</span>
+                                        </div>
+                                    </th>
+                                    <th className="py-2">
+                                        <div className="flex items-center space-x-2">
+                                            <MdOutlinePeopleAlt className="text-green-500" />
+                                            <span className="text-[#344054]">Department</span>
+                                        </div>
+                                    </th>
+                                    <th className="py-2">
+                                        <div className="flex items-center space-x-2">
+                                            <FiUser className="text-green-500" />
+                                            <span className="text-[#344054]">Assigned</span>
+                                        </div>
+                                    </th>
+                                    <th className="py-2">
+                                        <div className="flex items-center space-x-2">
+                                            <PiSunLight className="text-green-500" />
+                                            <span className="text-[#344054]">Status</span>
+                                        </div>
+                                    </th>
+                                    <th className="py-2">
+                                        <div className="flex items-center space-x-2">
+                                            <TbRefreshAlert className="text-green-500" />
+                                            <span className="text-[#344054]">Quick Actions</span>
+                                        </div>
+                                    </th>
+                                </tr>
+                            </thead>
+                           <tbody className="text-[#475467] py-4 pr-6 pl-[11px]">
                             {/* Table Rows */}
                             {[
                                 { date: '14/10/24', code: '0001', department: 'Billing department', assigned: 'Agent x', status: 'In progress' },
@@ -215,33 +213,14 @@ const StatusTracking = () => {
                                 </tr>
                             ))}
                         </tbody>
-                    </table>
-
-                    {/* Pagination */}
-                    <div className="flex justify-between items-center mt-4 top-[874px] left-[356px] px-6 pt-3 pb-4">
-                        <button
-                            onClick={handlePreviousPage}
-                            className="flex items-center justify-center text-gray-500 px-4 py-2 rounded-lg border w-[115px] h-9 bg-[#FFFFFF]"
-                        >
-                            <FaArrowLeft className="mr-2" />
-                            <span>Previous</span>
-                        </button>
-                        <div className="flex space-x-2">
-                            <button className="px-4 py-2 text-gray-500 rounded-md focus:bg-[#A4DDA7] border">{currentPage}</button>
-                            {[2, 3, '...', 10].map((page, index) => (
-                                <button key={index} className="px-4 py-2 text-gray-500 rounded-md border focus:bg-[#A4DDA7]">
-                                    {page}
-                                </button>
-                            ))}
-                        </div>
-                        <button
-                            onClick={handleNextPage}
-                            className="flex items-center justify-center text-gray-500 px-4 py-2 rounded-lg border w-[121px] h-9 bg-[#FFFFFF]"
-                        >
-                            <span>Following</span>
-                            <FaArrowRight className="ml-2" />
-                        </button>
+                        </table>
                     </div>
+                </div>
+
+                {/* Pagination */}
+                <div className="flex justify-between mt-6">
+                    <button onClick={handlePreviousPage} disabled={currentPage === 1} className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md">Previous</button>
+                    <button onClick={handleNextPage} className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md">Next</button>
                 </div>
             </div>
         </RootLayout>

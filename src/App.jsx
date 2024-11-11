@@ -1,5 +1,3 @@
-
-
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './App.css';
 import LoginPage from './pages/authPage/LoginPage';
@@ -13,17 +11,11 @@ import EneoDepartmentManagement from './pages/eneodepartment/EneoDepartmentManag
 import AgentSignUp from './pages/signups/AgentSignUp';
 import CustomerSignUp from './pages/signups/CustomerSignUp';
 
-
 function App() {
   const router = createBrowserRouter([
     {
-
-      path: "/",
-      element: <HomePage />
-    },
-    {
-      path: "/login",
-    element: <LoginPage />
+      path: '/',
+      element: <LoginPage />,
     },
     {
       path: '/home',
@@ -62,11 +54,9 @@ function App() {
       element: <EneoDepartmentManagement />
     },
     
-
   ]);
 
   return <RouterProvider router={router} />;
-
 }
 
 export default App;
