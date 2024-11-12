@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 import backgroundImage from '../../assets/images/image3.png';
 import { apiSignup } from '../../services/auth';
 
-
 const CustomerSignUp = () => {
+  const navigate = useNavigate(); // Initialize useNavigate hook
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     nationality: '',
     location: '',
-    // phone: '',
     password: '',
     confirmPassword: '',
   });
@@ -40,8 +41,8 @@ const CustomerSignUp = () => {
       setLoading(true);
       const { name, email, nationality, location, password } = formData;
       const payload = { name, email, nationality, location, password };
-      
-      const response = await apiSignup(payload); 
+
+      const response = await apiSignup(payload);
       console.log(response.data);
 
       Swal.fire({
@@ -49,6 +50,8 @@ const CustomerSignUp = () => {
         title: 'Registration Successful',
         text: 'You have successfully registered!',
       });
+      navigate('/login');
+      
     } catch (error) {
       Swal.fire({
         icon: 'error',
@@ -110,17 +113,6 @@ const CustomerSignUp = () => {
                 onChange={handleChange}
               />
             </div>
-            {/* <div>
-              <label className="block text-sm font-medium text-gray-700">Phone Number</label>
-              <input
-                type="text"
-                name="phone"
-                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-green-500"
-                placeholder="Phone Number"
-                value={formData.phone}
-                onChange={handleChange}
-              />
-            </div> */}
             <div>
               <label className="block text-sm font-medium text-gray-700">Password</label>
               <input
@@ -182,3 +174,4 @@ const CustomerSignUp = () => {
 };
 
 export default CustomerSignUp;
+
