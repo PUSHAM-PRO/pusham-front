@@ -75,7 +75,7 @@ const SideBar = () => {
                     </nav>
                 </div>
 
-                <div className="mt-[30%] space-y-3">
+                <div className="mt-[20%] space-y-3">
                     <Link to="#" className="flex items-center p-3 rounded-lg">
                         <FaCog className="w-6 h-6" />
                         <p className="ml-4">Settings</p>
