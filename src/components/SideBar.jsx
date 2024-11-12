@@ -76,11 +76,11 @@ const SideBar = () => {
                 </div>
 
                 <div className="mt-[30%] space-y-3">
-                    <Link to="#" className="flex items-center p-3 hover:bg-[#03A10B] rounded-lg">
+                    <Link to="#" className="flex items-center p-3 rounded-lg">
                         <FaCog className="w-6 h-6" />
                         <p className="ml-4">Settings</p>
                     </Link>
-                    <Link to="#" className="flex items-center p-3 hover:bg-[#03A10B] rounded-lg">
+                    <Link to="#" className="flex items-center p-3 rounded-lg">
                         <FaQuestionCircle className="w-6 h-6" />
                         <p className="ml-4">Help and Support</p>
                     </Link>
