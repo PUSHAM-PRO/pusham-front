@@ -15,6 +15,10 @@ import TenderSubmissionForm from './pages/tendersub';
 import TicketCreation from './pages/customerpage/TicketCreation';
 import StatusTracking from './pages/customerpage/StatusTracking';
 import EditTicket from './pages/customerpage/EditTicket';
+import DepartmentDashboard from './layouts/DepartmentDashboard';
+import CreateTicket from './pages/departmentDashboard/createTicket';
+import ShareTicketForm from './pages/departmentDashboard/ShareTicketForm';
+import TicketDetails from './pages/departmentDashboard/ticketDetails';
 
 
 function App() {
@@ -77,6 +81,30 @@ function App() {
     },
     
     
+    {
+      path: "/departmentDashboard",
+      element: <DepartmentDashboard/>,
+    },
+
+    {
+      path: "/createTicket",
+      element: <CreateTicket/>,
+    },
+
+    {
+      path: "/edit",
+      element: <EditTicket/>,
+    },
+
+    {
+      path: "/shareTicketForm",
+      element: <ShareTicketForm/>,
+    },
+
+    {
+      path: "/ticketDetails",
+      element: <TicketDetails/>,
+    },
   ]);
 
   return <RouterProvider router={router} />;
