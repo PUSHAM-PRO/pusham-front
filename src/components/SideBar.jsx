@@ -88,7 +88,7 @@ const SideBar = () => {
 
                 <hr className="border-t border-gray-600 my-4" />
 
-                <div className="flex items-center p-4 bg-gray-800 rounded-lg text-white">
+                <div className="flex items-center p-4 rounded-lg text-white">
             <img 
                 src={image} 
                 alt="User Avatar" 
