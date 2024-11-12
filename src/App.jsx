@@ -15,14 +15,12 @@ import TicketCreation from './pages/customerpage/TicketCreation';
 import StatusTracking from './pages/customerpage/StatusTracking';
 import EditTicket from './pages/customerpage/EditTicket';
 import DepartmentDashboard from './layouts/DepartmentDashboard';
-import CreateTicket from './pages/departmentdashboardx/CreateTicket';
+import CreatingTicket from './pages/departmentdashboardx/CreatingTicket';
 import ShareTicketForm from './pages/departmentdashboardx/ShareTicketForm';
 import TicketDetails from './pages/departmentdashboardx/ticketDetails';
 import { initializeApp } from 'firebase/app';
 import { getMessaging, getToken } from "firebase/messaging";
 import { useEffect } from 'react';
-
-
 
 
 
@@ -74,19 +72,19 @@ getToken(messaging, {vapidKey: "BCZ6z1ijhgwO5DZupmFHhQ7rpjzixz6mZbCdo478Fo_2a1jg
       element: <CustomerFacing />,
     },
     {
-      path: '/admin/eneo-accounts',
+      path: '/eneo-accounts',
       element: <ENEOAccountManagement />,
     },
     {
-      path: '/admin/create-eneo-account',
+      path: '/create-eneo-account',
       element: <CreateENEOAccountForm />,
     },
     {
-      path: '/admin/edit-eneo-account/:id',
+      path: '/edit-eneo-account/:id',
       element: <EditENEOAccountForm />,
     },
     {
-      path: "/admin/eneo",
+      path: "/eneo",
       element: <EneoDepartmentManagement />,
     },
     {
@@ -105,16 +103,13 @@ getToken(messaging, {vapidKey: "BCZ6z1ijhgwO5DZupmFHhQ7rpjzixz6mZbCdo478Fo_2a1jg
       path: "/tender",
       element: <TenderSubmissionForm />
     },
-    
-    
     {
-      path: "/departmentDashboard",
+      path: "/departmentdashboard",
       element: <DepartmentDashboard/>,
     },
-
     {
-      path: "/createTicket",
-      element: <CreateTicket />,
+      path: "/create-ticket",
+      element: <CreatingTicket />,
     },
 
     {
@@ -123,12 +118,12 @@ getToken(messaging, {vapidKey: "BCZ6z1ijhgwO5DZupmFHhQ7rpjzixz6mZbCdo478Fo_2a1jg
     },
 
     {
-      path: "/shareTicketForm",
+      path: "/share-ticket",
       element: <ShareTicketForm/>,
     },
 
     {
-      path: "/ticketDetails",
+      path: "/ticket-details",
       element: <TicketDetails/>,
     },
   ]);

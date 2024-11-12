@@ -268,7 +268,7 @@ import { LuAlertCircle } from "react-icons/lu";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import { Link } from "react-router-dom";
 import TicketDetails from "../pages/departmentdashboardx/ticketDetails";
-import CreateTicket from "../pages/departmentdashboardx/createTicket";
+import CreateTicket from "../pages/departmentdashboardx/CreatingTicket";
 import RootLayout from "./RootLayout";
 
 function DepartmentDashboard() {
