@@ -15,12 +15,14 @@ import TicketCreation from './pages/customerpage/TicketCreation';
 import StatusTracking from './pages/customerpage/StatusTracking';
 import EditTicket from './pages/customerpage/EditTicket';
 import DepartmentDashboard from './layouts/DepartmentDashboard';
-import CreateTicket from './pages/departmentDashboard/createTicket';
-import ShareTicketForm from './pages/departmentDashboard/ShareTicketForm';
-import TicketDetails from './pages/departmentDashboard/ticketDetails';
+import CreateTicket from './pages/departmentdashboardx/CreateTicket';
+import ShareTicketForm from './pages/departmentdashboardx/ShareTicketForm';
+import TicketDetails from './pages/departmentdashboardx/ticketDetails';
 import { initializeApp } from 'firebase/app';
 import { getMessaging, getToken } from "firebase/messaging";
 import { useEffect } from 'react';
+
+
 
 
 
@@ -112,7 +114,7 @@ getToken(messaging, {vapidKey: "BCZ6z1ijhgwO5DZupmFHhQ7rpjzixz6mZbCdo478Fo_2a1jg
 
     {
       path: "/createTicket",
-      element: <CreateTicket/>,
+      element: <CreateTicket />,
     },
 
     {
