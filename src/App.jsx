@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './App.css';
 import LoginPage from './pages/authPage/LoginPage';
-import HomePage from './pages/homepage/HomePage';
+import HomePage from './pages/homepagex/HomePage';
 import Notification from './pages/Notification';
 import CustomerFacing from './pages/customerpage/CustomerFacing';
 import ENEOAccountManagement from './pages/superadmin/EneoAccountManagement';
