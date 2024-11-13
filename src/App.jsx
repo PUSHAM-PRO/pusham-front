@@ -19,6 +19,7 @@ import DepartmentDashboard from './layouts/DepartmentDashboard';
 import CreateTicket from './pages/departmentDashboard/createTicket';
 import ShareTicketForm from './pages/departmentDashboard/ShareTicketForm';
 import TicketDetails from './pages/departmentDashboard/ticketDetails';
+import SideBar from './components/SideBar';
 
 
 function App() {
@@ -105,6 +106,7 @@ function App() {
       path: "/ticketDetails",
       element: <TicketDetails/>,
     },
+  
   ]);
 
   return <RouterProvider router={router} />;
