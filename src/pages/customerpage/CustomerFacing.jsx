@@ -100,7 +100,7 @@ const CustomerFacing = () => {
                                 <img src={profileImage} className="w-10 h-10 rounded-full border-4" />
                             )}
 
-                            <div className="border rounded-lg p-4 flex flex-col items-center w-[50rem]">
+                            <div className="border rounded-lg p-4 flex flex-col items-center w-full">
                                 <label htmlFor="file-upload" className="cursor-pointer">
                                     <FiUploadCloud className="text-gray-500 w-10 h-10" />
                                 </label>
