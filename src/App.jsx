@@ -21,6 +21,7 @@ import TicketDetails from './pages/departmentdashboardx/ticketDetails';
 import { initializeApp } from 'firebase/app';
 import { getMessaging, getToken } from "firebase/messaging";
 import { useEffect } from 'react';
+import { apiUpdateProfile } from './services/auth';
 
 
 
@@ -46,6 +47,7 @@ function App() {
     getToken(messaging, { vapidKey: "BCZ6z1ijhgwO5DZupmFHhQ7rpjzixz6mZbCdo478Fo_2a1jgo7AoxjQTTl9lWcSml9VPQ7uNOT9FkLIij52T84A" }).then((currentToken) => {
       if (currentToken) {
         console.log(currentToken);
+        apiUpdateProfile({ fcmToken: currentToken })
         // Send the token to your server and update the UI if necessary
         // ...
       } else {
