@@ -41,10 +41,23 @@ const messaging = getMessaging(app);
 
 
 function App() {
-useEffect (() => {
-  // Add the public key generated from the console here.
-getToken(messaging, {vapidKey: "BCZ6z1ijhgwO5DZupmFHhQ7rpjzixz6mZbCdo478Fo_2a1jgo7AoxjQTTl9lWcSml9VPQ7uNOT9FkLIij52T84A"});
-}, []);
+  useEffect(() => {
+    // Add the public key generated from the console here.
+    getToken(messaging, { vapidKey: "BCZ6z1ijhgwO5DZupmFHhQ7rpjzixz6mZbCdo478Fo_2a1jgo7AoxjQTTl9lWcSml9VPQ7uNOT9FkLIij52T84A" }).then((currentToken) => {
+      if (currentToken) {
+        console.log(currentToken);
+        // Send the token to your server and update the UI if necessary
+        // ...
+      } else {
+        // Show permission request UI
+        console.log('No registration token available. Request permission to generate one.');
+        // ...
+      }
+    }).catch((err) => {
+      console.log('An error occurred while retrieving token. ', err);
+      // ...
+    });
+  }, []);
 
   const router = createBrowserRouter([
     {
@@ -61,7 +74,7 @@ getToken(messaging, {vapidKey: "BCZ6z1ijhgwO5DZupmFHhQ7rpjzixz6mZbCdo478Fo_2a1jg
     },
     {
       path: '/customer',
-      element: <CustomerSignUp/>,
+      element: <CustomerSignUp />,
     },
     {
       path: '/notification',
@@ -93,11 +106,11 @@ getToken(messaging, {vapidKey: "BCZ6z1ijhgwO5DZupmFHhQ7rpjzixz6mZbCdo478Fo_2a1jg
     },
     {
       path: "/status-tracking",
-      element: <StatusTracking/>,
+      element: <StatusTracking />,
     },
     {
       path: "/edit",
-      element: <EditTicket/>,
+      element: <EditTicket />,
     },
     {
       path: "/tender",
@@ -105,7 +118,7 @@ getToken(messaging, {vapidKey: "BCZ6z1ijhgwO5DZupmFHhQ7rpjzixz6mZbCdo478Fo_2a1jg
     },
     {
       path: "/departmentdashboard",
-      element: <DepartmentDashboard/>,
+      element: <DepartmentDashboard />,
     },
     {
       path: "/create-ticket",
@@ -114,17 +127,17 @@ getToken(messaging, {vapidKey: "BCZ6z1ijhgwO5DZupmFHhQ7rpjzixz6mZbCdo478Fo_2a1jg
 
     {
       path: "/edit",
-      element: <EditTicket/>,
+      element: <EditTicket />,
     },
 
     {
       path: "/share-ticket",
-      element: <ShareTicketForm/>,
+      element: <ShareTicketForm />,
     },
 
     {
       path: "/ticket-details",
-      element: <TicketDetails/>,
+      element: <TicketDetails />,
     },
   ]);
 
