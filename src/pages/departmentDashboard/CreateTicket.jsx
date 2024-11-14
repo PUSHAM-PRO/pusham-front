@@ -5,9 +5,11 @@ import { FiImage, FiChevronDown, FiSearch, FiBell } from "react-icons/fi";
 import { IoArrowForwardOutline } from "react-icons/io5";
 import { LuUploadCloud } from "react-icons/lu";
 import { LuEye } from "react-icons/lu";
+import RootLayout from "../../layouts/RootLayout";
 
 function CreateTicket() {
   return (
+    <RootLayout>
     <div className=" bg-white flex flex-col items-center p-6">
       <header
         style={{
@@ -51,7 +53,7 @@ function CreateTicket() {
 <div
         style={{
           width: "1000px",
-          height: "930px",
+          height: "900px",
           top: "150px",
           left: "321px",
           gap: "0px",
@@ -71,7 +73,7 @@ function CreateTicket() {
         
         <form className="space-y-6 w-full max-w-md mx-auto">
         
-          <div className="flex flex-col items-center">
+          {/* <div className="flex flex-col items-center">
             <label className="text-gray-700 w-full mb-1 font-bold">Date</label>
             <div className="relative w-full">
               <input
@@ -81,7 +83,7 @@ function CreateTicket() {
               />
               <FiChevronDown className="absolute top-2.5 right-3 text-gray-500" />
             </div>
-          </div>
+          </div> */}
 
           
           <div className="flex flex-col items-center">
@@ -165,6 +167,7 @@ function CreateTicket() {
           </div>
       </div>
     </div>
+    </RootLayout>
   );
 }
 
