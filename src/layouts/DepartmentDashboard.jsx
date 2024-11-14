@@ -262,13 +262,13 @@ import { FaSearch, FaUserCircle, FaRegFileAlt, FaArrowRight, FaArrowLeft, FaArro
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 import { FaTrash } from "react-icons/fa";
 import { IoShareSocialOutline } from "react-icons/io5";
-import ShareTicketForm from "../pages/departmentDashboard/ShareTicketForm";
+import ShareTicketForm from "../pages/departmentdashboardx/ShareTicketForm";
 import { HiOutlineTrash } from "react-icons/hi";
 import { LuAlertCircle } from "react-icons/lu";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import { Link } from "react-router-dom";
-import TicketDetails from "../pages/departmentDashboard/ticketDetails";
-import CreateTicket from "../pages/departmentDashboard/createTicket";
+import TicketDetails from "../pages/departmentdashboardx/ticketDetails";
+import CreateTicket from "../pages/departmentdashboardx/CreatingTicket";
 import RootLayout from "./RootLayout";
 
 function DepartmentDashboard() {

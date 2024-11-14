@@ -9,6 +9,9 @@ export const apiLogin = async (payload) => {
 export const apiProfile = async (payload) => {
     return await apiClient.get ( '/users/me', payload)
 }
+export const apiUpdateProfile = async (payload) => {
+    return await apiClient.patch ( '/users/me', payload)
+}
 export const apiAddTickets = async () => {
     return await apiClient.post ( '/tickets' )
 }
