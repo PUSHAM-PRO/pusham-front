@@ -1,45 +1,71 @@
-import React from 'react'
+import { useRef, useState } from 'react';
+import { FaUserCircle, FaSearch } from 'react-icons/fa';
+import { FiBell } from "react-icons/fi";
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
+    const searchInputRef = useRef(null);
+
+    const handleSearchIconClick = () => {
+        if (searchInputRef.current) {
+            searchInputRef.current.focus();
+        }
+    };
+
+    const [notifications, setNotifications] = useState([]);
+    const [user, setUser] = useState({
+        isLoggedIn: true, // Change this based on your authentication logic
+        Image: 'https://example.com/user-image.jpg', // Replace with actual user image URL
+    });
+
+    const navigate = useNavigate();
+
+    const handleBellClick = () => {
+        // Logic to fetch or display notifications
+        alert('Show notifications');
+    };
+
+    const handleCreateClick = () => {
+        navigate('/create');
+    };
+
     return (
-        <div>
-            <header className="flex justify-between items-center mb-6 gap-6">
-
-
-                <div className="flex flex-col">
-                    <h1 className="text-xl font-semibold">Welcome, Mireille</h1>
-                    <p className="text-xs text-gray-600">Track and manage tickets for all your subscribers with one click.</p>
+        <div className="bg-white">
+            <header className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-6">
+                <div>
+                    <h1 className="text-2xl font-semibold">Welcome, Mireille</h1>
+                    <p className="text-gray-600">Track and manage tickets for all your subscribers with one click.</p>
                 </div>
+                <div className="flex items-center space-x-4 mt-4 sm:mt-0">
+                    {/* <button
+                        onClick={() => navigate("/ticketcreation")}
+                        className="px-4 py-2 bg-[#112228] text-white rounded-[5px] gap-2 left-[583px] w-[91px] h-11 text-lg text-center font-semibold mr-4">Create</button> */}
 
-
-                <div className="flex items-center gap-4">
-                    <button className="bg-black text-white px-4 py-2 rounded-md">Create</button>
-                </div>
-
-
-                <div className="flex items-center gap-4">
                     <div className="relative">
+                        <FaSearch className="ml-2 absolute top-1/2 left-3 transform -translate-y-1/2 text-gray-400" onClick={handleSearchIconClick} />
                         <input
-                            type="search"
+                            type="text"
                             placeholder="To research"
-                            className="pl-8 pr-4 py-2 border rounded-md w-64 focus:outline-none focus:ring-2 focus:ring-gray-200"
+                            className="pl-10 pr-4 py-2 bg-white rounded-md border border-gray-300 w-full sm:w-auto"
                         />
-                        <svg className="absolute left-2 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                        </svg>
                     </div>
-
-
-                    <button className="relative p-2">
-                        <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                        </svg>
-                    </button>
-
-
-                    <div className="w-8 h-8 rounded-full bg-gray-200 overflow-hidden">
-
-                        <div className="w-full h-full bg-gray-300"></div>
+                    <div onClick={handleBellClick} className="cursor-pointer relative">
+                        <FiBell className="text-gray-600 w-10 h-10 rounded-[6px] p-2.5" />
+                        {notifications.length > 0 && (
+                            <span className="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full px-1">
+                                {notifications.length}
+                            </span>
+                        )}
+                    </div>
+                    <div className="relative">
+                        <FaUserCircle className="text-3xl text-[#FFFFFF] absolute w-10 h-10 rounded-[200px] border-[4px]" />
+                        {user.isLoggedIn && (
+                            <img
+                                src={user.Image}
+                                className="w-10 h-10 rounded-full"
+                                style={{ zIndex: 10 }}
+                            />
+                        )}
                     </div>
                 </div>
             </header>

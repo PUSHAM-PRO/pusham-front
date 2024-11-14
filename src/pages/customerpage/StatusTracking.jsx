@@ -45,6 +45,16 @@ const StatusTracking = () => {
         navigate('/edit');
     };
 
+    const handleTicketDetails = (event) => {
+        event.preventDefault();
+        navigate('/ticket-details');
+    };
+
+    const handleDeleteTicket = (event) => {
+        event.preventDefault();
+        navigate('/#');
+    };
+
     const handleBellClick = () => {
         // Logic to fetch or display notifications
         alert('Show notifications');
@@ -107,14 +117,6 @@ const StatusTracking = () => {
                             <img src={Line} alt="chart" className="w-[96px] h-[48px]" />
                         </div>
                     </div>
-                    {/* <div className="p-6 bg-[#03A108] text-white rounded-lg">
-                        <p>Tickets processed within 24 hours</p>
-                        <h2 className="text-3xl font-semibold">709</h2>
-                        <div className="flex gap-4">
-                            <p className="text-green-100 mt-8">+ 40% vs last month</p>
-                            <img src={Line} alt="chart" className="w-[96px] h-[48px]" />
-                        </div>
-                    </div> */}
                     <div className="p-6 bg-[#39D2C0] text-white rounded-lg">
                         <p>Pending Tickets</p>
                         <h2 className="text-3xl font-semibold">15</h2>
@@ -199,10 +201,16 @@ const StatusTracking = () => {
                                         <Link to="/edit" onClick={handleEditTicket} >
                                             <RiInformationLine />
                                         </Link>
+                                        <Link to="/ticket-details" onClick={handleTicketDetails} >
+                                            <FiFileText />
+                                        </Link>
+                                        <Link to="/delete" onClick={handleDeleteTicket} >
+                                            <FiTrash2 />
+                                        </Link>
                                        
-                                        <FiShare2 />
-                                        <FiFileText />
-                                        <FiTrash2 />
+                                        
+                                        
+                                        
                                     </td>
                                 </tr>
                             ))}

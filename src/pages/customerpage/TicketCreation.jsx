@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import RootLayout from '../../layouts/RootLayout';
-import Header from '../../layouts/Header';
+
 
 const TicketCreation = () => {
   const [formData, setFormData] = useState({
@@ -96,12 +96,12 @@ const TicketCreation = () => {
   };
 
   return (
-    // <RootLayout>
-    <div className="max-w-3xl mx-auto p-4">
-      <Header />
+    <RootLayout>
+      <div className="bg-white rounded-xl shadow p-8 mx-4  lg:mr-20  max-w-screen-xl">
+     
       <h2 className="text-2xl font-bold mb-6">Ticket creation</h2>
       <form onSubmit={handleSubmit}>
-        <div className="border-b-8 border-green-500 mb-6">
+        <div className="border-b-8 border-green-500 mb-6 rounded-lg">
           <span className="text-green-500 font-medium">Ticket Information</span>
         </div>
 
@@ -229,7 +229,7 @@ const TicketCreation = () => {
         </div>
       </form>
     </div>
-    // </RootLayout>
+   </RootLayout>
   );
 };
 

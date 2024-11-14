@@ -50,7 +50,7 @@ const CustomerFacing = () => {
                 </div>
 
                 {/* Profile Section */}
-                <div className="bg-white rounded-xl shadow p-8 mx-4  lg:mr-20">
+                <div className="bg-white rounded-xl shadow p-12 mx-4  lg:mr-20">
                     <div className="flex items-center mb-4">
                         <div className="flex flex-col items-center sm:flex-row sm:items-start">
                             {user.isLoggedIn && (
