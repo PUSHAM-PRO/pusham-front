@@ -18,10 +18,6 @@ import DepartmentDashboard from './layouts/DepartmentDashboard';
 import CreatingTicket from './pages/departmentdashboardx/CreatingTicket';
 import ShareTicketForm from './pages/departmentdashboardx/ShareTicketForm';
 import TicketDetails from './pages/departmentdashboardx/ticketDetails';
-import CreateTicket from './pages/departmentDashboard/createTicket';
-import ShareTicketForm from './pages/departmentDashboard/ShareTicketForm';
-import TicketDetails from './pages/departmentDashboard/ticketDetails';
-import SideBar from './components/SideBar';
 
 
 function App() {
