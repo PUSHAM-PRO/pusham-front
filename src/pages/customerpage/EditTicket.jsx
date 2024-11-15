@@ -1,11 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaTimes } from 'react-icons/fa';
 import { FiCalendar, FiUserCheck, FiTruck } from "react-icons/fi";
 import { MdOutlinePeopleAlt, MdLowPriority } from "react-icons/md";
 import { GoPaperclip } from "react-icons/go";
 import { PiSunLight } from "react-icons/pi";
+import { useNavigate, useParams } from 'react-router-dom';
+import { apiUpdateTicket } from '../../services/auth';
+import { apiClient } from '../../services/config';
+
 
 const EditTicket = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  
+  // Form state variables
   const [assignedAgent, setAssignedAgent] = useState('');
   const [department, setDepartment] = useState('');
   const [dateSubmission, setDateSubmission] = useState('');
@@ -15,12 +23,53 @@ const EditTicket = () => {
   const [status, setStatus] = useState('');
   const [description, setDescription] = useState('');
 
-  const handleEdit = () => {
-    alert('Ticket updated successfully!');
+  // Load existing ticket data
+  useEffect(() => {
+    // Fetch the existing data here and set the form values.
+    // Assuming apiClient.get(`/tickets/${id}`) returns the ticket data
+    async function fetchTicket() {
+      try {
+        const response = await apiClient.patch(`/tickets/${id}`);
+        const data = response.data;
+        setAssignedAgent(data.assignedAgent || '');
+        setDepartment(data.department || '');
+        setDateSubmission(data.dateSubmission || '');
+        setDateExecution(data.dateExecution || '');
+        setType(data.type || '');
+        setPriority(data.priority || '');
+        setStatus(data.status || '');
+        setDescription(data.description || '');
+      } catch (error) {
+        console.error('Error fetching ticket data:', error);
+      }
+    }
+    fetchTicket();
+  }, [id]);
+
+  // Handle ticket update
+  const handleEdit = async () => {
+    const formData = {
+      department: "",
+      location: "",  
+      problem: "",  
+      description: "",
+      photo: "", 
+      category: ""
+    };
+
+    try {
+      await apiUpdateTicket(id, formData);
+      alert('Ticket updated successfully!');
+      navigate('/tickets'); 
+    } catch (error) {
+      console.error('Error updating ticket:', error);
+      alert('Failed to update ticket');
+    }
   };
 
   const handleClose = () => {
     alert('Modal closed');
+    navigate(-1); 
   };
 
   return (
@@ -32,7 +81,6 @@ const EditTicket = () => {
             <h2 className="text-xl font-semibold">Ticket Details</h2>
             <p className="text-sm text-[#344054]">Explore and add the full details of the query for effective follow-up.</p>
           </div>
-
           <button onClick={handleClose}>
             <FaTimes className="text-gray-500 hover:text-red-500" />
           </button>
@@ -44,6 +92,7 @@ const EditTicket = () => {
           <div>
             <h3 className="text-lg font-medium text-gray-700 mb-4">General Information</h3>
             <div className="grid gap-4">
+              {/* Assigned Agent */}
               <div className="flex justify-between">
                 <div className="flex items-center space-x-2 text-[#344054]">
                   <FiUserCheck />
@@ -52,13 +101,14 @@ const EditTicket = () => {
                 <select
                   value={assignedAgent}
                   onChange={(e) => setAssignedAgent(e.target.value)}
-                  className="w-[264px] h-10 left-[328px] border rounded-lg pl-4"
+                  className="w-[264px] h-10 border rounded-lg pl-4"
                 >
-                  <option value=""> Agent</option>
+                  <option value="">Select Agent</option>
                   <option value="Agent">Agent</option>
                 </select>
               </div>
 
+              {/* Department */}
               <div className="flex justify-between">
                 <div className="flex items-center space-x-2 text-[#344054]">
                   <MdOutlinePeopleAlt />
@@ -67,113 +117,115 @@ const EditTicket = () => {
                 <select
                   value={department}
                   onChange={(e) => setDepartment(e.target.value)}
-                  className="w-[264px] h-10 left-[328px] border rounded-lg pl-4"
+                  className="w-[264px] h-10 border rounded-lg pl-4"
                 >
                   <option value="Billing">Billing</option>
                   <option value="Facturation">Facturation</option>
                 </select>
               </div>
-
               <div className="flex justify-between">
-                <div className="flex items-center space-x-2 text-[#344054]">
-                  <FiCalendar />
-                  <span className="text-[#344054] block text-sm font-medium">Date Submission</span>
-                </div>
-                <input
-                  type="text"
-                  value={dateSubmission}
-                  onChange={(e) => setDateSubmission(e.target.value)}
-                  placeholder="DD/MM/YYYY"
-                  className="w-[264px] h-10 left-[328px] border rounded-lg pl-4"
-                  required
-                />
-              </div>
+<div className="flex items-center space-x-2 text-[#344054]">
+  <FiCalendar />
+  <span className="text-[#344054] block text-sm font-medium">Date Submission</span>
+</div>
+<input
+  type="text"
+  value={dateSubmission}
+  onChange={(e) => setDateSubmission(e.target.value)}
+  placeholder="DD/MM/YYYY"
+  className="w-[264px] h-10 left-[328px] border rounded-lg pl-4"
+  required
+/>
+</div>
 
-              <div className="flex justify-between">
-                <div className="flex items-center space-x-2 text-[#344054]">
-                  <FiCalendar />
-                  <span className="text-[#344054] block text-sm font-medium">Date Execution</span>
-                </div>
-                <input
-                  type="text"
-                  value={dateExecution}
-                  onChange={(e) => setDateExecution(e.target.value)}
-                  placeholder="DD/MM/YYYY"
-                  className="w-[264px] h-10 left-[328px] border rounded-lg pl-4 "
-                  required
-                />
-              </div>
-            </div>
-          </div>
-          <div className="py-4">
-            <hr />
-          </div>
+<div className="flex justify-between">
+<div className="flex items-center space-x-2 text-[#344054]">
+  <FiCalendar />
+  <span className="text-[#344054] block text-sm font-medium">Date Execution</span>
+</div>
+<input
+  type="text"
+  value={dateExecution}
+  onChange={(e) => setDateExecution(e.target.value)}
+  placeholder="DD/MM/YYYY"
+  className="w-[264px] h-10 left-[328px] border rounded-lg pl-4 "
+  required
+/>
+</div>
+</div>
+</div>
+<div className="py-4">
+<hr />
+</div>
 
-          {/* Ticket Details */}
-          <div>
-            <h3 className="text-lg font-medium text-gray-700 mb-4">Ticket Details</h3>
-            <div className="grid gap-4">
-              <div className="flex justify-between">
-                <div className="flex items-center space-x-2 text-[#344054]">
-                  <GoPaperclip />
-                  <span className="text-[#344054] block text-sm font-medium">Type</span>
-                </div>
-                <select
-                  value={type}
-                  onChange={(e) => setType(e.target.value)}
-                  className="w-[264px] h-10 left-[328px] border rounded-lg pl-4"
-                >
-                  <option value="Error Payment">Error Payment</option>
-                </select>
-              </div>
+{/* Ticket Details */}
+<div>
+<h3 className="text-lg font-medium text-gray-700 mb-4">Ticket Details</h3>
+<div className="grid gap-4">
+<div className="flex justify-between">
+<div className="flex items-center space-x-2 text-[#344054]">
+  <GoPaperclip />
+  <span className="text-[#344054] block text-sm font-medium">Type</span>
+</div>
+<select
+  value={type}
+  onChange={(e) => setType(e.target.value)}
+  className="w-[264px] h-10 left-[328px] border rounded-lg pl-4"
+>
+  <option value="Error Payment">Error Payment</option>
+</select>
+</div>
 
-              <div className="flex justify-between">
-                <div className="flex items-center space-x-2 text-[#344054]">
-                  <MdLowPriority />
-                  <span className="text-[#344054] block text-sm font-medium">Priority</span>
-                </div>
+<div className="flex justify-between">
+<div className="flex items-center space-x-2 text-[#344054]">
+  <MdLowPriority />
+  <span className="text-[#344054] block text-sm font-medium">Priority</span>
+</div>
 
-                <select
-                  value={priority}
-                  onChange={(e) => setPriority(e.target.value)}
-                  className="w-[264px] h-10 left-[328px] border rounded-lg pl-4"
-                >
-                  <option value="Highest">Highest</option>
-                  <option value="High">High</option>
-                  <option value="Medium">Medium</option>
-                  <option value="Low">Low</option>
-                </select>
-              </div>
+<select
+  value={priority}
+  onChange={(e) => setPriority(e.target.value)}
+  className="w-[264px] h-10 left-[328px] border rounded-lg pl-4"
+>
+  <option value="Highest">Highest</option>
+  <option value="High">High</option>
+  <option value="Medium">Medium</option>
+  <option value="Low">Low</option>
+</select>
+</div>
 
-              <div className="flex justify-between">
-                <div className="flex items-center space-x-2 text-[#344054]">
-                  <PiSunLight />
-                  <span className="text-[#344054] block text-sm font-medium">Status</span>
-                </div>
-                <select
-                  value={status}
-                  onChange={(e) => setStatus(e.target.value)}
-                  className="w-[264px] h-10 left-[328px] border rounded-lg pl-4"
-                >
-                  <option value="Delivered">Delivered</option>
-                  <option value="Pending">Pending</option>
-                  <option value="In Progress">In Progress</option>
-                  <option value="On Hold">On Hold</option>
-                </select>
-              </div>
+<div className="flex justify-between">
+<div className="flex items-center space-x-2 text-[#344054]">
+  <PiSunLight />
+  <span className="text-[#344054] block text-sm font-medium">Status</span>
+</div>
+<select
+  value={status}
+  onChange={(e) => setStatus(e.target.value)}
+  className="w-[264px] h-10 left-[328px] border rounded-lg pl-4"
+>
+  <option value="Delivered">Delivered</option>
+  <option value="Pending">Pending</option>
+  <option value="In Progress">In Progress</option>
+  <option value="On Hold">On Hold</option>
+</select>
+</div>
 
-              <div className="flex justify-between">
-                <div className="flex items-center space-x-2 text-[#344054]">
-                  <FiTruck />
-                  <span className="text-[#344054] block text-sm font-medium">Description</span>
-                </div>
-                <textarea
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                  className="border rounded-lg w-[264px] h-20 left-[328px] pl-4"
-                placeholder="Enter ticket description..."
-               />
-              </div>
+<div className="flex justify-between">
+<div className="flex items-center space-x-2 text-[#344054]">
+  <FiTruck />
+  <span className="text-[#344054] block text-sm font-medium">Description</span>
+</div>
+<textarea
+  value={description}
+  onChange={(e) => setDescription(e.target.value)}
+  className="border rounded-lg w-[264px] h-20 left-[328px] pl-4"
+placeholder="Enter ticket description..."
+/>
+</div>
+
+
+
             </div>
           </div>
 
@@ -182,22 +234,26 @@ const EditTicket = () => {
             <button
               type="button"
               onClick={handleClose}
-              className="px-4 gap-2 bg-[#FFFFFF] hover:bg-red-500 rounded-[32px] w-[290px] h-12 border font-semibold text-[#344054]"
+              className="px-4 bg-[#FFFFFF] hover:bg-red-500 rounded-[32px] w-[290px] h-12 border font-semibold text-[#344054]"
             >
               Close
             </button>
             <button
               type="button"
               onClick={handleEdit}
-              className="px-4 gap-2 bg-[#00B207] text-white rounded-[32px] w-[290px] h-12 font-semibold"
+              className="px-4 bg-[#00B207] text-white rounded-[32px] w-[290px] h-12 font-semibold"
             >
               Edit
             </button>
           </div>
         </form>
-      </div>
+     </div>
     </div>
   );
 };
 
 export default EditTicket;
+
+
+
+
