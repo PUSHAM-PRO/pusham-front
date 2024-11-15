@@ -114,7 +114,7 @@ function App() {
       ]
     },
     
-    
+    {
       path: "/departmentdashboard",
       element: <DepartmentDashboard />,
     },

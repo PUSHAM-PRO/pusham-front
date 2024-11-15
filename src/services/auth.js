@@ -35,9 +35,9 @@ export const apiAddTickets = async (ticketData) => {
 export const apiUpdateProfile = async (payload) => {
     return await apiClient.patch ( '/users/me', payload)
 }
-export const apiAddTickets = async () => {
-    return await apiClient.post ( '/tickets' )
-}
+// export const apiAddTickets = async () => {
+//     return await apiClient.post ( '/tickets' )
+// }
 export const apiGetTickets = async () => {
     const token = localStorage.getItem('token');
     
