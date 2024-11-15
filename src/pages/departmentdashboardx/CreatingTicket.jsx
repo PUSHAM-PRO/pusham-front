@@ -5,10 +5,12 @@ import { FiImage, FiChevronDown, FiSearch, FiBell } from "react-icons/fi";
 import { IoArrowForwardOutline } from "react-icons/io5";
 import { LuUploadCloud } from "react-icons/lu";
 import { LuEye } from "react-icons/lu";
+import RootLayout from "../../layouts/RootLayout";
 
 function CreatingTicket() {
   return (
-    <div className=" bg-white flex flex-col items-center p-6">
+    <RootLayout>
+    <div className="bo flex flex-col items-center p-6">
       <header
         style={{
           width: "1000px",
@@ -26,7 +28,7 @@ function CreatingTicket() {
             Track and manage tickets from all your subscribers with one click.
           </p>
         </div>
-        <button className="bg-gray-500 hover:bg-gray-300 text-white px-4 py-2">
+        <button className="bg-gray-500 hover:bg-gray-300 text-white px-4 py-2 rounded">
           Create
         </button>
 
@@ -51,7 +53,7 @@ function CreatingTicket() {
 <div
         style={{
           width: "1000px",
-          height: "930px",
+          height: "900px",
           top: "150px",
           left: "321px",
           gap: "0px",
@@ -71,7 +73,7 @@ function CreatingTicket() {
         
         <form className="space-y-6 w-full max-w-md mx-auto">
         
-          <div className="flex flex-col items-center">
+          {/* <div className="flex flex-col items-center">
             <label className="text-gray-700 w-full mb-1 font-bold">Date</label>
             <div className="relative w-full">
               <input
@@ -81,7 +83,7 @@ function CreatingTicket() {
               />
               <FiChevronDown className="absolute top-2.5 right-3 text-gray-500" />
             </div>
-          </div>
+          </div> */}
 
           
           <div className="flex flex-col items-center">
@@ -165,6 +167,7 @@ function CreatingTicket() {
           </div>
       </div>
     </div>
+    </RootLayout>
   );
 }
 
