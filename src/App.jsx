@@ -15,6 +15,13 @@ import TenderSubmissionForm from './pages/tendersub';
 import TicketCreation from './pages/customerpage/TicketCreation';
 import StatusTracking from './pages/customerpage/StatusTracking';
 import EditTicket from './pages/customerpage/EditTicket';
+import SuperSidebar from './pages/superadmin/SuperSideBar';
+import SuperDashboard from './layouts/SuperDashboard';
+import SuperTacking from './pages/superadmin/SuperTacking';
+import AddTicket from './pages/superadmin/AddTicket';
+import DeptLogin from './pages/superadmin/DeptSignin';
+import DepartmentSignUp from './pages/superadmin/CreateDaptForm';
+import CreateDepartmentForm from './pages/superadmin/CreateDeptForm';
 
 
 function App() {
@@ -74,6 +81,34 @@ function App() {
     {
       path: "/tender",
       element: <TenderSubmissionForm />
+    },
+    {
+      path: "/deptLogin",
+      element: <DeptLogin />
+    },
+    {
+      path: "/deptSignin",
+      element: <DepartmentSignUp/>
+    },
+    {
+      path: "/createDepartment",
+      element: <CreateDepartmentForm/>
+    },
+    {
+      path:"/superAdmin",
+      element:<SuperDashboard/>,
+      children:[
+     
+      {
+        index: true,
+        element: <SuperTacking/>
+      },
+      {
+        path: "superCreate",
+        element: <AddTicket />
+      },
+
+      ]
     },
     
     
