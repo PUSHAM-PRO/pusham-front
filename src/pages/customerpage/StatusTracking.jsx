@@ -45,6 +45,16 @@ const StatusTracking = () => {
         navigate('/edit');
     };
 
+    const handleTicketDetails = (event) => {
+        event.preventDefault();
+        navigate('/ticket-details');
+    };
+
+    const handleDeleteTicket = (event) => {
+        event.preventDefault();
+        navigate('/#');
+    };
+
     const handleBellClick = () => {
         // Logic to fetch or display notifications
         alert('Show notifications');
@@ -98,39 +108,24 @@ const StatusTracking = () => {
                 </header>
 
                 {/* Stats Cards */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
+                <div className="flex justify-center gap-12 mb-6 items-center">
                     <div className="p-6 bg-[#112228] text-white rounded-lg">
                         <p>Total tickets</p>
-                        <h2 className="text-3xl font-semibold">1023</h2>
+                        <h2 className="text-3xl font-semibold">50</h2>
                         <div className="flex gap-4">
                             <p className="text-green-500 mt-8">+ 40% vs last month</p>
                             <img src={Line} alt="chart" className="w-[96px] h-[48px]" />
                         </div>
                     </div>
-                    <div className="p-6 bg-[#03A108] text-white rounded-lg">
-                        <p>Tickets processed within 24 hours</p>
-                        <h2 className="text-3xl font-semibold">709</h2>
-                        <div className="flex gap-4">
-                            <p className="text-green-100 mt-8">+ 40% vs last month</p>
-                            <img src={Line} alt="chart" className="w-[96px] h-[48px]" />
-                        </div>
-                    </div>
                     <div className="p-6 bg-[#39D2C0] text-white rounded-lg">
                         <p>Pending Tickets</p>
-                        <h2 className="text-3xl font-semibold">25</h2>
+                        <h2 className="text-3xl font-semibold">15</h2>
                         <div className="flex gap-4">
                             <p className="text-red-200 mt-8">- 40% vs last month</p>
                             <img src={Line} alt="chart" className="w-[96px] h-[48px]" />
                         </div>
                     </div>
                 </div>
-
-                {/* Action Buttons */}
-                <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 mb-10 justify-end">
-    <button className="px-4 py-2 bg-black text-white rounded-md w-full sm:w-auto">Create a department</button>
-    <button className="px-4 py-2 bg-black text-white rounded-md w-full sm:w-auto">Add an account</button>
-</div>
-
 
                 {/* Ticket Management Table */}
                 <div className="bg-white rounded-lg shadow p-4">
@@ -206,10 +201,16 @@ const StatusTracking = () => {
                                         <Link to="/edit" onClick={handleEditTicket} >
                                             <RiInformationLine />
                                         </Link>
+                                        <Link to="/ticket-details" onClick={handleTicketDetails} >
+                                            <FiFileText />
+                                        </Link>
+                                        <Link to="/delete" onClick={handleDeleteTicket} >
+                                            <FiTrash2 />
+                                        </Link>
                                        
-                                        <FiShare2 />
-                                        <FiFileText />
-                                        <FiTrash2 />
+                                        
+                                        
+                                        
                                     </td>
                                 </tr>
                             ))}

@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './App.css';
 import LoginPage from './pages/authPage/LoginPage';
-import HomePage from './pages/homepage/HomePage';
+import HomePage from './pages/homepagex/HomePage';
 import Notification from './pages/Notification';
 import CustomerFacing from './pages/customerpage/CustomerFacing';
 import ENEOAccountManagement from './pages/superadmin/EneoAccountManagement';
@@ -11,7 +11,6 @@ import EneoDepartmentManagement from './pages/eneodepartment/EneoDepartmentManag
 import AgentSignUp from './pages/signups/AgentSignUp';
 import CustomerSignUp from './pages/signups/CustomerSignUp';
 import TenderSubmissionForm from './pages/tendersub';
-
 import TicketCreation from './pages/customerpage/TicketCreation';
 import StatusTracking from './pages/customerpage/StatusTracking';
 import EditTicket from './pages/customerpage/EditTicket';
@@ -22,6 +21,10 @@ import AddTicket from './pages/superadmin/AddTicket';
 import DeptLogin from './pages/superadmin/DeptSignin';
 import DepartmentSignUp from './pages/superadmin/CreateDaptForm';
 import CreateDepartmentForm from './pages/superadmin/CreateDeptForm';
+import DepartmentDashboard from './layouts/DepartmentDashboard';
+import CreatingTicket from './pages/departmentdashboardx/CreatingTicket';
+import ShareTicketForm from './pages/departmentdashboardx/ShareTicketForm';
+import TicketDetails from './pages/departmentdashboardx/ticketDetails';
 
 
 function App() {
@@ -40,7 +43,7 @@ function App() {
     },
     {
       path: '/customer',
-      element: <CustomerSignUp/>,
+      element: <CustomerSignUp />,
     },
     {
       path: '/notification',
@@ -51,19 +54,19 @@ function App() {
       element: <CustomerFacing />,
     },
     {
-      path: '/admin/eneo-accounts',
+      path: '/eneo-accounts',
       element: <ENEOAccountManagement />,
     },
     {
-      path: '/admin/create-eneo-account',
+      path: '/create-eneo-account',
       element: <CreateENEOAccountForm />,
     },
     {
-      path: '/admin/edit-eneo-account/:id',
+      path: '/edit-eneo-account/:id',
       element: <EditENEOAccountForm />,
     },
     {
-      path: "/admin/eneo",
+      path: "/eneo",
       element: <EneoDepartmentManagement />,
     },
     {
@@ -72,11 +75,11 @@ function App() {
     },
     {
       path: "/status-tracking",
-      element: <StatusTracking/>,
+      element: <StatusTracking />,
     },
     {
       path: "/edit",
-      element: <EditTicket/>,
+      element: <EditTicket />,
     },
     {
       path: "/tender",
@@ -112,6 +115,26 @@ function App() {
     },
     
     
+      path: "/departmentdashboard",
+      element: <DepartmentDashboard />,
+    },
+    {
+      path: "/create-ticket",
+      element: <CreatingTicket />,
+    },
+    {
+      path: "/edit",
+      element: <EditTicket />,
+    },
+    {
+      path: "/share-ticket",
+      element: <ShareTicketForm />,
+    },
+    {
+      path: "/ticket-details",
+      element: <TicketDetails />,
+    },
+  
   ]);
 
   return <RouterProvider router={router} />;

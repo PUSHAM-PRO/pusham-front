@@ -50,7 +50,7 @@ const CustomerFacing = () => {
                 </div>
 
                 {/* Profile Section */}
-                <div className="bg-white rounded-xl shadow p-8 mx-4  lg:mr-20">
+                <div className="bg-white rounded-xl shadow p-12 mx-4  lg:mr-20">
                     <div className="flex items-center mb-4">
                         <div className="flex flex-col items-center sm:flex-row sm:items-start">
                             {user.isLoggedIn && (
@@ -100,7 +100,7 @@ const CustomerFacing = () => {
                                 <img src={profileImage} className="w-10 h-10 rounded-full border-4" />
                             )}
 
-                            <div className="border rounded-lg p-4 flex flex-col items-center w-[50rem]">
+                            <div className="border rounded-lg p-4 flex flex-col items-center w-full">
                                 <label htmlFor="file-upload" className="cursor-pointer">
                                     <FiUploadCloud className="text-gray-500 w-10 h-10" />
                                 </label>
