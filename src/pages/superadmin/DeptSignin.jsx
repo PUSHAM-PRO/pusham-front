@@ -60,8 +60,8 @@ const DeptLogin = () => {
           </form>
 
           <p className="text-center mt-4 text-gray-600">
-            Don’t have an account?{' '}
-            <Link to="/vendorsignup" className="text-green-500 hover:underline">
+            Don't have an account?{' '}
+            <Link to="/deptSignin" className="text-green-500 hover:underline">
               Sign up
             </Link>
           </p> 

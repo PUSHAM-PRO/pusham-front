@@ -42,7 +42,7 @@ const HomePage = () => {
           Yes, I am a Customer
         </Link>
         <Link
-          to="/agent"
+          to="/deptLogin"
           className="w-full py-4 mt-4 text-lg font-bold text-white rounded-md hover:opacity-90 transition-opacity duration-150"
           style={{ backgroundColor: 'rgb(3, 161, 11)', display: 'block', textAlign: 'center' }}
         >

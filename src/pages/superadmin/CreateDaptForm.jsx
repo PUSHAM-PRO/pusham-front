@@ -2,16 +2,16 @@ import React, { useState } from 'react';
 import backgroundImage from '../../assets/images/image3.png';
 import { useNavigate } from 'react-router-dom';
 import { apiSignup } from '../../services/auth';
+import { Link } from 'react-router-dom';
 
 const DepartmentSignUp = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    // nationality: 'cameroon',
-    // location: 'accra',
     password: '',
     confirmPassword: '',
     department: '',
+    role: 'superadmin'
   });
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(true);
@@ -28,7 +28,7 @@ const DepartmentSignUp = () => {
     event.preventDefault();
     setLoading(true);
     
-    const { name, email, password, confirmPassword,department } = formData;
+    const { name, email, password, confirmPassword, department, role } = formData;
 
     // Validate form data
     if (!name || !email) {
@@ -41,7 +41,7 @@ const DepartmentSignUp = () => {
       return;
     }
 
-    const payload = { name, email, password, department };
+    const payload = { name, email, password, department, role };
     console.log("Payload:", payload)
 
     try {
@@ -90,28 +90,6 @@ const DepartmentSignUp = () => {
                 placeholder="Email"
               />
             </div>
-            {/* <div>
-              <label className="block text-sm font-medium text-gray-700">Nationality</label>
-              <input
-                type="text"
-                name="nationality"
-                value={formData.nationality}
-                onChange={handleChange}
-                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-green-500"
-                placeholder="nationality"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700">Location</label>
-              <input
-                type="text"
-                name="location"
-                value={formData.location}
-                onChange={handleChange}
-                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-green-500"
-                placeholder="location"
-              />
-            </div> */}
             <div>
               <label className="block text-sm font-medium text-gray-700">Department</label>
               <input
@@ -167,7 +145,7 @@ const DepartmentSignUp = () => {
               </button>
             </div>
             <p className="text-center text-sm text-gray-600">
-              You already have an account? <a href="/signin" className="text-green-500 underline">Sign In</a>
+              You already have an account? <Link to="/deptLogin" className="text-green-500 underline">Sign In</Link>
             </p>
           </form>
           <p className="text-center text-xs text-gray-400">© Pusham 2024</p>

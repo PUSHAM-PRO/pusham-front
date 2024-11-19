@@ -1,259 +1,225 @@
 import React, { useState, useEffect } from 'react';
 import { FaTimes } from 'react-icons/fa';
-import { FiCalendar, FiUserCheck, FiTruck } from "react-icons/fi";
+import { FiTruck, FiUserCheck } from "react-icons/fi";
 import { MdOutlinePeopleAlt, MdLowPriority } from "react-icons/md";
 import { GoPaperclip } from "react-icons/go";
 import { PiSunLight } from "react-icons/pi";
 import { useNavigate, useParams } from 'react-router-dom';
-import { apiUpdateTicket } from '../../services/auth';
+import { apiUpdateTicketPro, apiUpdateTicketComplete } from '../../services/auth';
 import { apiClient } from '../../services/config';
-
 
 const EditTicket = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  
-  // Form state variables
-  const [assignedAgent, setAssignedAgent] = useState('');
-  const [department, setDepartment] = useState('');
-  const [dateSubmission, setDateSubmission] = useState('');
-  const [dateExecution, setDateExecution] = useState('');
-  const [type, setType] = useState('');
-  const [priority, setPriority] = useState('');
-  const [status, setStatus] = useState('');
-  const [description, setDescription] = useState('');
 
-  // Load existing ticket data
+  const [formData, setFormData] = useState({
+    user: '',
+    department: '',
+    location: '',
+    problem: '',
+    description: '',
+    photo: '',
+    status: '',
+    role: '',
+    category: '',
+    assignedTo: '',
+  });
+
+  const VALID_STATUSES = ['initialized', 'in_progress', 'completed'];
+
   useEffect(() => {
-    // Fetch the existing data here and set the form values.
-    // Assuming apiClient.get(`/tickets/${id}`) returns the ticket data
     async function fetchTicket() {
       try {
-        const response = await apiClient.patch(`/tickets/${id}`);
+        const response = await apiClient.get(`/tickets/${id}`);
         const data = response.data;
-        setAssignedAgent(data.assignedAgent || '');
-        setDepartment(data.department || '');
-        setDateSubmission(data.dateSubmission || '');
-        setDateExecution(data.dateExecution || '');
-        setType(data.type || '');
-        setPriority(data.priority || '');
-        setStatus(data.status || '');
-        setDescription(data.description || '');
+        setFormData({
+          user: data.user || '',
+          department: data.department || '',
+          location: data.location || '',
+          problem: data.problem || '',
+          description: data.description || '',
+          photo: data.photo || '',
+          status: data.status || 'initialized',
+          role: data.role || '',
+          category: data.category || '',
+          assignedTo: data.assignedTo || '',
+        });
       } catch (error) {
-        console.error('Error fetching ticket data:', error);
+        console.error('Error fetching ticket:', error.response?.data || error.message);
       }
     }
     fetchTicket();
   }, [id]);
 
-  // Handle ticket update
   const handleEdit = async () => {
-    const formData = {
-      department: "",
-      location: "",  
-      problem: "",  
-      description: "",
-      photo: "", 
-      category: ""
-    };
-
     try {
-      await apiUpdateTicket(id, formData);
+      const updatedData = {
+        ...formData
+      };
+
+      if (formData.status === 'in_progress') {
+        await apiUpdateTicketPro(id, updatedData);
+      } else if (formData.status === 'completed') {
+        await apiUpdateTicketComplete(id, updatedData);
+      }
+
       alert('Ticket updated successfully!');
-      navigate('/tickets'); 
+      navigate(-1);
     } catch (error) {
-      console.error('Error updating ticket:', error);
-      alert('Failed to update ticket');
+      console.error('Error updating ticket:', error.response?.data || error.message);
+      alert(`Failed to update ticket: ${error.response?.data || error.message}`);
     }
   };
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
   const handleClose = () => {
-    alert('Modal closed');
-    navigate(-1); 
+    navigate(-1);
   };
 
   return (
     <div className="inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
       <div className="bg-white rounded-lg shadow-xl w-full max-w-lg p-6">
-        {/* Header */}
         <div className="flex justify-between items-center mb-6">
           <div>
             <h2 className="text-xl font-semibold">Ticket Details</h2>
-            <p className="text-sm text-[#344054]">Explore and add the full details of the query for effective follow-up.</p>
+            <p className="text-sm text-gray-500">Fill in the details to update the ticket.</p>
           </div>
           <button onClick={handleClose}>
             <FaTimes className="text-gray-500 hover:text-red-500" />
           </button>
         </div>
 
-        {/* Form Section */}
         <form className="space-y-4">
-          {/* General Information */}
           <div>
             <h3 className="text-lg font-medium text-gray-700 mb-4">General Information</h3>
             <div className="grid gap-4">
-              {/* Assigned Agent */}
               <div className="flex justify-between">
-                <div className="flex items-center space-x-2 text-[#344054]">
-                  <FiUserCheck />
-                  <span className="block text-sm font-medium text-gray-700">Assigned Agent</span>
-                </div>
-                <select
-                  value={assignedAgent}
-                  onChange={(e) => setAssignedAgent(e.target.value)}
-                  className="w-[264px] h-10 border rounded-lg pl-4"
-                >
-                  <option value="">Select Agent</option>
-                  <option value="Agent">Agent</option>
-                </select>
-              </div>
-
-              {/* Department */}
-              <div className="flex justify-between">
-                <div className="flex items-center space-x-2 text-[#344054]">
+                <div className="flex items-center space-x-2 text-gray-700">
                   <MdOutlinePeopleAlt />
-                  <span className="text-[#344054] block text-sm font-medium">Department</span>
+                  <span className="block text-sm font-medium">Department</span>
                 </div>
                 <select
-                  value={department}
-                  onChange={(e) => setDepartment(e.target.value)}
+                  name="department"
+                  value={formData.department}
+                  onChange={handleChange}
                   className="w-[264px] h-10 border rounded-lg pl-4"
                 >
                   <option value="Billing">Billing</option>
                   <option value="Facturation">Facturation</option>
                 </select>
               </div>
+
               <div className="flex justify-between">
-<div className="flex items-center space-x-2 text-[#344054]">
-  <FiCalendar />
-  <span className="text-[#344054] block text-sm font-medium">Date Submission</span>
-</div>
-<input
-  type="text"
-  value={dateSubmission}
-  onChange={(e) => setDateSubmission(e.target.value)}
-  placeholder="DD/MM/YYYY"
-  className="w-[264px] h-10 left-[328px] border rounded-lg pl-4"
-  required
-/>
-</div>
+                <div className="flex items-center space-x-2 text-gray-700">
+                  <PiSunLight />
+                  <span className="block text-sm font-medium">Status</span>
+                </div>
+                <select
+                  name="status"
+                  value={formData.status}
+                  onChange={handleChange}
+                  className="w-[264px] h-10 border rounded-lg pl-4"
+                >
+                  <option value="">Select Status</option>
+                  <option value="in_progress">In Progress</option>
+                  <option value="completed">Completed</option>
+                </select>
+              </div>
 
-<div className="flex justify-between">
-<div className="flex items-center space-x-2 text-[#344054]">
-  <FiCalendar />
-  <span className="text-[#344054] block text-sm font-medium">Date Execution</span>
-</div>
-<input
-  type="text"
-  value={dateExecution}
-  onChange={(e) => setDateExecution(e.target.value)}
-  placeholder="DD/MM/YYYY"
-  className="w-[264px] h-10 left-[328px] border rounded-lg pl-4 "
-  required
-/>
-</div>
-</div>
-</div>
-<div className="py-4">
-<hr />
-</div>
+              <div className="flex justify-between">
+                <div className="flex items-center space-x-2 text-gray-700">
+                  <FiTruck />
+                  <span className="block text-sm font-medium">Description</span>
+                </div>
+                <textarea
+                  name="description"
+                  value={formData.description}
+                  onChange={handleChange}
+                  className="border rounded-lg w-[264px] h-20 pl-4"
+                  placeholder="Enter ticket description..."
+                />
+              </div>
 
-{/* Ticket Details */}
-<div>
-<h3 className="text-lg font-medium text-gray-700 mb-4">Ticket Details</h3>
-<div className="grid gap-4">
-<div className="flex justify-between">
-<div className="flex items-center space-x-2 text-[#344054]">
-  <GoPaperclip />
-  <span className="text-[#344054] block text-sm font-medium">Type</span>
-</div>
-<select
-  value={type}
-  onChange={(e) => setType(e.target.value)}
-  className="w-[264px] h-10 left-[328px] border rounded-lg pl-4"
->
-  <option value="Error Payment">Error Payment</option>
-</select>
-</div>
+              <div className="flex justify-between">
+                <div className="flex items-center space-x-2 text-gray-700">
+                  <GoPaperclip />
+                  <span className="block text-sm font-medium">Problem</span>
+                </div>
+                <textarea
+                  name="problem"
+                  value={formData.problem}
+                  onChange={handleChange}
+                  className="border rounded-lg w-[264px] h-20 pl-4"
+                  placeholder="Enter problem description..."
+                />
+              </div>
 
-<div className="flex justify-between">
-<div className="flex items-center space-x-2 text-[#344054]">
-  <MdLowPriority />
-  <span className="text-[#344054] block text-sm font-medium">Priority</span>
-</div>
+              <div className="flex justify-between">
+                <div className="flex items-center space-x-2 text-gray-700">
+                  <MdLowPriority />
+                  <span className="block text-sm font-medium">Category</span>
+                </div>
+                <select
+                  name="category"
+                  value={formData.category}
+                  onChange={handleChange}
+                  className="w-[264px] h-10 border rounded-lg pl-4"
+                >
+                  <option value="">Select Category</option>
+                  <option value="technical support">Technical Support</option>
+                  <option value="billing">Billing</option>
+                  <option value="account management">Account Management</option>
+                  <option value="sales enquiry">Sales Enquiry</option>
+                </select>
+              </div>
 
-<select
-  value={priority}
-  onChange={(e) => setPriority(e.target.value)}
-  className="w-[264px] h-10 left-[328px] border rounded-lg pl-4"
->
-  <option value="Highest">Highest</option>
-  <option value="High">High</option>
-  <option value="Medium">Medium</option>
-  <option value="Low">Low</option>
-</select>
-</div>
-
-<div className="flex justify-between">
-<div className="flex items-center space-x-2 text-[#344054]">
-  <PiSunLight />
-  <span className="text-[#344054] block text-sm font-medium">Status</span>
-</div>
-<select
-  value={status}
-  onChange={(e) => setStatus(e.target.value)}
-  className="w-[264px] h-10 left-[328px] border rounded-lg pl-4"
->
-  <option value="Delivered">Delivered</option>
-  <option value="Pending">Pending</option>
-  <option value="In Progress">In Progress</option>
-  <option value="On Hold">On Hold</option>
-</select>
-</div>
-
-<div className="flex justify-between">
-<div className="flex items-center space-x-2 text-[#344054]">
-  <FiTruck />
-  <span className="text-[#344054] block text-sm font-medium">Description</span>
-</div>
-<textarea
-  value={description}
-  onChange={(e) => setDescription(e.target.value)}
-  className="border rounded-lg w-[264px] h-20 left-[328px] pl-4"
-placeholder="Enter ticket description..."
-/>
-</div>
-
-
-
+              <div className="flex justify-between">
+                <div className="flex items-center space-x-2 text-gray-700">
+                  <FiUserCheck />
+                  <span className="block text-sm font-medium">Assigned To</span>
+                </div>
+                <select
+                  name="assignedTo"
+                  value={formData.assignedTo}
+                  onChange={handleChange}
+                  className="w-[264px] h-10 border rounded-lg pl-4"
+                >
+                  <option value="">Select Agent</option>
+                  <option value="not assigned">Not Assigned</option>
+                  <option value="agent1">Agent 1</option>
+                  <option value="agent2">Agent 2</option>
+                </select>
+              </div>
             </div>
           </div>
 
-          {/* Action Buttons */}
           <div className="flex justify-end space-x-4 mt-6">
             <button
               type="button"
               onClick={handleClose}
-              className="px-4 bg-[#FFFFFF] hover:bg-red-500 rounded-[32px] w-[290px] h-12 border font-semibold text-[#344054]"
+              className="px-4 bg-white hover:bg-red-500 rounded-full w-[290px] h-12 border font-semibold text-gray-700"
             >
               Close
             </button>
             <button
               type="button"
               onClick={handleEdit}
-              className="px-4 bg-[#00B207] text-white rounded-[32px] w-[290px] h-12 font-semibold"
+              className="px-4 bg-green-600 text-white rounded-full w-[290px] h-12 font-semibold"
             >
-              Edit
+              Update Ticket
             </button>
           </div>
         </form>
-     </div>
+      </div>
     </div>
   );
 };
 
 export default EditTicket;
-
-
-
-
