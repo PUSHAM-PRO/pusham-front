@@ -8,7 +8,8 @@ import { RiInformationLine } from 'react-icons/ri';
 import Line from '../../assets/images/Line.png';
 import { Link, useNavigate } from 'react-router-dom';
 import { IoEllipse } from 'react-icons/io5';
-import { apiDashboard, apiGetTickets } from '../../services/auth';
+import { apiDashboard, apiDeleteTicket, apiGetTickets } from '../../services/auth';
+import Swal from 'sweetalert2';
 
 
 const SuperTacking = () => {
@@ -65,9 +66,67 @@ const SuperTacking = () => {
 
   const navigate = useNavigate();
 
-  const handleEditTicket = (event) => {
-    event.preventDefault();
-    navigate('/edit');
+  // const handleEditTicket = (event) => {
+  //   event.preventDefault();
+  //   navigate(`/edit-ticket/${ticketId}`);
+  // };
+  const handleDelete = async (id) => {
+    // First Swal - Confirmation
+    Swal.fire({
+      icon: 'warning',
+      title: '<h3 class="text-lg font-bold text-black">Confirm your delete</h3>',
+      html: '<p class="text-sm text-gray-600">Are you sure you want to delete this ticket? This action is irreversible, and the ticket will be permanently removed from the system.</p>',
+      iconColor: '#F87171',
+      showCancelButton: true,
+      confirmButtonText: 'Delete',
+      cancelButtonText: 'Cancel',
+      customClass: {
+        popup: 'rounded-lg p-6',
+        confirmButton: 'bg-red-500 text-white font-medium rounded-full px-6 py-2 text-sm hover:bg-red-600',
+        cancelButton: 'bg-gray-200 text-gray-700 font-medium rounded-full px-6 py-2 text-sm hover:bg-gray-300',
+      },
+      background: '#ffffff',
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const response = await apiDeleteTicket(id);
+          console.log("Ticket deleted:", response.data);
+          
+          // Second Swal - Success message
+          Swal.fire({
+            icon: 'success',
+            title: '<h3 class="text-black font-bold text-lg">Successful</h3>',
+            text: 'Your deletion has been successfully completed.',
+            iconColor: '#22c55e',
+            confirmButtonText: 'OK',
+            customClass: {
+              popup: 'rounded-lg p-6 shadow-md',
+              confirmButton: 'bg-green-500 text-white font-medium rounded-full px-6 py-2 text-sm hover:bg-green-600',
+            },
+            background: '#ffffff',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              window.location.reload();
+            }
+          });
+        } catch (error) {
+          // Error Swal
+          Swal.fire({
+            icon: 'error',
+            title: '<h3 class="text-black font-bold text-lg">Error</h3>',
+            text: 'Failed to delete ticket.',
+            iconColor: '#EF4444',
+            confirmButtonText: 'OK',
+            customClass: {
+              popup: 'rounded-lg p-6 shadow-md',
+              confirmButton: 'bg-red-500 text-white font-medium rounded-full px-6 py-2 text-sm hover:bg-red-600',
+            },
+            background: '#ffffff',
+          });
+          console.error("Error deleting ticket:", error.response?.data || error.message);
+        }
+      }
+    });
   };
 
   return (
@@ -110,7 +169,7 @@ const SuperTacking = () => {
   Create a department
 </Link>
         <Link
-        to="/deptSignin "
+        to="/deptSignin"
         className="px-4 py-2 bg-black text-white rounded-md w-full sm:w-auto">Add an account</Link>
       </div>
 
@@ -160,8 +219,8 @@ const SuperTacking = () => {
 
                     </thead>
                     <tbody className="text-[#475467]">
-                        {tickets.map((ticket, index) => (
-                            <tr key={index} className="border-t hover:bg-gray-50">
+                        {tickets.map((ticket) => (
+                            <tr key={ticket._id || ticket.id} className="border-t hover:bg-gray-50">
                                 <td className="py-2">{ticket.createdAt || 'N/A'}</td>
                                 <td className="py-2">{ticket.id || 'N/A'}</td>
                                 <td className="py-2">{ticket.department || 'N/A'}</td>
@@ -178,13 +237,19 @@ const SuperTacking = () => {
                                 </td>
                                 <td className="py-2 flex space-x-2 text-[#101828]">
                                   
-                                        <RiInformationLine />
+                                        <RiInformationLine 
+                                            className="cursor-pointer hover:text-green-500"
+                                            onClick={() => navigate(`/superAdmin/tickets/${ticket._id || ticket.id}`)}
+                                        />
                                   
                                     <FiShare2 />
-                                    <Link to="/edit" onClick={handleEditTicket}>
-                                    <FiFileText /></Link>
-                                    
-                                    <FiTrash2 />
+                                    <Link to={`/edit-ticket/${ticket._id || ticket.id}`}>
+    <FiFileText />
+</Link>
+                                    <FiTrash2 
+    className="cursor-pointer hover:text-red-500"
+    onClick={() => handleDelete(ticket._id || ticket.id)}
+/>
                                 </td>
                             </tr>
                         ))}

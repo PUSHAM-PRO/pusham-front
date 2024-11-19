@@ -13,8 +13,9 @@ const AddTicket = () => {
     location: '',
     problem: '',
     description: '',
-    photo: null,
+    photo: 'https://savefiles.org/default-image?shareable_link=502',
     category: '',
+    assignedTo: 'not assigned'
   });
   const navigate = useNavigate();
 
@@ -39,8 +40,9 @@ const AddTicket = () => {
     e.preventDefault();
 
     try {
-      const requiredFields = ['department', 'location', 'problem', 'description', 'category'];
+      const requiredFields = ['problem', 'description'];
       const emptyFields = requiredFields.filter(field => !formData[field]);
+      
       if (emptyFields.length > 0) {
         Swal.fire({
           icon: 'error',
@@ -50,48 +52,30 @@ const AddTicket = () => {
         });
         return;
       }
+
       const ticketData = {
         ...formData,
         photo: formData.photo || 'https://savefiles.org/default-image?shareable_link=502'
       };
     
-      try {
-        const response = await apiAddTickets(ticketData);
-        Swal.fire({
-          icon: 'success',
-          title: 'Ticket Added!',
-          text: 'Your ticket has been successfully added.',
-          confirmButtonText: 'OK',
-        }).then((result) => {
-          if (result.isConfirmed) {
-            navigate(-1); 
-          }
-        });
-        setFormData({
-          department: '',
-          location: '',
-          problem: '',
-          description: '',
-          photo: null,
-          category: '',
-        });
-      } catch (error) {
-        console.error('Error adding ticket:', error);
-        Swal.fire({
-          icon: 'error',
-          title: 'Failed to Add Ticket',
-          text: error.response?.data?.message || 
-                'An error occurred while adding the ticket. Please ensure all fields are filled correctly.',
-          confirmButtonText: 'Try Again',
-        });
-      }
+      const response = await apiAddTickets(ticketData);
+      Swal.fire({
+        icon: 'success',
+        title: 'Ticket Added!',
+        text: 'Your ticket has been successfully added.',
+        confirmButtonText: 'OK',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate(-1); 
+        }
+      });
     } catch (error) {
-      console.error('Error:', error);
+      console.error('Error adding ticket:', error);
       Swal.fire({
         icon: 'error',
-        title: 'Error',
-        text: 'An unexpected error occurred',
-        confirmButtonText: 'OK'
+        title: 'Failed to Add Ticket',
+        text: error.response?.data?.message || 'An error occurred while adding the ticket.',
+        confirmButtonText: 'Try Again',
       });
     }
   };
@@ -120,72 +104,74 @@ const AddTicket = () => {
   
 
   return (
-    <div className="mt-11">
+    <div className="mt-11  flex flex-col items-center">
       <h2 className="text-2xl font-bold mb-4">Ticket Creation</h2>
-      <div className="px-10">
+      <div className="px-10 w-[60%]">
         <div className="mb-6">
           <p className="text-sm font-semibold text-green-600">Ticket Information</p>
           <div className="bg-green-500 h-1 w-full mt-1"></div>
         </div>
-      <form onSubmit={handleSubmit} className="space-y-6 w-full max-w-md mx-auto">
-      <div className="flex flex-col items-center">
-            <label className="text-gray-700 w-full mb-1 font-bold">Department</label>
-            <input
-              type="text"
-              name="department"
-              value={formData.department}
-              onChange={handleChange}
-              className="w-full border border-gray-300 rounded-md p-2"
-            />
-          </div>
-          <div className="flex flex-col items-center">
-            <label className="text-gray-700 w-full mb-1 font-bold">Location</label>
-            <input
-              type="text"
-              name="location"
-              value={formData.location}
-              onChange={handleChange}
-              placeholder="Enter location"
-              className="w-full border border-gray-300 rounded-md p-3 pl-4 focus:outline-none focus:ring-2 focus:ring-green-500 text-gray-800"
-            />
-          </div>
-          <div className="flex flex-col items-center">
-            <label className="text-gray-700 w-full mb-1 font-bold">Type of Problem</label>
-            <input
-              type="text"
-              name="problem"
-              value={formData.problem}
-              onChange={handleChange}
-              placeholder="Enter problem type"
-              className="w-full border border-gray-300 rounded-md p-3 pl-4 focus:outline-none focus:ring-2 focus:ring-green-500 text-gray-800"
-            />
-          </div>
-          <div className="flex flex-col items-center">
-            <label className="text-gray-700 w-full mb-1 font-bold">Description</label>
-            <input
-              type="text"
-              name="description"
-              value={formData.description}
-              onChange={handleChange}
-              placeholder="Enter description"
-              className="w-full border border-gray-300 rounded-md p-3 pl-4 focus:outline-none focus:ring-2 focus:ring-green-500 text-gray-800"
-            />
-          </div>
-          <div className="flex flex-col items-center">
-            <label className="text-gray-700 w-full mb-1 font-bold">Category</label>
-            <select
-              name="category"
-              value={formData.category}
-              onChange={handleChange}
-              className="w-full border border-gray-300 rounded-md p-3 pl-4 focus:outline-none focus:ring-2 focus:ring-green-500 text-gray-800"
-            >
-              <option value="">Select a category</option>
-              <option value="technical support">Technical Support</option>
-              <option value="billing">Billing</option>
-              <option value="account management">Account Management</option>
-              <option value="sales enquiry">Sales Enquiry</option>
-            </select>
-          </div>
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <div className="flex flex-col">
+          <label className="text-gray-700 mb-1">Department</label>
+          <input
+            type="text"
+            name="department"
+            value={formData.department}
+            onChange={handleChange}
+            className="border rounded-md p-2"
+          />
+        </div>
+        <div className="flex flex-col">
+          <label className="text-gray-700 mb-1">Location</label>
+          <input
+            type="text"
+            name="location"
+            value={formData.location}
+            onChange={handleChange}
+            className="border rounded-md p-2"
+          />
+        </div>
+        <div className="flex flex-col">
+          <label className="text-gray-700 mb-1">
+            Problem <span className="text-red-500">*</span>
+          </label>
+          <input
+            type="text"
+            name="problem"
+            value={formData.problem}
+            onChange={handleChange}
+            required
+            className="border rounded-md p-2"
+          />
+        </div>
+        <div className="flex flex-col">
+          <label className="text-gray-700 mb-1">
+            Description <span className="text-red-500">*</span>
+          </label>
+          <textarea
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+            required
+            className="border rounded-md p-2"
+          />
+        </div>
+        <div className="flex flex-col">
+          <label className="text-gray-700 mb-1">Category</label>
+          <select
+            name="category"
+            value={formData.category}
+            onChange={handleChange}
+            className="border rounded-md p-2"
+          >
+            <option value="">Select Category</option>
+            <option value="technical support">Technical Support</option>
+            <option value="billing">Billing</option>
+            <option value="account management">Account Management</option>
+            <option value="sales enquiry">Sales Enquiry</option>
+          </select>
+        </div>
         <div className="flex flex-col items-center mb-8">
           <label className="text-gray-700 w-full mb-1 font-bold">Add photo (Optional)</label>
           <div

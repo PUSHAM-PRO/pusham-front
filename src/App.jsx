@@ -24,6 +24,7 @@ import CreateDepartmentForm from './pages/superadmin/CreateDeptForm';
 import DepartmentDashboard from './layouts/DepartmentDashboard';
 import CreatingTicket from './pages/departmentdashboardx/CreatingTicket';
 import ShareTicketForm from './pages/departmentdashboardx/ShareTicketForm';
+import TicketDetails from './pages/superadmin/SinglePage';
 import TicketDetails from './pages/departmentdashboardx/ticketDetails';
 import AgentDashboard from './layouts/AgentDashboard';
 import AgTickets from './pages/agent/AgTickets';
@@ -116,6 +117,11 @@ function App() {
         path: "superCreate",
         element: <AddTicket />
       },
+      {
+        path: "tickets/:id", 
+        element: <TicketDetails />
+      }
+     
 
       ]
     },
@@ -129,13 +135,15 @@ function App() {
       element: <CreatingTicket />,
     },
     {
-      path: "/edit",
+      path: "/edit-ticket/:id",
       element: <EditTicket />,
     },
     {
       path: "/share-ticket",
       element: <ShareTicketForm />,
     },
+
+   
     {
       path: "/ticket-details",
       element: <TicketDetails />,

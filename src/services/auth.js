@@ -47,8 +47,8 @@ export const apiGetTickets = async () => {
         },
     });
 };
-export const apiGetTicket = async () => {
-    return await apiClient.get ( '/tickets/672df3d1e3d9ad0248cd4b98' )
+export const apiGetTicket = async (id) => {
+    return await apiClient.get ( `/tickets/${id}` )
 }
 export const apiDashboard = async () => {
     const token = localStorage.getItem('token'); 
@@ -59,9 +59,64 @@ export const apiDashboard = async () => {
         },
     });
 };
-export const apiUpdateTicket = async (id,formData) => {
-    return await apiClient.patch (`/tickets/${id}`,formData )
+export const apiUpdateTicket = async (id, updatedData) => {
+    // Define valid status values
+    const validStatuses = ['initialized', 'in_progress', 'completed'];
+
+    // Prepare payload with defaults
+    const payload = {
+        ...updatedData,
+        assignedTo: updatedData.assignedTo || 'not assigned',
+        status: updatedData.status || 'initialized', // Default to 'initialized' if status is missing
+    };
+
+    // Validate status
+    if (!validStatuses.includes(payload.status)) {
+        console.error(`Invalid status: ${payload.status}. Allowed values are ${validStatuses.join(', ')}`);
+        throw new Error('Invalid status value');
+    }
+
+    // Log the payload to debug
+    console.log('Sending to API:', { id, payload });
+
+    try {
+        const response = await apiClient.patch(`/tickets/pro/${id}`, payload);
+        console.log('API Response:', response.data);
+        return response;
+    } catch (error) {
+        console.error('Error updating ticket:', error.response?.data || error.message);
+        throw new Error(`Failed to update ticket: ${error.response?.data?.message || error.message}`);
+    }
+};
+
+export const apiDeleteTicket = async (id) => {
+    return await apiClient.delete( `/tickets/${id}` )
 }
-export const apiDeleteTicket = async () => {
-    return await apiClient.delete ( '/tickets/672df824e3d9ad0248cd4ba0' )
+export const apiCreateDepartment = async (payload) => {
+    return await apiClient.post( "addcategory" , payload)
 }
+// export const apiEditTicket= async (id) => {
+//     return await apiClient.patch(`tickets/com/${id}`, )
+// }
+
+// For professional/agent to change status to in_progress
+export const apiUpdateTicketPro = async (id, updatedData) => {
+    const payload = {
+        ...updatedData,
+        status: 'in_progress'
+    };
+
+    console.log('Sending to Pro API:', { id, payload });
+    return await apiClient.patch(`/tickets/pro/${id}`, payload);
+};
+
+// For completing tickets
+export const apiUpdateTicketComplete = async (id, updatedData) => {
+    const payload = {
+        ...updatedData,
+        status: 'completed'
+    };
+
+    console.log('Sending to Complete API:', { id, payload });
+    return await apiClient.patch(`/tickets/com/${id}`, payload);
+};

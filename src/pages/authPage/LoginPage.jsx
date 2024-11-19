@@ -41,7 +41,7 @@ const LoginPage = () => {
           `
         });
 
-        navigate("/superAdmin");
+        navigate("/status-tracking");
 
         // login(defaultRole);
         // Proceed with login using selected role
