@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import backgroundImage from '../../assets/images/image3.png';
 import { useNavigate, Link } from 'react-router-dom';
 import { apiSignup } from '../../services/auth';
-import { Link } from 'react-router-dom';
 
 const AgentSignUp = () => {
   const [formData, setFormData] = useState({

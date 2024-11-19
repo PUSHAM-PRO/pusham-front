@@ -14,7 +14,6 @@ import TenderSubmissionForm from './pages/tendersub';
 import TicketCreation from './pages/customerpage/TicketCreation';
 import StatusTracking from './pages/customerpage/StatusTracking';
 import EditTicket from './pages/customerpage/EditTicket';
-import SuperSidebar from './pages/superadmin/SuperSideBar';
 import SuperDashboard from './layouts/SuperDashboard';
 import SuperTacking from './pages/superadmin/SuperTacking';
 import AddTicket from './pages/superadmin/AddTicket';
@@ -24,7 +23,7 @@ import CreateDepartmentForm from './pages/superadmin/CreateDeptForm';
 import DepartmentDashboard from './layouts/DepartmentDashboard';
 import CreatingTicket from './pages/departmentdashboardx/CreatingTicket';
 import ShareTicketForm from './pages/departmentdashboardx/ShareTicketForm';
-import TicketDetails from './pages/superadmin/SinglePage';
+import AdminTicketDetails from './pages/superadmin/SinglePage';
 import TicketDetails from './pages/departmentdashboardx/ticketDetails';
 import AgentDashboard from './layouts/AgentDashboard';
 import AgTickets from './pages/agent/AgTickets';
@@ -44,7 +43,7 @@ function App() {
       element: <HomePage />,
     },
     {
-      path: '/agent',
+      path: '/agent-signup',
       element: <AgentSignUp />,
     },
     {
@@ -119,7 +118,7 @@ function App() {
       },
       {
         path: "tickets/:id", 
-        element: <TicketDetails />
+        element: <AdminTicketDetails />
       }
      
 
@@ -150,7 +149,7 @@ function App() {
     },
 
     {
-      path: "/agentd",
+      path: "/agent",
       element: <AgentDashboard />,
       children: [
         {
