@@ -25,8 +25,12 @@ import DepartmentDashboard from './layouts/DepartmentDashboard';
 import CreatingTicket from './pages/departmentdashboardx/CreatingTicket';
 import ShareTicketForm from './pages/departmentdashboardx/ShareTicketForm';
 import TicketDetails from './pages/superadmin/SinglePage';
-
-
+import TicketDetails from './pages/departmentdashboardx/ticketDetails';
+import AgentDashboard from './layouts/AgentDashboard';
+import AgTickets from './pages/agent/AgTickets';
+import AgentCreateTicket from './pages/agent/AgentCreateTicket';
+import AgentTicketDetails from './pages/agent/AgentTicketDetails';
+import EscalateModal from './components/modals/EscalateModal';
 
 
 function App() {
@@ -99,6 +103,7 @@ function App() {
       path: "/createDepartment",
       element: <CreateDepartmentForm/>
     },
+
     {
       path:"/superAdmin",
       element:<SuperDashboard/>,
@@ -137,7 +142,33 @@ function App() {
       path: "/share-ticket",
       element: <ShareTicketForm />,
     },
+
    
+    {
+      path: "/ticket-details",
+      element: <TicketDetails />,
+    },
+
+    {
+      path: "/agentd",
+      element: <AgentDashboard />,
+      children: [
+        {
+          index: true,
+          element: <AgTickets />
+        },
+        {
+          path: "agentcreateticket",
+          element: <AgentCreateTicket />
+        },
+        {
+          path: "ticket-details/:id",
+          element: <AgentTicketDetails />
+        }
+      ]
+    },
+    
+    
   
   ]);
 
