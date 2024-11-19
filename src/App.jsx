@@ -30,6 +30,7 @@ import AgTickets from './pages/agent/AgTickets';
 import AgentCreateTicket from './pages/agent/AgentCreateTicket';
 import AgentTicketDetails from './pages/agent/AgentTicketDetails';
 import EscalateModal from './components/modals/EscalateModal';
+import CustomerTracking from './pages/superadmin/CustomerTracking';
 
 
 function App() {
@@ -119,6 +120,10 @@ function App() {
       {
         path: "tickets/:id", 
         element: <AdminTicketDetails />
+      },
+       {
+        path: "customerTrack", 
+        element: <CustomerTracking />
       }
      
 
@@ -157,14 +162,14 @@ function App() {
           element: <AgTickets />
         },
         {
-          path: "agentcreateticket",
-          element: <AgentCreateTicket />
-        },
-        {
           path: "ticket-details/:id",
           element: <AgentTicketDetails />
         }
       ]
+    },
+    {
+      path: "/agentcreateticket",
+      element: <AgentCreateTicket />
     },
     
     

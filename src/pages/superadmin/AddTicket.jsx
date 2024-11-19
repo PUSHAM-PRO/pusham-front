@@ -13,8 +13,9 @@ const AddTicket = () => {
     location: '',
     problem: '',
     description: '',
-    photo: 'https://savefiles.org/default-image?shareable_link=502',
+    photo: 'secure/uploads/22374',
     category: '',
+    status: 'initialized',
     assignedTo: 'not assigned'
   });
   const navigate = useNavigate();
@@ -55,10 +56,13 @@ const AddTicket = () => {
 
       const ticketData = {
         ...formData,
-        photo: formData.photo || 'https://savefiles.org/default-image?shareable_link=502'
+        status: 'initialized',
+        assignedTo: 'not assigned'
       };
     
+      console.log('Sending ticket data:', ticketData);
       const response = await apiAddTickets(ticketData);
+      
       Swal.fire({
         icon: 'success',
         title: 'Ticket Added!',
