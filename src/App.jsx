@@ -24,7 +24,7 @@ import CreateDepartmentForm from './pages/superadmin/CreateDeptForm';
 import DepartmentDashboard from './layouts/DepartmentDashboard';
 import CreatingTicket from './pages/departmentdashboardx/CreatingTicket';
 import ShareTicketForm from './pages/departmentdashboardx/ShareTicketForm';
-import TicketDetails from './pages/superadmin/SinglePage';
+import AdminTicketDetails from './pages/superadmin/SinglePage';
 import TicketDetails from './pages/departmentdashboardx/ticketDetails';
 import AgentDashboard from './layouts/AgentDashboard';
 import AgTickets from './pages/agent/AgTickets';
@@ -119,7 +119,7 @@ function App() {
       },
       {
         path: "tickets/:id", 
-        element: <TicketDetails />
+        element: <AdminTicketDetails />
       }
      
 
