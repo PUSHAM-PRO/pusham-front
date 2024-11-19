@@ -63,7 +63,10 @@ const AgentSideBar = () => {
 
                     {/* Navigation Links */}
                     <nav className="space-y-4">
-                        <Link to="<AgTickets />" className="flex items-center p-2 focus:bg-[#03A10B] rounded-lg w-[279px] h-[40px]">
+                        <Link 
+                            to="/agent"
+                            className="flex items-center p-2 focus:bg-[#03A10B] rounded-lg w-[279px] h-[40px]"
+                        >
                             <FaChartBar className="w-6 h-6" />
                             <p className="ml-4 hover:text-[#03A10B]">Dashboard</p>
                         </Link>

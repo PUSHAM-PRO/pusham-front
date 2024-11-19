@@ -45,7 +45,7 @@ function App() {
       element: <HomePage />,
     },
     {
-      path: '/agent',
+      path: '/agent-signup',
       element: <AgentSignUp />,
     },
     {
@@ -155,7 +155,7 @@ function App() {
     },
 
     {
-      path: "/agentd",
+      path: "/agent",
       element: <AgentDashboard />,
       children: [
         {
@@ -163,14 +163,14 @@ function App() {
           element: <AgTickets />
         },
         {
-          path: "agentcreateticket",
-          element: <AgentCreateTicket />
-        },
-        {
           path: "ticket-details/:id",
           element: <AgentTicketDetails />
         }
       ]
+    },
+    {
+      path: "/agentcreateticket",
+      element: <AgentCreateTicket />
     },
     
     
