@@ -14,7 +14,6 @@ import TenderSubmissionForm from './pages/tendersub';
 import TicketCreation from './pages/customerpage/TicketCreation';
 import StatusTracking from './pages/customerpage/StatusTracking';
 import EditTicket from './pages/customerpage/EditTicket';
-import SuperSidebar from './pages/superadmin/SuperSideBar';
 import SuperDashboard from './layouts/SuperDashboard';
 import SuperTacking from './pages/superadmin/SuperTacking';
 import AddTicket from './pages/superadmin/AddTicket';
