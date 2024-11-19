@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 // import { getSingleTicket } from '../../services/api';
 import { apiGetTicket } from '../../services/auth';
 
-const TicketDetails = () => {
+const AdminTicketDetails = () => {
   const [ticket, setTicket] = useState(null);
   const [isVisible, setIsVisible] = useState(false);
   const { id } = useParams();
@@ -112,4 +112,4 @@ const TicketDetails = () => {
   );
 };
 
-export default TicketDetails;
+export default AdminTicketDetails;
