@@ -120,3 +120,25 @@ export const apiUpdateTicketComplete = async (id, updatedData) => {
     console.log('Sending to Complete API:', { id, payload });
     return await apiClient.patch(`/tickets/com/${id}`, payload);
 };
+export const apiGetOneUserTicket = async () => {
+    try {
+        console.log('Fetching user ticket stats...');
+        const response = await apiClient.get("/tickets-stats/user");
+       
+        return response;
+    } catch (error) {
+        console.error('Error fetching ticket stats:', error.response?.data || error);
+        throw error;
+    }
+}
+export const apiGeticketByUser = async () => {
+    try {
+        console.log('Fetching user tickets...');
+        const response = await apiClient.get("/tickets/byUser");
+      
+        return response;
+    } catch (error) {
+        console.error('Error fetching user tickets:', error.response?.data || error);
+        throw error;
+    }
+}
