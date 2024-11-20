@@ -1,23 +1,48 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { FaUserShield } from 'react-icons/fa';
+import { useNavigate, Link } from 'react-router-dom';
+import { FaUserShield, FaUser, FaBuilding, FaUserTie } from 'react-icons/fa';
 import backgroundImage from '../../assets/images/ecg2.jpg';
-import Modal from '../../components/Modal'; // Import the Modal component
+import Modal from '../../components/Modal';
 import EneoDepartmentManagement from '../eneodepartment/EneoDepartmentManagement';
-import { Link } from 'react-router-dom';
 
 const HomePage = () => {
   const navigate = useNavigate();
-  const [isAdminModalOpen, setIsAdminModalOpen] = useState(false); // State to control modal visibility
+  const [isAdminModalOpen, setIsAdminModalOpen] = useState(false);
 
-  // Function to handle navigation based on role
-  const handleNavigate = (role) => {
-    navigate(`/signup/${role.toLowerCase()}`);
-  };
+  const roles = [
+    {
+      title: "Customer",
+      icon: <FaUser className="text-4xl mb-4" />,
+      description: "Get support and answers to your questions",
+      path: "/customer",
+      color: "rgb(3, 161, 11)"
+    },
+    {
+      title: "Department Agent",
+      icon: <FaBuilding className="text-4xl mb-4" />,
+      description: "Access department-specific tools",
+      path: "",
+      color: "#2563eb"
+    },
+    {
+      title: "Super Admin",
+      icon: <FaUserShield className="text-4xl mb-4" />,
+      description: "System administration and oversight",
+      path: "/deptLogin",
+      color: "#dc2626"
+    },
+    {
+      title: "Agent",
+      icon: <FaUserTie className="text-4xl mb-4" />,
+      description: "Manage users and system settings",
+      path: "/admin",
+      color: "#7c3aed"
+    }
+  ];
 
   return (
     <div
-      className="relative flex items-center justify-center min-h-screen bg-cover bg-center bg-no-repeat"
+      className="relative min-h-screen bg-cover bg-center bg-no-repeat"
       style={{
         backgroundImage: `url(${backgroundImage})`,
       }}
@@ -26,44 +51,53 @@ const HomePage = () => {
       <div className="absolute inset-0 bg-black opacity-70"></div>
 
       {/* Content */}
-      <div className="relative z-10 w-full max-w-lg p-8 space-y-6 text-center text-white rounded-lg">
-        <h1 className="text-5xl font-bold">Welcome to  ENEO</h1>
-        <p className="text-xl mb-8">
-          Answer a few questions to direct you to the correct sign-up page.
-        </p>
+      <div className="relative z-10 container mx-auto px-4 py-16">
+        <div className="text-center text-white mb-16">
+          <h1 className="text-5xl font-bold mb-6">Welcome to ENEO</h1>
+          <p className="text-xl">Select your role to get started</p>
+        </div>
 
-        {/* Step 1 */}
-        <p className="text-2xl mt-4">Are you a customer looking for answers?</p>
-        <Link
-          to="/customer"
-          className="w-full py-4 mt-4 text-lg font-bold text-white rounded-md hover:opacity-90 transition-opacity duration-150"
-          style={{ backgroundColor: 'rgb(3, 161, 11)', display: 'block', textAlign: 'center' }}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+          {roles.map((role) => (
+            <Link
+              key={role.title}
+              to={role.path}
+              className="transform transition-all duration-300 hover:scale-105"
+            >
+              <div
+                className="bg-white bg-opacity-10 backdrop-blur-lg rounded-xl p-6 text-white border border-white border-opacity-20 hover:bg-opacity-20"
+                style={{ minHeight: '280px' }}
+              >
+                <div className="flex flex-col items-center justify-center h-full text-center">
+                  <div
+                    className="rounded-full p-4 mb-4"
+                    style={{ backgroundColor: role.color }}
+                  >
+                    {role.icon}
+                  </div>
+                  <h3 className="text-2xl font-bold mb-3">{role.title}</h3>
+                  <p className="text-sm opacity-80">{role.description}</p>
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+
+     
+        <div
+          className="absolute bottom-4 left-4 flex items-center justify-center w-12 h-12 bg-white rounded-full cursor-pointer hover:bg-gray-200 transition-colors duration-300"
+          onClick={() => setIsAdminModalOpen(true)}
         >
-          Yes, I am a Customer
-        </Link>
-        <Link
-          to="/deptLogin"
-          className="w-full py-4 mt-4 text-lg font-bold text-white rounded-md hover:opacity-90 transition-opacity duration-150"
-          style={{ backgroundColor: 'rgb(3, 161, 11)', display: 'block', textAlign: 'center' }}
-        >
-          No, I am an Agent
-        </Link>
-      </div>
+          <FaUserShield className="text-black text-2xl" />
+        </div>
 
-      {/* Super Admin Shortcut Icon */}
-      <div
-        className="absolute bottom-4 left-4 flex items-center justify-center w-12 h-12 bg-white rounded-full cursor-pointer hover:bg-gray-200"
-        onClick={() => setIsAdminModalOpen(true)} // Open the modal when clicked
-      >
-        <FaUserShield className="text-black text-2xl" />
+        {/* Modal */}
+        {isAdminModalOpen && (
+          <Modal onClose={() => setIsAdminModalOpen(false)}>
+            <EneoDepartmentManagement />
+          </Modal>
+        )}
       </div>
-
-      {/* Modal for Super Admin ENEO Department Management */}
-      {isAdminModalOpen && (
-        <Modal onClose={() => setIsAdminModalOpen(false)}> {/* Close modal when onClose is triggered */}
-          <EneoDepartmentManagement /> {/* ENEO Department Management component inside modal */}
-        </Modal>
-      )}
     </div>
   );
 };

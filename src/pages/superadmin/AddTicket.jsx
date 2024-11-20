@@ -3,18 +3,18 @@ import { FiChevronDown } from 'react-icons/fi';
 import { LuUploadCloud } from 'react-icons/lu';
 import { IoArrowForwardOutline } from 'react-icons/io5';
 
-import Swal from 'sweetalert2';
-import { apiAddTickets } from '../../services/auth';
+ import Swal from 'sweetalert2';
+// import { apiAddTickets } from '../../services/auth';
 import { useNavigate } from 'react-router-dom';
 
 const AddTicket = () => {
   const [formData, setFormData] = useState({
-    department: '',
-    location: '',
+    department: 'payment',
+    location: 'Accra',
     problem: '',
     description: '',
-    photo: 'secure/uploads/22374',
-    category: '',
+    photo: null,
+    category: 'technical support',
     status: 'initialized',
     assignedTo: 'not assigned'
   });
@@ -25,11 +25,7 @@ const AddTicket = () => {
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setFormData({ ...formData, photo: reader.result });
-      };
-      reader.readAsDataURL(file); 
+      setFormData(prev => ({ ...prev, photo: file }));
     }
   };
 
@@ -41,27 +37,19 @@ const AddTicket = () => {
     e.preventDefault();
 
     try {
-      const requiredFields = ['problem', 'description'];
-      const emptyFields = requiredFields.filter(field => !formData[field]);
-      
-      if (emptyFields.length > 0) {
+      if (!formData.problem || !formData.description) {
         Swal.fire({
           icon: 'error',
           title: 'Required Fields Empty',
-          text: `Please fill in the following fields: ${emptyFields.join(', ')}`,
+          text: 'Please fill in both Problem and Description fields.',
           confirmButtonText: 'OK',
         });
         return;
       }
 
-      const ticketData = {
-        ...formData,
-        status: 'initialized',
-        assignedTo: 'not assigned'
-      };
-    
-      console.log('Sending ticket data:', ticketData);
-      const response = await apiAddTickets(ticketData);
+      console.log('Auth Token:', localStorage.getItem('token'));
+
+      const response = await apiAddTickets(formData);
       
       Swal.fire({
         icon: 'success',
@@ -75,11 +63,12 @@ const AddTicket = () => {
       });
     } catch (error) {
       console.error('Error adding ticket:', error);
+      
       Swal.fire({
         icon: 'error',
         title: 'Failed to Add Ticket',
-        text: error.response?.data?.message || 'An error occurred while adding the ticket.',
-        confirmButtonText: 'Try Again',
+        text: `Error: ${error.response?.data?.message || error.message}`,
+        confirmButtonText: 'OK',
       });
     }
   };
