@@ -284,13 +284,13 @@ const SuperTacking = () => {
           );
         })}
       </div>
-      <button
-        onClick={handleNextPage}
-        disabled={currentPage === 1}
-        className="flex items-center px-4 py-2 bg-white border rounded-lg text-gray-700 hover:bg-gray-200 disabled:opacity-50"
-      >
-        <span className="mr-2">←</span> next
-      </button>
+        <button
+          onClick={handleNextPage}
+          disabled={currentPage === totalPages}
+          className="flex items-center px-4 py-2 bg-white border rounded-lg text-gray-700 hover:bg-gray-200 disabled:opacity-50"
+        >
+          Next <span className="ml-2">→</span>
+        </button>
       </div>
       </div>
   );

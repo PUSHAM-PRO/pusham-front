@@ -32,6 +32,7 @@ import AgentTicketDetails from './pages/agent/AgentTicketDetails';
 import EscalateModal from './components/modals/EscalateModal';
 import CustomerTracking from './pages/superadmin/CustomerTracking';
 import CreateNotification from './pages/superadmin/CreateNotification';
+import CustomerTicketDetails from './pages/customerpage/CustomerTicketDetails';
 
 
 function App() {
@@ -87,6 +88,10 @@ function App() {
     {
       path: "/status-tracking",
       element: <StatusTracking />,
+    },
+    {
+      path: "/custtickdetails",
+      element: <CustomerTicketDetails />,
     },
     {
       path: "/edit",
