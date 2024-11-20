@@ -9,29 +9,35 @@ export const apiLogin = async (payload) => {
 export const apiProfile = async (payload) => {
     return await apiClient.get ( '/users/me', payload)
 }
-export const apiAddTickets = async (ticketData) => {
-    try {
-      const token = localStorage.getItem('token'); 
-      
-   
-      if (!token) {
-        throw new Error("No token found. Please log in.");
-      }
-  
-    
-      const response = await apiClient.post('/tickets', ticketData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-  
-      return response.data;
-    } catch (error) {
-      console.error("Error adding ticket:", error);
-      throw error;
-    }
-  };
-  
+// export const apiAddTickets = async (ticketData) => {
+//     try {
+//         // Get the image name from the file if it exists
+//         const imageName = ticketData.photo?.name || 'default-image';
+        
+//         const payload = {
+//             problem: ticketData.problem,
+//             description: ticketData.description,
+//             photo: `https://savefiles.org/${imageName}?shareable_link=502`,  // Dynamic image URL
+//             category: "technical support",
+//             assignedTo: "not assigned",
+//             department: "payment",
+//             location: "Accra",
+//             status: "initialized"
+//         };
+
+//         console.log('Exact payload being sent:', JSON.stringify(payload, null, 2));
+
+//         const response = await apiClient.post("/tickets", payload);
+//         return response;
+//     } catch (error) {
+//         console.error('Backend Error Details:', {
+//             status: error.response?.status,
+//             data: error.response?.data,
+//             headers: error.response?.headers
+//         });
+//         throw error;
+//     }
+// }
 export const apiUpdateProfile = async (payload) => {
     return await apiClient.patch ( '/users/me', payload)
 }
@@ -141,4 +147,19 @@ export const apiGeticketByUser = async () => {
         console.error('Error fetching user tickets:', error.response?.data || error);
         throw error;
     }
+}
+export const apiAddTickets = async (payload) => {
+    const imageName = payload.photo?.name || 'default-image';
+ 
+    const ticketData = {
+        department: payload.department,
+        location: payload.location,
+        problem: payload.problem,
+        description: payload.description,
+        category: payload.category,
+        photo: `https://savefiles.org/${imageName}?shareable_link=502`, 
+      
+    };
+
+    return await apiClient.post("/tickets", ticketData);
 }

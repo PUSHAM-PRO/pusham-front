@@ -34,23 +34,43 @@ const SuperTacking = () => {
         fetchTicketStats();
       }, []);
 
+      const [currentPage, setCurrentPage] = useState(1);
+      const [totalPages, setTotalPages] = useState(1);
+      const TICKETS_PER_PAGE = 10;
+
       useEffect(() => {
         const fetchTickets = async () => {
           try {
-            const response = await apiGetTickets();
-            setTickets(response.data);
+            setLoadingTickets(true);
+            const response = await apiGetTickets(currentPage, TICKETS_PER_PAGE);
+            
+            // Debug logs
+            console.log('API Response:', response);
+            console.log('Tickets data:', response?.data);
+            console.log('Tickets array:', response?.data?.tickets);
+            
+            // Check the structure of your response
+            if (response?.data?.tickets) {
+              setTickets(response.data.tickets);
+              setTotalPages(Math.ceil(response.data.total / TICKETS_PER_PAGE));
+            } else if (Array.isArray(response.data)) {
+              // If the response.data is directly an array
+              setTickets(response.data);
+              setTotalPages(Math.ceil(response.data.length / TICKETS_PER_PAGE));
+            } else {
+              console.error('Unexpected data structure:', response.data);
+              setTickets([]);
+            }
           } catch (error) {
             console.error("Error fetching tickets:", error);
+            setTickets([]);
           } finally {
             setLoadingTickets(false);
           }
         };
         fetchTickets();
-      }, []);
+      }, [currentPage]);
 
-    const [currentPage, setCurrentPage] = useState(1);
-    const totalPages = 10;
-  
     const handlePreviousPage = () => {
       if (currentPage > 1) {
         setCurrentPage(currentPage - 1);
@@ -176,7 +196,10 @@ const SuperTacking = () => {
         {/* Ticket Management Table */}
         <div className="bg-white rounded-lg shadow p-4 overflow-x-auto">
                 <h3 className="text-lg font-semibold mb-4">Ticket Management</h3>
-                <table className="w-full min-w-[600px] text-left">
+                {loadingTickets ? (
+                  <div className="text-center py-4">Loading tickets...</div>
+                ) : tickets && tickets.length > 0 ? (
+                  <table className="w-full min-w-[600px] text-left">
                     <thead>
                     <tr className="border-b">
   <th className="py-2">
@@ -255,9 +278,13 @@ const SuperTacking = () => {
                         ))}
                     </tbody>
                 </table>
+              ) : (
+                <div className="text-center py-4">No tickets found</div>
+              )}
             </div>
   
-       <div className="flex items-center justify-between mt-6">
+       {tickets && tickets.length > 0 && (
+         <div className="flex items-center justify-between mt-6">
       <button
         onClick={handlePreviousPage}
         disabled={currentPage === 1}
@@ -292,6 +319,7 @@ const SuperTacking = () => {
           Next <span className="ml-2">→</span>
         </button>
       </div>
+      )}
       </div>
   );
 };
