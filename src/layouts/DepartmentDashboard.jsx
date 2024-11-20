@@ -1,7 +1,3 @@
-
-// 
-
-
 import React, { useState, useEffect } from "react";
 import { FaSearch, FaUserCircle, FaRegFileAlt, FaArrowRight, FaArrowLeft } from "react-icons/fa";
 import { IoShareSocialOutline } from "react-icons/io5";
@@ -11,6 +7,7 @@ import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import { Link } from "react-router-dom";
 import RootLayout from "./RootLayout";
 import TicketDetails from "../pages/departmentdashboardx/ticketDetails";
+import { apiGetDepartmentTickets } from "../services/department";
 
 function DepartmentDashboard() {
   const [showModal, setShowModal] = useState(false);
@@ -18,6 +15,7 @@ function DepartmentDashboard() {
   const [showTicketDetails, setShowTicketDetails] = useState(false);
   const [tickets, setTickets] = useState([]);
   const [statistics, setStatistics] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   // Fetch data from API on component mount
   useEffect(() => {
@@ -26,12 +24,20 @@ function DepartmentDashboard() {
   }, []);
 
   const fetchTickets = async () => {
+    setLoading(true);
     try {
-      const response = await fetch("API_URL/tickets");
-      const data = await response.json();
-      setTickets(data); // Assuming data is an array of tickets
+      const data = await apiGetDepartmentTickets('account');
+      if (Array.isArray(data)) {
+        setTickets(data);
+      } else {
+        console.error("Unexpected data format:", data);
+        setTickets([]);
+      }
     } catch (error) {
       console.error("Error fetching tickets:", error);
+      setTickets([]);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -69,6 +75,10 @@ function DepartmentDashboard() {
   const closeTicketDetails = () => {
     setShowTicketDetails(false);
   };
+
+  if (loading) {
+    return <div className="text-center py-4">Loading tickets...</div>;
+  }
 
   return (
     <RootLayout>
@@ -138,23 +148,23 @@ function DepartmentDashboard() {
           </thead>
           <tbody>
             {tickets.map((ticket) => (
-              <tr key={ticket.id} className="border-b">
-                <td className="p-4">{ticket.date}</td>
-                <td className="p-4">{ticket.code}</td>
+              <tr key={ticket._id} className="border-b">
+                <td className="p-4">{new Date(ticket.createdAt).toLocaleDateString()}</td>
+                <td className="p-4">{ticket.ticketCode}</td>
                 <td className="p-4">{ticket.description}</td>
                 <td className="p-4 flex items-center">
                   <FaUserCircle className="text-3xl text-gray-600 mr-4" />
-                  {ticket.assigned}
+                  {ticket.assignedTo || 'Unassigned'}
                 </td>
                 <td className="p-4">
                   <div className="flex justify-start space-x-2">
-                    <button onClick={openTicketDetails} className="p-2">
+                    <button onClick={() => openTicketDetails(ticket._id)} className="p-2">
                       <FaRegFileAlt />
                     </button>
-                    <Link to={`/share-ticket/${ticket.id}`} className="p-2">
+                    <Link to={`/share-ticket/${ticket._id}`} className="p-2">
                       <IoShareSocialOutline />
                     </Link>
-                    <button onClick={handleDelete} className="p-2">
+                    <button onClick={() => handleDelete(ticket._id)} className="p-2">
                       <HiOutlineTrash />
                     </button>
                   </div>
