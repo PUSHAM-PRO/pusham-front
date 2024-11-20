@@ -1,7 +1,7 @@
 import React from 'react';
-import { CiBellOn } from 'react-icons/ci';
 import profileImage from '../../assets/images/m-eto.png';
 import { Link } from 'react-router-dom';
+import Notification from '../../components/Notification';
 
 const AgentCreateHeader = () => {
   return (
@@ -14,14 +14,7 @@ const AgentCreateHeader = () => {
       </div>
 
       <div className='flex items-center gap-4'>
-
-        
-        <div className="relative cursor-pointer">
-          <CiBellOn className="text-2xl text-gray-600" />
-          <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
-            0
-          </span>
-        </div>
+        <Notification />
         <div className="w-10 h-10 rounded-full overflow-hidden">
           <img 
             src={profileImage} 
