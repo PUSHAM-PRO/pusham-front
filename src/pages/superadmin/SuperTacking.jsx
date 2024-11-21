@@ -36,53 +36,104 @@ const SuperTacking = () => {
 
       const [currentPage, setCurrentPage] = useState(1);
       const [totalPages, setTotalPages] = useState(1);
-      const TICKETS_PER_PAGE = 10;
+      const [ticketsPerPage] = useState(10);
 
       useEffect(() => {
         const fetchTickets = async () => {
           try {
             setLoadingTickets(true);
-            const response = await apiGetTickets(currentPage, TICKETS_PER_PAGE);
+            const response = await apiGetTickets();
             
-            // Debug logs
-            console.log('API Response:', response);
-            console.log('Tickets data:', response?.data);
-            console.log('Tickets array:', response?.data?.tickets);
-            
-            // Check the structure of your response
-            if (response?.data?.tickets) {
-              setTickets(response.data.tickets);
-              setTotalPages(Math.ceil(response.data.total / TICKETS_PER_PAGE));
-            } else if (Array.isArray(response.data)) {
-              // If the response.data is directly an array
-              setTickets(response.data);
-              setTotalPages(Math.ceil(response.data.length / TICKETS_PER_PAGE));
-            } else {
-              console.error('Unexpected data structure:', response.data);
-              setTickets([]);
+            // Handle the tickets data
+            let allTickets = [];
+            if (Array.isArray(response.data)) {
+              allTickets = response.data;
+            } else if (response.data?.tickets && Array.isArray(response.data.tickets)) {
+              allTickets = response.data.tickets;
             }
+
+            // Calculate pagination
+            const totalItems = allTickets.length;
+            const calculatedTotalPages = Math.ceil(totalItems / ticketsPerPage);
+            setTotalPages(calculatedTotalPages);
+
+            // Get current page tickets
+            const indexOfLastTicket = currentPage * ticketsPerPage;
+            const indexOfFirstTicket = indexOfLastTicket - ticketsPerPage;
+            const currentTickets = allTickets.slice(indexOfFirstTicket, indexOfLastTicket);
+            
+            setTickets(currentTickets);
           } catch (error) {
             console.error("Error fetching tickets:", error);
-            setTickets([]);
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: 'Failed to fetch tickets',
+              confirmButtonText: 'OK'
+            });
           } finally {
             setLoadingTickets(false);
           }
         };
         fetchTickets();
-      }, [currentPage]);
+      }, [currentPage, ticketsPerPage]);
 
     const handlePreviousPage = () => {
       if (currentPage > 1) {
-        setCurrentPage(currentPage - 1);
+        setCurrentPage(prev => prev - 1);
       }
     };
   
     const handleNextPage = () => {
       if (currentPage < totalPages) {
-        setCurrentPage(currentPage + 1);
+        setCurrentPage(prev => prev + 1);
       }
     };
   
+    const handlePageClick = (pageNumber) => {
+      setCurrentPage(pageNumber);
+    };
+
+    // Generate page numbers for display
+    const getPageNumbers = () => {
+      const pageNumbers = [];
+      const maxVisiblePages = 5; // Show max 5 page numbers at a time
+
+      if (totalPages <= maxVisiblePages) {
+        // If total pages is less than max visible, show all pages
+        for (let i = 1; i <= totalPages; i++) {
+          pageNumbers.push(i);
+        }
+      } else {
+        // Show pages around current page
+        let startPage = Math.max(1, currentPage - 2);
+        let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+
+        // Adjust if we're near the end
+        if (endPage - startPage < maxVisiblePages - 1) {
+          startPage = Math.max(1, endPage - maxVisiblePages + 1);
+        }
+
+        // Add first page if not included
+        if (startPage > 1) {
+          pageNumbers.push(1);
+          if (startPage > 2) pageNumbers.push('...');
+        }
+
+        // Add pages around current page
+        for (let i = startPage; i <= endPage; i++) {
+          pageNumbers.push(i);
+        }
+
+        // Add last page if not included
+        if (endPage < totalPages) {
+          if (endPage < totalPages - 1) pageNumbers.push('...');
+          pageNumbers.push(totalPages);
+        }
+      }
+
+      return pageNumbers;
+    };
 
   const navigate = useNavigate();
 
@@ -288,33 +339,43 @@ const SuperTacking = () => {
       <button
         onClick={handlePreviousPage}
         disabled={currentPage === 1}
-        className="flex items-center px-4 py-2 bg-white border rounded-lg text-gray-700 hover:bg-gray-200 disabled:opacity-50"
+        className={`flex items-center px-4 py-2 rounded-lg ${
+          currentPage === 1
+            ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+            : 'bg-white border text-gray-700 hover:bg-gray-50'
+        }`}
       >
         <span className="mr-2">←</span> Previous
       </button>
 
       <div className="flex items-center space-x-2">
-        {Array.from({ length: totalPages }, (_, index) => {
-          const page = index + 1;
-          return (
-            <button
-              key={page}
-              onClick={() => setCurrentPage(page)}
-              className={`px-3 py-1 rounded-md ${
-                currentPage === page
-                  ? 'bg-green-500 text-white'
-                  : 'text-gray-700 hover:text-green-500'
-              }`}
-            >
-              {page}
-            </button>
-          );
-        })}
+        {getPageNumbers().map((number, index) => (
+          <React.Fragment key={index}>
+            {number === '...' ? (
+              <span className="px-3 py-1">...</span>
+            ) : (
+              <button
+                onClick={() => handlePageClick(number)}
+                className={`px-3 py-1 rounded-md ${
+                  currentPage === number
+                    ? 'bg-green-500 text-white'
+                    : 'text-gray-700 hover:bg-gray-100'
+                }`}
+              >
+                {number}
+              </button>
+            )}
+          </React.Fragment>
+        ))}
       </div>
         <button
           onClick={handleNextPage}
           disabled={currentPage === totalPages}
-          className="flex items-center px-4 py-2 bg-white border rounded-lg text-gray-700 hover:bg-gray-200 disabled:opacity-50"
+          className={`flex items-center px-4 py-2 rounded-lg ${
+            currentPage === totalPages
+              ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+              : 'bg-white border text-gray-700 hover:bg-gray-50'
+          }`}
         >
           Next <span className="ml-2">→</span>
         </button>

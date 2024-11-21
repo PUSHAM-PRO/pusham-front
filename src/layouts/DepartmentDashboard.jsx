@@ -225,14 +225,14 @@ function DepartmentDashboard() {
                 <td className="p-4">
                   <div className="flex justify-start space-x-2">
                     {/* <button onClick={() => openTicketDetails(ticket._id)} className="p-2"> */}
-                    <Link to={`/deptticketdetails/${ticket._id}`} className="p-2">
+                    <Link to={`/deptticketdetails/${ticket._id || ticket.id}`} className="p-2">
                       <FaRegFileAlt />
                     </Link>
                     {/* </button> */}
-                    <Link to={`/share-ticket/${ticket._id}`} className="p-2">
+                    <Link to={`/share-ticket/${ticket._id || ticket.id}`} className="p-2">
                       <IoShareSocialOutline />
                     </Link>
-                    <button onClick={() => handleDeleteTicket(ticket._id)} className="p-2">
+                    <button onClick={() => handleDeleteTicket(ticket._id || ticket.id)} className="p-2">
                       <HiOutlineTrash />
                     </button>
                   </div>
