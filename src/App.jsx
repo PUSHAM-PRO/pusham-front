@@ -2,7 +2,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './App.css';
 import LoginPage from './pages/authPage/LoginPage';
 import HomePage from './pages/homepagex/HomePage';
-import Notification from './pages/Notification';
+import Notifications from './pages/Notifications';
 import CustomerFacing from './pages/customerpage/CustomerFacing';
 import ENEOAccountManagement from './pages/superadmin/EneoAccountManagement';
 import CreateENEOAccountForm from './pages/superadmin/CreateAccountForm';
@@ -11,7 +11,6 @@ import EneoDepartmentManagement from './pages/eneodepartment/EneoDepartmentManag
 import AgentSignUp from './pages/signups/AgentSignUp';
 import CustomerSignUp from './pages/signups/CustomerSignUp';
 import TenderSubmissionForm from './pages/tendersub';
-
 import StatusTracking from './pages/customerpage/StatusTracking';
 import EditTicket from './pages/customerpage/EditTicket';
 import SuperDashboard from './layouts/SuperDashboard';
@@ -31,10 +30,12 @@ import AgentCreateTicket from './pages/agent/AgentCreateTicket';
 import AgentTicketDetails from './pages/agent/AgentTicketDetails';
 import EscalateModal from './components/modals/EscalateModal';
 import CustomerTracking from './pages/superadmin/CustomerTracking';
+import CreateNotification from './pages/superadmin/CreateNotification';
 import CustomerTicketDetails from './pages/customerpage/CustomerTicketDetails';
-import TicketCreation from './pages/superadmin/TicketsCreation';
 import DepartmentSignIn from './pages/departmentdashboardx/DepartmentSignIn';
 import AgentSignIn from './pages/agent/AgentSignIn';
+import TicketsCreation from './pages/superadmin/TicketsCreation';
+import TicketCreation from './pages/customerpage/TicketCreation';
 
 
 function App() {
@@ -56,8 +57,12 @@ function App() {
       element: <CustomerSignUp />,
     },
     {
-      path: '/notification',
-      element: <Notification />,
+      path: '/notifications',
+      element: <Notifications />,
+    },
+    {
+      path: '/create-notification',
+      element: <CreateNotification />,
     },
     {
       path: '/dashboard',
@@ -105,39 +110,39 @@ function App() {
     },
     {
       path: "/deptSignin",
-      element: <DepartmentSignUp/>
+      element: <DepartmentSignUp />
     },
     {
       path: "/createDepartment",
-      element: <CreateDepartmentForm/>
+      element: <CreateDepartmentForm />
     },
 
     {
-      path:"/superAdmin",
-      element:<SuperDashboard/>,
-      children:[
-     
-      {
-        index: true,
-        element: <SuperTacking/>
-      },
-      {
-        path: "superCreate",
-        element: <TicketCreation />
-      },
-      {
-        path: "tickets/:id", 
-        element: <AdminTicketDetails />
-      },
-       {
-        path: "customerTrack", 
-        element: <CustomerTracking />
-      }
-     
+      path: "/superAdmin",
+      element: <SuperDashboard />,
+      children: [
+
+        {
+          index: true,
+          element: <SuperTacking />
+        },
+        {
+          path: "superCreate",
+          element: <TicketsCreation />
+        },
+        {
+          path: "tickets/:id",
+          element: <AdminTicketDetails />
+        },
+        {
+          path: "customerTrack",
+          element: <CustomerTracking />
+        }
+
 
       ]
     },
-    
+
     {
       path: "/department-signin",
       element: <DepartmentSignIn />,
@@ -159,7 +164,7 @@ function App() {
       element: <ShareTicketForm />,
     },
 
-   
+
     {
       path: "/ticket-details",
       element: <TicketDetails />,
@@ -188,9 +193,9 @@ function App() {
       path: "/agentcreateticket",
       element: <AgentCreateTicket />
     },
-    
-    
-  
+
+
+
   ]);
 
   return <RouterProvider router={router} />;

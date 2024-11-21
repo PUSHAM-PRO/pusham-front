@@ -40,8 +40,8 @@ const LoginPage = () => {
             no-repeat
           `
         });
-navigate("/superAdmin/customerTrack")
-        // navigate("/status-tracking");
+
+        navigate("/status-tracking");
 
         // login(defaultRole);
         // Proceed with login using selected role
