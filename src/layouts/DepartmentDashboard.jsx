@@ -8,6 +8,8 @@ import { Link } from "react-router-dom";
 import RootLayout from "./RootLayout";
 import TicketDetails from "../pages/departmentdashboardx/ticketDetails";
 import { apiGetDepartmentTickets } from "../services/department";
+import { apiDeleteTicket } from '../services/auth';
+import Swal from 'sweetalert2';
 
 function DepartmentDashboard() {
   const [showModal, setShowModal] = useState(false);
@@ -74,6 +76,55 @@ function DepartmentDashboard() {
 
   const closeTicketDetails = () => {
     setShowTicketDetails(false);
+  };
+
+  const handleDeleteTicket = async (id) => {
+    try {
+      // Show confirmation dialog
+      const result = await Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      });
+
+      if (result.isConfirmed) {
+        await apiDeleteTicket(id);
+        
+        Swal.fire(
+          'Deleted!',
+          'Ticket has been deleted.',
+          'success'
+        );
+        
+        // Refresh the tickets list
+        fetchTickets(); // Make sure this function exists to refresh the list
+      }
+    } catch (error) {
+      console.error('Error deleting ticket:', error);
+      
+      if (error.message === "No token found. Please log in.") {
+        Swal.fire({
+          icon: 'error',
+          title: 'Authentication Error',
+          text: 'Please log in to delete tickets.',
+          confirmButtonText: 'OK'
+        }).then(() => {
+          navigate('/login');
+        });
+        return;
+      }
+
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Failed to delete ticket. Please try again later.',
+        confirmButtonText: 'OK'
+      });
+    }
   };
 
   if (loading) {
@@ -164,7 +215,7 @@ function DepartmentDashboard() {
                     <Link to={`/share-ticket/${ticket._id}`} className="p-2">
                       <IoShareSocialOutline />
                     </Link>
-                    <button onClick={() => handleDelete(ticket._id)} className="p-2">
+                    <button onClick={() => handleDeleteTicket(ticket._id)} className="p-2">
                       <HiOutlineTrash />
                     </button>
                   </div>

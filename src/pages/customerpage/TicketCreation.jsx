@@ -12,7 +12,7 @@ const TicketCreation = () => {
     location: '',
     problem: '',
     description: '',
-    category: 'Billing',
+    category: 'billing',
     photo: null
   });
 
