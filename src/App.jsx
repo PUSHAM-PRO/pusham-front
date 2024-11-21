@@ -33,6 +33,8 @@ import EscalateModal from './components/modals/EscalateModal';
 import CustomerTracking from './pages/superadmin/CustomerTracking';
 import CustomerTicketDetails from './pages/customerpage/CustomerTicketDetails';
 import TicketCreation from './pages/superadmin/TicketsCreation';
+import DepartmentSignIn from './pages/departmentdashboardx/DepartmentSignIn';
+import AgentSignIn from './pages/agent/AgentSignIn';
 
 
 function App() {
@@ -137,6 +139,10 @@ function App() {
     },
     
     {
+      path: "/department-signin",
+      element: <DepartmentSignIn />,
+    },
+    {
       path: "/departmentdashboard",
       element: <DepartmentDashboard />,
     },
@@ -159,6 +165,11 @@ function App() {
       element: <TicketDetails />,
     },
 
+
+    {
+      path: "/agent-signin",
+      element: <AgentSignIn />,
+    },
     {
       path: "/agent",
       element: <AgentDashboard />,
