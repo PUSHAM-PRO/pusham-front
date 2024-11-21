@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom';
 import './App.css';
 import LoginPage from './pages/authPage/LoginPage';
 import HomePage from './pages/homepagex/HomePage';
@@ -31,9 +31,14 @@ import AgTickets from './pages/agent/AgTickets';
 import AgentCreateTicket from './pages/agent/AgentCreateTicket';
 import AgentTicketDetails from './pages/agent/AgentTicketDetails';
 import EscalateModal from './components/modals/EscalateModal';
+import AgentSignIn from './pages/agent/AgentSignIn';
+import DepartmentSignIn from './pages/authPage/DepartmentSignIn';
+import { useAuth } from './context/AuthContext';
 
 
 function App() {
+  const { isAuthenticated, userRole } = useAuth();
+
   const router = createBrowserRouter([
     {
       path: '/login',
@@ -108,27 +113,24 @@ function App() {
       path:"/superAdmin",
       element:<SuperDashboard/>,
       children:[
-     
-      {
-        index: true,
-        element: <SuperTacking/>
-      },
-      {
-        path: "superCreate",
-        element: <AddTicket />
-      },
-      {
-        path: "tickets/:id", 
-        element: <AdminTicketDetails />
-      }
-     
-
+        {
+          index: true,
+          element: <SuperTacking/>
+        },
+        {
+          path: "superCreate",
+          element: <AddTicket />
+        },
+        {
+          path: "tickets/:id", 
+          element: <AdminTicketDetails />
+        }
       ]
     },
     
     {
       path: "/departmentdashboard",
-      element: <DepartmentDashboard />,
+      element: isAuthenticated && userRole === 'department' ? <DepartmentDashboard /> : <Navigate to="/department-signin" />,
     },
     {
       path: "/create-ticket",
@@ -142,7 +144,6 @@ function App() {
       path: "/share-ticket",
       element: <ShareTicketForm />,
     },
-
    
     {
       path: "/ticket-details",
@@ -151,7 +152,7 @@ function App() {
 
     {
       path: "/agentd",
-      element: <AgentDashboard />,
+      element: isAuthenticated && userRole === 'agent' ? <AgentDashboard /> : <Navigate to="/agent-signin" />,
       children: [
         {
           index: true,
@@ -168,7 +169,22 @@ function App() {
       ]
     },
     
-    
+    {
+      path: '/agent-signin',
+      element: <AgentSignIn />,
+    },
+    {
+      path: '/agent-dashboard',
+      element: isAuthenticated && userRole === 'agent' ? <AgentDashboard /> : <Navigate to="/agent-signin" />,
+    },
+    {
+      path: '/department-signin',
+      element: <DepartmentSignIn />,
+    },
+    {
+      path: '/department-dashboard',
+      element: isAuthenticated && userRole === 'department' ? <DepartmentDashboard /> : <Navigate to="/department-signin" />,
+    },
   
   ]);
 

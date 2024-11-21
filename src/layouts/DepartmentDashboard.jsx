@@ -1,7 +1,3 @@
-
-// 
-
-
 import React, { useState, useEffect } from "react";
 import { FaSearch, FaUserCircle, FaRegFileAlt, FaArrowRight, FaArrowLeft } from "react-icons/fa";
 import { IoShareSocialOutline } from "react-icons/io5";
@@ -11,8 +7,16 @@ import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import { Link } from "react-router-dom";
 import RootLayout from "./RootLayout";
 import TicketDetails from "../pages/departmentdashboardx/ticketDetails";
+import { useAuth } from '../context/AuthContext';
+import { Navigate } from 'react-router-dom';
 
 function DepartmentDashboard() {
+  const { isAuthenticated, userRole } = useAuth();
+
+  if (!isAuthenticated || userRole !== 'Department') {
+    return <Navigate to="/department-signin" />;
+  }
+
   const [showModal, setShowModal] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [showTicketDetails, setShowTicketDetails] = useState(false);

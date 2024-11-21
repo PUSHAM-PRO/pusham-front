@@ -120,3 +120,13 @@ export const apiUpdateTicketComplete = async (id, updatedData) => {
     console.log('Sending to Complete API:', { id, payload });
     return await apiClient.patch(`/tickets/com/${id}`, payload);
 };
+
+export const apiDepartmentLogin = async (credentials) => {
+  return await fetch('API_URL/department-login', { // Replace with actual API endpoint
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(credentials),
+  }).then(response => response.json());
+};

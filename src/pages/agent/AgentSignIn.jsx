@@ -2,33 +2,33 @@ import React, { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import Swal from 'sweetalert2';
 import { apiLogin } from '../../services/auth';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-
-const LoginPage = () => {
+const AgentSignIn = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  // const [defaultRole, setDefaultRole] = useState('Customer');
 
   const { login } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
-      const formData = new FormData(event.target);
-      const email = formData.get("email");
+      const formData = new FormData(e.target);
+      const username = formData.get("username");
       const password = formData.get("password");
 
-      const response = await apiLogin({ email, password });
+      const response = await apiLogin({ username, password, role: 'agent' });
 
       if (response.status === 200) {
         localStorage.setItem("token", response.data.accessToken);
+        login('agent');
 
         // Show success message with SweetAlert2
         await Swal.fire({
           icon: 'success',
-          title: 'Welcome Back!',
+          title: 'Welcome, Agent!',
           text: 'Login successful. Redirecting to dashboard...',
           timer: 2000,
           timerProgressBar: true,
@@ -41,10 +41,7 @@ const LoginPage = () => {
           `
         });
 
-        navigate("/status-tracking");
-
-        // login(defaultRole);
-        // Proceed with login using selected role
+        navigate("/agent-dashboard");
       }
     } catch (error) {
       console.error(error);
@@ -52,8 +49,8 @@ const LoginPage = () => {
       // Show error message with SweetAlert2
       await Swal.fire({
         icon: 'error',
-        title: 'Oops...',
-        text: error.response?.data?.message || 'Login failed. Please check your credentials and try again.',
+        title: 'Login Failed',
+        text: error.response?.data?.message || 'Invalid credentials. Please try again.',
         confirmButtonText: 'Try Again',
         confirmButtonColor: '#3B82F6',
         showClass: {
@@ -74,18 +71,17 @@ const LoginPage = () => {
         className="w-full max-w-md p-6 space-y-6 rounded-lg shadow-lg"
         style={{ backgroundColor: 'rgb(17, 34, 40)' }}
       >
-        <h2 className="text-2xl font-bold text-center text-white">Login</h2>
+        <h2 className="text-2xl font-bold text-center text-white">Agent Login</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Email Field */}
+          {/* Username Field */}
           <div>
-            <label className="block text-white text-sm font-medium mb-1">Email</label>
+            <label className="block text-white text-sm font-medium mb-1">Username</label>
             <input
-              name="email"
-              type="email"
+              name="username"
+              type="text"
               className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2"
-              placeholder="Enter your email"
+              placeholder="Enter your username"
               required
-            // defaultValue={defaultEmail}
             />
           </div>
 
@@ -98,32 +94,17 @@ const LoginPage = () => {
               className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2"
               placeholder="Enter your password"
               required
-            // defaultValue={defaultPassword}
             />
           </div>
-
-          {/* Role Selection Dropdown */}
-          {/* <div>
-            <label className="block text-white text-sm font-medium mb-1">Role</label>
-            <select
-              className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2"
-              value={defaultRole}
-              onChange={(e) => setDefaultRole(e.target.value)}
-            >
-              <option value="Customer">Customer</option>
-              <option value="ENEO Department">ENEO Department</option>
-              <option value="Agent">Agent</option>
-              <option value="Super Administrator">Super Administrator</option>
-            </select>
-          </div> */}
 
           {/* Submit Button */}
           <button
             type="submit"
             className="w-full py-2 text-white font-bold rounded-md hover:opacity-90 transition-opacity duration-150"
             style={{ backgroundColor: 'rgb(3, 161, 11)' }}
+            disabled={loading}
           >
-            Log In
+            {loading ? 'Logging In...' : 'Log In'}
           </button>
         </form>
       </div>
@@ -131,4 +112,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default AgentSignIn; 
