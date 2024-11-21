@@ -93,7 +93,7 @@ function App() {
       element: <StatusTracking />,
     },
     {
-      path: "/custtickdetails",
+      path: "/custtickdetails/:id",
       element: <CustomerTicketDetails />,
     },
     {
