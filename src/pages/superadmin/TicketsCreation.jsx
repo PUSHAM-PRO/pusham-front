@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { apiAddTickets } from '../../services/auth';
 
-const TicketCreation = () => {
+const TicketsCreation = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     department: '',
@@ -204,4 +204,4 @@ const TicketCreation = () => {
   );
 };
 
-export default TicketCreation;
+export default TicketsCreation;

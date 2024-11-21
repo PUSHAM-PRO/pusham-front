@@ -33,7 +33,10 @@ import EscalateModal from './components/modals/EscalateModal';
 import CustomerTracking from './pages/superadmin/CustomerTracking';
 import CreateNotification from './pages/superadmin/CreateNotification';
 import CustomerTicketDetails from './pages/customerpage/CustomerTicketDetails';
-import TicketCreation from './pages/superadmin/TicketsCreation';
+import TicketsCreation from './pages/superadmin/TicketsCreation';
+import TicketCreation from './pages/customerpage/TicketCreation';
+
+
 
 
 function App() {
@@ -108,39 +111,39 @@ function App() {
     },
     {
       path: "/deptSignin",
-      element: <DepartmentSignUp/>
+      element: <DepartmentSignUp />
     },
     {
       path: "/createDepartment",
-      element: <CreateDepartmentForm/>
+      element: <CreateDepartmentForm />
     },
 
     {
-      path:"/superAdmin",
-      element:<SuperDashboard/>,
-      children:[
-     
-      {
-        index: true,
-        element: <SuperTacking/>
-      },
-      {
-        path: "superCreate",
-        element: <TicketCreation />
-      },
-      {
-        path: "tickets/:id", 
-        element: <AdminTicketDetails />
-      },
-       {
-        path: "customerTrack", 
-        element: <CustomerTracking />
-      }
-     
+      path: "/superAdmin",
+      element: <SuperDashboard />,
+      children: [
+
+        {
+          index: true,
+          element: <SuperTacking />
+        },
+        {
+          path: "superCreate",
+          element: <TicketsCreation />
+        },
+        {
+          path: "tickets/:id",
+          element: <AdminTicketDetails />
+        },
+        {
+          path: "customerTrack",
+          element: <CustomerTracking />
+        }
+
 
       ]
     },
-    
+
     {
       path: "/departmentdashboard",
       element: <DepartmentDashboard />,
@@ -158,7 +161,7 @@ function App() {
       element: <ShareTicketForm />,
     },
 
-   
+
     {
       path: "/ticket-details",
       element: <TicketDetails />,
@@ -182,9 +185,9 @@ function App() {
       path: "/agentcreateticket",
       element: <AgentCreateTicket />
     },
-    
-    
-  
+
+
+
   ]);
 
   return <RouterProvider router={router} />;
