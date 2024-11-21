@@ -1,55 +1,68 @@
 import React, { useState, useEffect } from "react";
-import { FaSearch, FaUserCircle, FaRegFileAlt, FaArrowRight, FaArrowLeft } from "react-icons/fa";
+import { FaSearch, FaUserCircle, FaRegFileAlt } from "react-icons/fa";
 import { IoShareSocialOutline } from "react-icons/io5";
 import { HiOutlineTrash } from "react-icons/hi";
 import { LuAlertCircle } from "react-icons/lu";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import RootLayout from "./RootLayout";
 import TicketDetails from "../pages/departmentdashboardx/ticketDetails";
-import { apiGetDepartmentTickets } from "../services/department";
-import { apiDeleteTicket } from '../services/auth';
+import { apiGetOneUserTicket, apiGeticketByUser, apiDeleteTicket } from '../services/auth';
 import Swal from 'sweetalert2';
 
 function DepartmentDashboard() {
+  const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [showTicketDetails, setShowTicketDetails] = useState(false);
   const [tickets, setTickets] = useState([]);
-  const [statistics, setStatistics] = useState([]);
+  const [statistics, setStatistics] = useState({});
   const [loading, setLoading] = useState(true);
 
-  // Fetch data from API on component mount
   useEffect(() => {
-    fetchTickets();
-    fetchStatistics();
+    fetchUserData();
   }, []);
 
-  const fetchTickets = async () => {
+  const fetchUserData = async () => {
     setLoading(true);
     try {
-      const data = await apiGetDepartmentTickets('account');
-      if (Array.isArray(data)) {
-        setTickets(data);
+      // Fetch user's ticket statistics
+      const statsResponse = await apiGetOneUserTicket();
+      setStatistics(statsResponse.data);
+
+      // Fetch user's tickets
+      const ticketsResponse = await apiGeticketByUser();
+      if (Array.isArray(ticketsResponse.data)) {
+        setTickets(ticketsResponse.data);
+      } else if (Array.isArray(ticketsResponse.data.tickets)) {
+        setTickets(ticketsResponse.data.tickets);
       } else {
-        console.error("Unexpected data format:", data);
+        console.error("Unexpected tickets data format:", ticketsResponse.data);
         setTickets([]);
       }
     } catch (error) {
-      console.error("Error fetching tickets:", error);
-      setTickets([]);
+      console.error("Error fetching user data:", error);
+      
+      if (error.message === "No token found. Please log in.") {
+        Swal.fire({
+          icon: 'error',
+          title: 'Authentication Error',
+          text: 'Please log in to view your tickets.',
+          confirmButtonText: 'OK'
+        }).then(() => {
+          navigate('/login');
+        });
+        return;
+      }
+
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Failed to fetch your ticket data. Please try again later.',
+        confirmButtonText: 'OK'
+      });
     } finally {
       setLoading(false);
-    }
-  };
-
-  const fetchStatistics = async () => {
-    try {
-      const response = await fetch("API_URL/statistics");
-      const data = await response.json();
-      setStatistics(data); // Assuming data is an array of statistics
-    } catch (error) {
-      console.error("Error fetching statistics:", error);
     }
   };
 
@@ -80,7 +93,6 @@ function DepartmentDashboard() {
 
   const handleDeleteTicket = async (id) => {
     try {
-      // Show confirmation dialog
       const result = await Swal.fire({
         title: 'Are you sure?',
         text: "You won't be able to revert this!",
@@ -101,7 +113,7 @@ function DepartmentDashboard() {
         );
         
         // Refresh the tickets list
-        fetchTickets(); // Make sure this function exists to refresh the list
+        fetchUserData();
       }
     } catch (error) {
       console.error('Error deleting ticket:', error);
@@ -128,7 +140,13 @@ function DepartmentDashboard() {
   };
 
   if (loading) {
-    return <div className="text-center py-4">Loading tickets...</div>;
+    return (
+      <RootLayout>
+        <div className="flex justify-center items-center h-64">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-500"></div>
+        </div>
+      </RootLayout>
+    );
   }
 
   return (
@@ -153,23 +171,20 @@ function DepartmentDashboard() {
 
         {/* Statistics Cards */}
         <div className="grid grid-cols-2 gap-24 mb-6">
-          {statistics.map((stat, index) => (
-            <div
-              key={index}
-              className="p-4 rounded-lg flex flex-col items-start"
-              style={{ backgroundColor: "#349D4F", border: "1px solid #349D4F" }}
-            >
-              <h3 className="text-lg font-medium text-white mb-3 mt-2">{stat.title}</h3>
-              <div className="text-4xl font-bold mt-2 text-gray-200 mb-4">{stat.value}</div>
-              <div className="flex items-center mt-1">
-                <p className="text-sm flex items-center">
-                  <FaArrowDown className="mr-1 text-red-500" />
-                  <span className="text-red-500">{stat.changePercentage}%</span>
-                  <span className="ml-1 text-white">vs last month</span>
-                </p>
-              </div>
+          <div className="p-4 rounded-lg flex flex-col items-start"
+               style={{ backgroundColor: "#349D4F", border: "1px solid #349D4F" }}>
+            <h3 className="text-lg font-medium text-white mb-3 mt-2">Total Tickets</h3>
+            <div className="text-4xl font-bold mt-2 text-gray-200 mb-4">
+              {statistics.totalTickets || 0}
             </div>
-          ))}
+          </div>
+          <div className="p-4 rounded-lg flex flex-col items-start"
+               style={{ backgroundColor: "#349D4F", border: "1px solid #349D4F" }}>
+            <h3 className="text-lg font-medium text-white mb-3 mt-2">Completed Tickets</h3>
+            <div className="text-4xl font-bold mt-2 text-gray-200 mb-4">
+              {statistics.completedTickets || 0}
+            </div>
+          </div>
         </div>
 
         {/* Search Bar */}

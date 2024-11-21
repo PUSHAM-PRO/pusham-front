@@ -8,7 +8,7 @@ import { RiInformationLine } from 'react-icons/ri';
 import Line from '../../assets/images/Line.png';
 import { Link, useNavigate } from 'react-router-dom';
 import { IoEllipse } from 'react-icons/io5';
-import { apiGetOneUserTicket, apiGeticketByUser } from '../../services/auth';
+import { apiDeleteTicket, apiGetOneUserTicket, apiGeticketByUser } from '../../services/auth';
 import Swal from 'sweetalert2';
 import RootLayout from '../../layouts/RootLayout';
 
