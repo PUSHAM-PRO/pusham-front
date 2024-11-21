@@ -5,7 +5,7 @@ import { Link, useParams, useNavigate } from 'react-router-dom';
 import { apiGetTicket } from '../../services/auth';
 import Swal from 'sweetalert2';
 
-const TicketDetails = () => {
+const DeptTicketDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [ticket, setTicket] = useState(null);
@@ -139,4 +139,4 @@ const TicketDetails = () => {
   );
 };
 
-export default TicketDetails;
+export default DeptTicketDetails;

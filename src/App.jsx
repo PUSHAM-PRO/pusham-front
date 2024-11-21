@@ -36,6 +36,7 @@ import DepartmentSignIn from './pages/departmentdashboardx/DepartmentSignIn';
 import AgentSignIn from './pages/agent/AgentSignIn';
 import TicketsCreation from './pages/superadmin/TicketsCreation';
 import TicketCreation from './pages/customerpage/TicketCreation';
+import DeptTicketDetails from './pages/departmentdashboardx/ticketDetails';
 
 
 function App() {
@@ -97,7 +98,7 @@ function App() {
       element: <CustomerTicketDetails />,
     },
     {
-      path: "/edit",
+      path: "/edit/:id",
       element: <EditTicket />,
     },
     {
@@ -158,6 +159,10 @@ function App() {
     {
       path: "/edit-ticket/:id",
       element: <EditTicket />,
+    },
+    {
+      path: "/deptticketdetails/:id",
+      element: <DeptTicketDetails />
     },
     {
       path: "/share-ticket",
