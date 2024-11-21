@@ -21,7 +21,7 @@ const HomePage = () => {
       title: "Department Agent",
       icon: <FaBuilding className="text-4xl mb-4" />,
       description: "Access department-specific tools",
-      path: "",
+      path: "/department-signin",
       color: "#2563eb"
     },
     {
@@ -35,7 +35,7 @@ const HomePage = () => {
       title: "Agent",
       icon: <FaUserTie className="text-4xl mb-4" />,
       description: "Manage users and system settings",
-      path: "/admin",
+      path: "/agent-signin",
       color: "#7c3aed"
     }
   ];

@@ -11,7 +11,6 @@ import EneoDepartmentManagement from './pages/eneodepartment/EneoDepartmentManag
 import AgentSignUp from './pages/signups/AgentSignUp';
 import CustomerSignUp from './pages/signups/CustomerSignUp';
 import TenderSubmissionForm from './pages/tendersub';
-
 import StatusTracking from './pages/customerpage/StatusTracking';
 import EditTicket from './pages/customerpage/EditTicket';
 import SuperDashboard from './layouts/SuperDashboard';
@@ -33,10 +32,10 @@ import EscalateModal from './components/modals/EscalateModal';
 import CustomerTracking from './pages/superadmin/CustomerTracking';
 import CreateNotification from './pages/superadmin/CreateNotification';
 import CustomerTicketDetails from './pages/customerpage/CustomerTicketDetails';
+import DepartmentSignIn from './pages/departmentdashboardx/DepartmentSignIn';
+import AgentSignIn from './pages/agent/AgentSignIn';
 import TicketsCreation from './pages/superadmin/TicketsCreation';
 import TicketCreation from './pages/customerpage/TicketCreation';
-
-
 
 
 function App() {
@@ -145,6 +144,10 @@ function App() {
     },
 
     {
+      path: "/department-signin",
+      element: <DepartmentSignIn />,
+    },
+    {
       path: "/departmentdashboard",
       element: <DepartmentDashboard />,
     },
@@ -167,6 +170,11 @@ function App() {
       element: <TicketDetails />,
     },
 
+
+    {
+      path: "/agent-signin",
+      element: <AgentSignIn />,
+    },
     {
       path: "/agent",
       element: <AgentDashboard />,
