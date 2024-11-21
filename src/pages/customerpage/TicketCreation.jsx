@@ -37,6 +37,7 @@ const TicketCreation = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+
     try {
 
       if (!formData.department || !formData.location || !formData.problem || !formData.description || !formData.category) {
@@ -78,14 +79,22 @@ const TicketCreation = () => {
       const errorMessage = error.response?.data?.message ||
         error.response?.data?.error ||
         'An error occurred while adding the ticket.';
+
+    
+
       Swal.fire({
         icon: 'error',
+
         title: 'Failed to Add Ticket',
         text: errorMessage,
         confirmButtonText: 'OK',
+
+    
+
       });
     }
   };
+
 
   return (
     <RootLayout>
@@ -201,6 +210,11 @@ const TicketCreation = () => {
             </div>
           </form>
         </div>
+
+  
+
+ 
+               
       </div>
     </RootLayout>
   );

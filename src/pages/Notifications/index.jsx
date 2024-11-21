@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FiBell, FiX, FiMapPin, FiCalendar, FiAlertTriangle } from 'react-icons/fi';
 
-const Notification = () => {
+const Notifications = () => {
   const sampleNotifications = [
     { type: 'emergency', title: 'Power Outage in Downtown', location: 'Downtown District', message: 'Scheduled maintenance will cause power outage from 10 AM to 4 PM.', date: '2024-10-31' },
     { type: 'scheduled', title: 'Routine System Maintenance', location: 'Uptown Area', message: 'Brief power outage expected during system maintenance from 2 PM to 3 PM.', date: '2024-11-01' },
@@ -129,4 +129,4 @@ const Notification = () => {
   );
 };
 
-export default Notification;
+export default Notifications;

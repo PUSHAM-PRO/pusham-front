@@ -2,7 +2,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './App.css';
 import LoginPage from './pages/authPage/LoginPage';
 import HomePage from './pages/homepagex/HomePage';
-import Notification from './pages/Notification';
+import Notifications from './pages/Notifications';
 import CustomerFacing from './pages/customerpage/CustomerFacing';
 import ENEOAccountManagement from './pages/superadmin/EneoAccountManagement';
 import CreateENEOAccountForm from './pages/superadmin/CreateAccountForm';
@@ -31,6 +31,7 @@ import AgentCreateTicket from './pages/agent/AgentCreateTicket';
 import AgentTicketDetails from './pages/agent/AgentTicketDetails';
 import EscalateModal from './components/modals/EscalateModal';
 import CustomerTracking from './pages/superadmin/CustomerTracking';
+import CreateNotification from './pages/superadmin/CreateNotification';
 import CustomerTicketDetails from './pages/customerpage/CustomerTicketDetails';
 import TicketsCreation from './pages/superadmin/TicketsCreation';
 import TicketCreation from './pages/customerpage/TicketCreation';
@@ -57,8 +58,12 @@ function App() {
       element: <CustomerSignUp />,
     },
     {
-      path: '/notification',
-      element: <Notification />,
+      path: '/notifications',
+      element: <Notifications />,
+    },
+    {
+      path: '/create-notification',
+      element: <CreateNotification />,
     },
     {
       path: '/dashboard',
