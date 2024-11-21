@@ -224,9 +224,11 @@ function DepartmentDashboard() {
                 </td>
                 <td className="p-4">
                   <div className="flex justify-start space-x-2">
-                    <button onClick={() => openTicketDetails(ticket._id)} className="p-2">
+                    {/* <button onClick={() => openTicketDetails(ticket._id)} className="p-2"> */}
+                    <Link to={`/deptticketdetails/${ticket._id}`} className="p-2">
                       <FaRegFileAlt />
-                    </button>
+                    </Link>
+                    {/* </button> */}
                     <Link to={`/share-ticket/${ticket._id}`} className="p-2">
                       <IoShareSocialOutline />
                     </Link>
@@ -243,7 +245,7 @@ function DepartmentDashboard() {
         {/* Modals */}
         {showTicketDetails && (
           <div className="fixed inset-0 flex items-center bg-gray-300 bg-opacity-50">
-            <TicketDetails />
+            {/* <TicketDetails /> */}
             <button
               onClick={closeTicketDetails}
               className="absolute top-4 right-4 bg-white p-2 font-sans"

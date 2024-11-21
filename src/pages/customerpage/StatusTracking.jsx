@@ -238,7 +238,7 @@ const StatusTracking = () => {
                                         <span className="text-[#344054]">Code</span>
                                     </span>
                                 </th>
-                                <th className="py-2">
+                                {/* <th className="py-2">
                                     <span className="flex items-center space-x-2">
                                         <MdOutlinePeopleAlt className="text-green-500" />
                                         <span className="text-[#344054]">Department</span>
@@ -249,7 +249,7 @@ const StatusTracking = () => {
                                         <FiUser className="text-green-500" />
                                         <span className="text-[#344054]">Assigned</span>
                                     </div>
-                                </th>
+                                </th> */}
                                 <th className="py-2">
                                     <span className="flex items-center space-x-2">
                                         <PiSunLight className="text-green-500" />
@@ -270,7 +270,7 @@ const StatusTracking = () => {
                                 <tr key={ticket._id || ticket.id} className="border-t hover:bg-gray-50">
                                     <td className="py-2">{ticket.createdAt || 'N/A'}</td>
                                     <td className="py-2">{ticket._id || ticket.id || 'N/A'}</td>
-                                    <td className="py-2">{ticket.department || 'N/A'}</td>
+                                    {/* <td className="py-2">{ticket.department || 'N/A'}</td> */}
                                     <td className="py-2">
                                         <span className={`flex items-center px-4 gap-2 rounded-full w-[142px] h-8 ${ticket.status === 'in_progress' ? 'bg-[#FFD70029] text-[#FFD700]' : 'bg-[#78E0D4] text-[#2C4229]'
                                             }`}>
@@ -281,9 +281,9 @@ const StatusTracking = () => {
                                     <td className="py-2 flex space-x-2 text-[#101828]">
                                         <RiInformationLine
                                             className="cursor-pointer hover:text-green-500"
-                                            onClick={() => navigate(`/custtickdetails${ticket._id || ticket.id}`)}
+                                            onClick={() => navigate(`/custtickdetails/${ticket._id || ticket.id}`)}
                                         />
-                                        <Link to={`/edit${ticket._id || ticket.id}`}>
+                                        <Link to={`/edit/${ticket._id || ticket.id}`}>
                                             <FiFileText />
                                         </Link>
                                         {ticket.status !== 'completed' && (
